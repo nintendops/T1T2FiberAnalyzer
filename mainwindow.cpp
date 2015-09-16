@@ -1,11 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "tfatool.h"
+#include "fibertractmodel.h"
 #include "Resources/csv.h"
 #include <QApplication>
 #include <QFileDialog>
 #include <QtDebug>
-
+#include <QTableView>
 #include <iostream>
 
 
@@ -33,8 +34,20 @@ void MainWindow::on_toolButton_3_clicked()
     atlas.read_header(io::ignore_extra_column,"csv_path","subjectID");
     char* csv_path;
     char* subjectID;
+    std::vector<tool::TractData> tractData;
 
     while(atlas.read_row(csv_path,subjectID)){
         std::cout << csv_path << ":" << subjectID << "\n";
+        tool::TractData newTract = {
+            QString::fromStdString(csv_path),  // csv path
+            QString::fromStdString(subjectID)  //subject ID
+        };
+
+        tractData.push_back(newTract);
     }
+    FiberTractModel mm(0,tractData);
+    QItemSelectionModel *m =ui->Fiber_Tracts_Table->selectionModel();
+    QTableView tract_table = *ui->Fiber_Tracts_Table;
+    if(m) delete m;
+
 }

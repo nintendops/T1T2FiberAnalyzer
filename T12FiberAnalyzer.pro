@@ -15,11 +15,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    tfatool.cpp
+    tfatool.cpp \
+    fibertractmodel.cpp
 
 HEADERS  += mainwindow.h \
     Resources/csv.h \
-    tfatool.h
+    tfatool.h \
+    fibertractmodel.h
 
 FORMS    += mainwindow.ui
 
