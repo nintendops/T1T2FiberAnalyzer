@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QMAKE_CXXFLAGS += -std=c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,8 +14,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    tfatool.cpp \
+    fibertractmodel.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    Resources/csv.h \
+    tfatool.h \
+    fibertractmodel.h
 
 FORMS    += mainwindow.ui
+
+SUBDIRS += \
+    Resources/analogclock.pro
