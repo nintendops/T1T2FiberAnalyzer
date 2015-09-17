@@ -171,7 +171,7 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Load CSV of ???: Filename:</string>
+           <string>Load CSV of Diffusion Fields: </string>
           </property>
          </widget>
         </item>
