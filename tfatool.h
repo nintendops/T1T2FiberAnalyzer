@@ -5,9 +5,7 @@
 
 namespace tool{
 
-    unsigned int TRACT_CSV_COL_NUM;
-
-    struct TractData{
+     struct TractData{
         QString csv_path;
         QString subjectID;
     };

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "tfatool.h"
 #include "fibertractmodel.h"
 #include "Resources/csv.h"
 #include <QApplication>
@@ -45,9 +44,10 @@ void MainWindow::on_toolButton_3_clicked()
 
         tractData.push_back(newTract);
     }
-    FiberTractModel mm(0,tractData);
+    FiberTractModel *mm = new FiberTractModel(0,tractData);
     QItemSelectionModel *m =ui->Fiber_Tracts_Table->selectionModel();
-    QTableView tract_table = *ui->Fiber_Tracts_Table;
+    ui->Fiber_Tracts_Table->setModel(mm);
+    ui->Fiber_Tracts_Table->horizontalHeader()->setStretchLastSection(true);
     if(m) delete m;
-
+//    ui->Fiber_Tracts_Table->show();
 }
