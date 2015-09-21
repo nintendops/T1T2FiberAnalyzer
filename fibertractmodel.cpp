@@ -1,10 +1,17 @@
 #include "fibertractmodel.h"
 #include <iostream>
 
-FiberTractModel::FiberTractModel(QObject *parent, std::vector<tool::TractData> db) :
+FiberTractModel::FiberTractModel(QObject *parent, std::map<std::string,tool::TractData> db1,
+                                 std::map<std::string,tool::TractData> db2) :
     QAbstractTableModel(parent)
 {
-    tract_db = db;
+
+
+    // store the union of db1 and db2 into vector
+    for (const auto x : db1){
+         // std::unordered_set<tool::TractData>::const_iterator got =
+    }
+
 }
 
 
@@ -44,9 +51,9 @@ QVariant FiberTractModel::headerData(int section, Qt::Orientation orientation, i
             case 0:
                 return "Selected";
             case 1:
-                return "csv path";
-            case 2:
                 return "Subject ID";
+            case 2:
+                return "CSV Path";
         }
     }
 

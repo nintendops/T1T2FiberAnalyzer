@@ -28,15 +28,15 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Tab 1</string>
+      <string>Data Definition</string>
      </attribute>
      <widget class="QFrame" name="frame">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>20</y>
-        <width>271</width>
-        <height>141</height>
+        <width>291</width>
+        <height>181</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -50,7 +50,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>271</width>
+         <width>291</width>
          <height>71</height>
         </rect>
        </property>
@@ -58,17 +58,17 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Load CSV: Filename:</string>
+           <string>Load CSV of T1/T2 Map: </string>
           </property>
          </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QLineEdit" name="lineEdit"/>
+           <widget class="QLineEdit" name="T12MapInputText"/>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton">
+           <widget class="QToolButton" name="T12MapInputBtn">
             <property name="text">
              <string>...</string>
             </property>
@@ -83,15 +83,15 @@
         <rect>
          <x>0</x>
          <y>70</y>
-         <width>271</width>
-         <height>71</height>
+         <width>291</width>
+         <height>121</height>
         </rect>
        </property>
        <layout class="QFormLayout" name="formLayout">
         <property name="fieldGrowthPolicy">
          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
         </property>
-        <item row="0" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="label_3">
           <property name="minimumSize">
            <size>
@@ -100,21 +100,11 @@
            </size>
           </property>
           <property name="text">
-           <string>Column index of path:</string>
+           <string>Header Name of path:</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QSpinBox" name="spinBox">
-          <property name="maximumSize">
-           <size>
-            <width>45</width>
-            <height>16777215</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
+        <item row="4" column="0">
          <widget class="QLabel" name="label_4">
           <property name="minimumSize">
            <size>
@@ -123,20 +113,28 @@
            </size>
           </property>
           <property name="text">
-           <string>Column index of Subject ID:</string>
+           <string>Header Name of Subject ID:</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="spinBox_2">
-          <property name="maximumSize">
-           <size>
-            <width>45</width>
-            <height>16777215</height>
-           </size>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Browse Table</string>
           </property>
-          <property name="value">
-           <number>1</number>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="T12pathHeaderName">
+          <property name="text">
+           <string>CSV_PATH</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="T12sidHeaderName">
+          <property name="text">
+           <string>SubjectID</string>
           </property>
          </widget>
         </item>
@@ -146,10 +144,10 @@
      <widget class="QFrame" name="frame_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>200</y>
-        <width>271</width>
-        <height>141</height>
+        <x>570</x>
+        <y>20</y>
+        <width>291</width>
+        <height>181</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -158,30 +156,30 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QWidget" name="verticalLayoutWidget_3">
+      <widget class="QWidget" name="verticalLayoutWidget_2">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>271</width>
+         <width>291</width>
          <height>71</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Load CSV of Diffusion Fields: </string>
+           <string>Load CSV of DTI and Deformation Map:</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLineEdit" name="lineEdit_3"/>
+           <widget class="QLineEdit" name="DTIdefInputText"/>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton_2">
+           <widget class="QToolButton" name="DTIdefInputBtn">
             <property name="text">
              <string>...</string>
             </property>
@@ -196,15 +194,15 @@
         <rect>
          <x>0</x>
          <y>70</y>
-         <width>271</width>
-         <height>71</height>
+         <width>291</width>
+         <height>121</height>
         </rect>
        </property>
        <layout class="QFormLayout" name="formLayout_2">
         <property name="fieldGrowthPolicy">
          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
         </property>
-        <item row="0" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="label_6">
           <property name="minimumSize">
            <size>
@@ -213,21 +211,11 @@
            </size>
           </property>
           <property name="text">
-           <string>Column index of path:</string>
+           <string>Header Name of path:</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QSpinBox" name="spinBox_3">
-          <property name="maximumSize">
-           <size>
-            <width>45</width>
-            <height>16777215</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
+        <item row="4" column="0">
          <widget class="QLabel" name="label_7">
           <property name="minimumSize">
            <size>
@@ -240,26 +228,39 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="spinBox_4">
-          <property name="maximumSize">
-           <size>
-            <width>45</width>
-            <height>16777215</height>
-           </size>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>Browse Table</string>
           </property>
-          <property name="value">
-           <number>1</number>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="DTIpathHeaderName">
+          <property name="text">
+           <string>Original DTI Image</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="DTIsidHeaderName">
+          <property name="text">
+           <string>id</string>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
      </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Attribute Fibers </string>
+     </attribute>
      <widget class="QWidget" name="verticalLayoutWidget_4">
       <property name="geometry">
        <rect>
-        <x>570</x>
+        <x>10</x>
         <y>20</y>
         <width>311</width>
         <height>71</height>
@@ -279,7 +280,7 @@
           <widget class="QLineEdit" name="DTIAtlas_Path"/>
          </item>
          <item>
-          <widget class="QToolButton" name="toolButton_3">
+          <widget class="QToolButton" name="DTIAtlasPathBtn">
            <property name="text">
             <string>...</string>
            </property>
@@ -289,11 +290,21 @@
        </item>
       </layout>
      </widget>
+     <widget class="QTableView" name="Fiber_Tracts_Table">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>60</y>
+        <width>391</width>
+        <height>411</height>
+       </rect>
+      </property>
+     </widget>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>100</y>
+        <x>350</x>
+        <y>30</y>
         <width>271</width>
         <height>21</height>
        </rect>
@@ -302,21 +313,53 @@
        <string>Available Fiber Tracts:</string>
       </property>
      </widget>
-     <widget class="QTableView" name="Fiber_Tracts_Table">
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Software Configuration</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_3">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>120</y>
-        <width>311</width>
-        <height>301</height>
+        <x>190</x>
+        <y>130</y>
+        <width>531</width>
+        <height>201</height>
        </rect>
       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Python Path:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_3"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Fiber Process:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_4"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>DTI Tract Stat:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_5"/>
+       </item>
+      </layout>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
     </widget>
    </widget>
   </widget>

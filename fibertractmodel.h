@@ -9,7 +9,9 @@ class FiberTractModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit FiberTractModel(QObject *parent = 0, std::vector<tool::TractData> db = std::vector<tool::TractData>());
+    explicit FiberTractModel(QObject *parent = 0,
+                            std::map<std::string,tool::TractData> db1 = std::map<std::string,tool::TractData>(),
+                            std::map<std::string,tool::TractData> db2 = std::map<std::string,tool::TractData>());
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
