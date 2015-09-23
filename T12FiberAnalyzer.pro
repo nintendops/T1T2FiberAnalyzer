@@ -16,14 +16,21 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     tfatool.cpp \
-    fibertractmodel.cpp
+    fibertractmodel.cpp \
+    atlasmodel.cpp \
+    csvbrowsemodel.cpp \
+    csvbrowser.cpp
 
 HEADERS  += mainwindow.h \
     Resources/csv.h \
     tfatool.h \
-    fibertractmodel.h
+    fibertractmodel.h \
+    atlasmodel.h \
+    csvbrowsemodel.h \
+    csvbrowser.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    csvbrowser.ui
 
 SUBDIRS += \
     Resources/analogclock.pro

@@ -1,9 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#define DEFAULT_DIR "/home/haiweich/Dev/repo/T1T2FiberAnalyzer/test_data/"
 
 #include <QMainWindow>
 
 #include "fibertractmodel.h"
+#include "atlasmodel.h"
 #include "Resources/csv.h"
 
 namespace Ui {
@@ -24,6 +26,10 @@ private slots:
     void on_DTIdefInputBtn_clicked();
 
     void on_DTIAtlasPathBtn_clicked();
+
+    void on_T12BrowseBtn_clicked();
+
+    void on_DTIBrowseBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

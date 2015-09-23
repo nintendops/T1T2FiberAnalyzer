@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "csvbrowser.h"
 #include <QApplication>
 #include <QFileDialog>
 #include <QtDebug>
 #include <QTableView>
 #include <iostream>
-
+#include <utility>
+#include <functional>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,7 +24,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_T12MapInputBtn_clicked()
 {
     /* setting path in edit line*/
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),"/home/haiweich/Dev/repo/T1T2FiberAnalyzer/test_data/");
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),DEFAULT_DIR);
     ui->T12MapInputText->setText(fileName);
 
     // read header names from spinBox
@@ -37,22 +39,22 @@ void MainWindow::on_T12MapInputBtn_clicked()
 
     T12TractData.clear();
 
-    while(atlas.read_row(csv_path,subjectID)){
-        std::cout << csv_path << ":" << subjectID << "\n";
+    while(atlas.read_row(subjectID,csv_path)){
+        //std::cout << csv_path << ":" << subjectID << "\n";
         tool::TractData newTract = {
             QString::fromStdString(csv_path),  // csv path
             QString::fromStdString(subjectID)  //subject ID
         };
 
-        T12TractData.insert(std::pair<std::string,tool::TractData>(newTract.subjectID,newTract));
+        auto element = std::make_pair(subjectID,newTract);
+        T12TractData.insert(element);
 
     }
-    FiberTractModel *mm = new FiberTractModel(0,T12TractData,DTITractData);
-    QItemSelectionModel *m =ui->Fiber_Tracts_Table->selectionModel();
-    ui->Fiber_Tracts_Table->setModel(mm);
-    ui->Fiber_Tracts_Table->horizontalHeader()->setStretchLastSection(true);
+    AtlasModel *mm = new AtlasModel(0,T12TractData,DTITractData);
+    QItemSelectionModel *m =ui->CSVMatchTable->selectionModel();
+    ui->CSVMatchTable->setModel(mm);
+    ui->CSVMatchTable->horizontalHeader()->setStretchLastSection(true);
     if(m) delete m;
-//    ui->Fiber_Tracts_Table->show();
 }
 
 
@@ -61,7 +63,7 @@ void MainWindow::on_T12MapInputBtn_clicked()
 void MainWindow::on_DTIdefInputBtn_clicked()
 {
     /* setting path in edit line*/
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),"/home/haiweich/Dev/repo/T1T2FiberAnalyzer/test_data/");
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),DEFAULT_DIR);
     ui->DTIdefInputText->setText(fileName);
 
     // read header names from spinBox
@@ -76,24 +78,59 @@ void MainWindow::on_DTIdefInputBtn_clicked()
 
     DTITractData.clear();
 
-    while(atlas.read_row(csv_path,subjectID)){
-        std::cout << csv_path << ":" << subjectID << "\n";
+    while(atlas.read_row(subjectID,csv_path)){
+        //std::cout << csv_path << ":" << subjectID << "\n";
         tool::TractData newTract = {
             QString::fromStdString(csv_path),  // csv path
             QString::fromStdString(subjectID)  //subject ID
         };
 
-        DTITractData.insert(std::pair<std::string,tool::TractData>(newTract.subjectID,newTract));
+        auto element = std::make_pair(subjectID,newTract);
+        DTITractData.insert(element);
 
     }
-    FiberTractModel *mm = new FiberTractModel(0,T12TractData,DTITractData);
-    QItemSelectionModel *m =ui->Fiber_Tracts_Table->selectionModel();
-    ui->Fiber_Tracts_Table->setModel(mm);
-    ui->Fiber_Tracts_Table->horizontalHeader()->setStretchLastSection(true);
+    AtlasModel *mm = new AtlasModel(0,T12TractData,DTITractData);
+    QItemSelectionModel *m =ui->CSVMatchTable->selectionModel();
+    ui->CSVMatchTable->setModel(mm);
+    ui->CSVMatchTable->horizontalHeader()->setStretchLastSection(true);
     if(m) delete m;
 }
 
 void MainWindow::on_DTIAtlasPathBtn_clicked()
 {
+    QString dir = QFileDialog::getExistingDirectory(this,tr("Open Directory"),DEFAULT_DIR,
+                                                    QFileDialog::ShowDirsOnly);
+    ui->DTIFiber_Path->setText(dir);
+    std::vector<tool::TractData> filelist;
+    tool::getnrrdfiles(dir.toStdString(),filelist);
 
+    FiberTractModel *mm = new FiberTractModel(0,filelist);
+    QItemSelectionModel *m =ui->CSVMatchTable->selectionModel();
+    ui->Fiber_Tracts_Table->setModel(mm);
+    ui->Fiber_Tracts_Table->horizontalHeader()->setStretchLastSection(true);
+    if(m) delete m;
+}
+
+void MainWindow::on_T12BrowseBtn_clicked()
+{
+    QString dir = ui->T12MapInputText->text();
+    std::vector<std::vector<std::string>> csv_results;
+    std::vector<std::string> headers;
+    if(dir != NULL){
+        csv_results = tool::parseCSV(dir.toStdString(),headers);
+    }
+    CSVBrowser bd;
+    bd.show();
+}
+
+void MainWindow::on_DTIBrowseBtn_clicked()
+{
+    QString dir = ui->DTIdefInputText->text();
+    std::vector<std::vector<std::string>> csv_results;
+    std::vector<std::string> headers;
+    if(dir != NULL){
+        tool::parseCSV(dir.toStdString(),headers);
+    }
+    CSVBrowser bd;
+    bd.show();
 }

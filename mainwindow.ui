@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -118,7 +118,7 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="T12BrowseBtn">
           <property name="text">
            <string>Browse Table</string>
           </property>
@@ -144,8 +144,8 @@
      <widget class="QFrame" name="frame_2">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>20</y>
+        <x>20</x>
+        <y>260</y>
         <width>291</width>
         <height>181</height>
        </rect>
@@ -229,7 +229,7 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="DTIBrowseBtn">
           <property name="text">
            <string>Browse Table</string>
           </property>
@@ -252,6 +252,29 @@
        </layout>
       </widget>
      </widget>
+     <widget class="QTableView" name="CSVMatchTable">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>60</y>
+        <width>371</width>
+        <height>381</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>30</y>
+        <width>111</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Match Result:</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -270,14 +293,14 @@
        <item>
         <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>DTIAtlas Path:</string>
+          <string>DTI Fiber Path:</string>
          </property>
         </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QLineEdit" name="DTIAtlas_Path"/>
+          <widget class="QLineEdit" name="DTIFiber_Path"/>
          </item>
          <item>
           <widget class="QToolButton" name="DTIAtlasPathBtn">
@@ -293,8 +316,8 @@
      <widget class="QTableView" name="Fiber_Tracts_Table">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>60</y>
+        <x>390</x>
+        <y>80</y>
         <width>391</width>
         <height>411</height>
        </rect>
