@@ -3,6 +3,7 @@
 #include "csvbrowser.h"
 #include <QApplication>
 #include <QFileDialog>
+#include <QDialog>
 #include <QtDebug>
 #include <QTableView>
 #include <iostream>
@@ -119,8 +120,10 @@ void MainWindow::on_T12BrowseBtn_clicked()
     if(dir != NULL){
         csv_results = tool::parseCSV(dir.toStdString(),headers);
     }
-    CSVBrowser bd;
-    bd.show();
+    CSVBrowser *bd = new CSVBrowser();
+    bd->show();
+    bd->loadTable(csv_results,headers);
+
 }
 
 void MainWindow::on_DTIBrowseBtn_clicked()
@@ -129,8 +132,9 @@ void MainWindow::on_DTIBrowseBtn_clicked()
     std::vector<std::vector<std::string>> csv_results;
     std::vector<std::string> headers;
     if(dir != NULL){
-        tool::parseCSV(dir.toStdString(),headers);
+        csv_results = tool::parseCSV(dir.toStdString(),headers);
     }
-    CSVBrowser bd;
-    bd.show();
+    CSVBrowser *bd = new CSVBrowser();
+    bd->show();
+    bd->loadTable(csv_results,headers);
 }
