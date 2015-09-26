@@ -316,8 +316,8 @@
      <widget class="QTableView" name="Fiber_Tracts_Table">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>80</y>
+        <x>350</x>
+        <y>60</y>
         <width>391</width>
         <height>411</height>
        </rect>

@@ -19,7 +19,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 private:
     std::vector<tool::TractData> tract_db;
-
+    QVariant checkedState = Qt::Checked;
 signals:
 
 public slots:

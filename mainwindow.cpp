@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "csvbrowser.h"
+#include "errorreporter.h"
 #include <QApplication>
 #include <QFileDialog>
 #include <QDialog>
@@ -26,6 +27,7 @@ void MainWindow::on_T12MapInputBtn_clicked()
 {
     /* setting path in edit line*/
     QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),DEFAULT_DIR);
+    if(fileName == NULL) return;
     ui->T12MapInputText->setText(fileName);
 
     // read header names from spinBox
@@ -65,6 +67,7 @@ void MainWindow::on_DTIdefInputBtn_clicked()
 {
     /* setting path in edit line*/
     QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),DEFAULT_DIR);
+    if(fileName == NULL) return;
     ui->DTIdefInputText->setText(fileName);
 
     // read header names from spinBox
@@ -101,6 +104,7 @@ void MainWindow::on_DTIAtlasPathBtn_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this,tr("Open Directory"),DEFAULT_DIR,
                                                     QFileDialog::ShowDirsOnly);
+    if(dir == NULL) return;
     ui->DTIFiber_Path->setText(dir);
     std::vector<tool::TractData> filelist;
     tool::getnrrdfiles(dir.toStdString(),filelist);
@@ -115,10 +119,17 @@ void MainWindow::on_DTIAtlasPathBtn_clicked()
 void MainWindow::on_T12BrowseBtn_clicked()
 {
     QString dir = ui->T12MapInputText->text();
+    if(dir == NULL) return;
     std::vector<std::vector<std::string>> csv_results;
     std::vector<std::string> headers;
     if(dir != NULL){
+        try{
         csv_results = tool::parseCSV(dir.toStdString(),headers);
+        }
+        catch(io::error::can_not_open_file e){
+            ErrorReporter::fire("CSV file is not found!");
+            return;
+        }
     }
     CSVBrowser *bd = new CSVBrowser();
     bd->show();

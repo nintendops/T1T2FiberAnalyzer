@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     fibertractmodel.cpp \
     atlasmodel.cpp \
     csvbrowsemodel.cpp \
-    csvbrowser.cpp
+    csvbrowser.cpp \
+    errorreporter.cpp
 
 HEADERS  += mainwindow.h \
     Resources/csv.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     fibertractmodel.h \
     atlasmodel.h \
     csvbrowsemodel.h \
-    csvbrowser.h
+    csvbrowser.h \
+    errorreporter.h
 
 FORMS    += mainwindow.ui \
     csvbrowser.ui
