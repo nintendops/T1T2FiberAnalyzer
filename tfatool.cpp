@@ -43,6 +43,20 @@ void tool::tokenize(char* str, char* delimiter, vector<string> &results){
     }
 }
 
+void tool::parseMapContent(string filename, map<string,TractData> &data, string header1, string header2){
+    io::CSVReader<2> in(filename);
+    char* path;
+    char* sid;
+    in.read_header(io::ignore_extra_column,header1,header2);
+    while(in.read_row(path,sid)){
+        tool::TractData newTract = {
+            QString::fromStdString(path),
+            QString::fromStdString(sid)
+        };
+        auto element = std::make_pair(sid,newTract);
+        data.insert(element);
+    }
+}
 
 // generic parsing of csv files
 vector<vector<string>> tool::parseCSV(string dir, vector<string> &attrs){
@@ -61,4 +75,3 @@ vector<vector<string>> tool::parseCSV(string dir, vector<string> &attrs){
     }
     return results;
 }
-

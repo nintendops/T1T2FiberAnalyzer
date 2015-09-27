@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>906</width>
-    <height>536</height>
+    <width>1117</width>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>911</width>
-      <height>511</height>
+      <width>1121</width>
+      <height>521</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -35,7 +35,7 @@
        <rect>
         <x>20</x>
         <y>20</y>
-        <width>291</width>
+        <width>311</width>
         <height>181</height>
        </rect>
       </property>
@@ -50,7 +50,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>291</width>
+         <width>311</width>
          <height>71</height>
         </rect>
        </property>
@@ -65,7 +65,11 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QLineEdit" name="T12MapInputText"/>
+           <widget class="QLineEdit" name="T12MapInputText">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QToolButton" name="T12MapInputBtn">
@@ -83,7 +87,7 @@
         <rect>
          <x>0</x>
          <y>70</y>
-         <width>291</width>
+         <width>311</width>
          <height>121</height>
         </rect>
        </property>
@@ -100,7 +104,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Header Name of path:</string>
+           <string>Header Name of T1/T2 path:</string>
           </property>
          </widget>
         </item>
@@ -125,18 +129,10 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="T12pathHeaderName">
-          <property name="text">
-           <string>CSV_PATH</string>
-          </property>
-         </widget>
+         <widget class="QComboBox" name="T12ComboPath"/>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="T12sidHeaderName">
-          <property name="text">
-           <string>SubjectID</string>
-          </property>
-         </widget>
+         <widget class="QComboBox" name="T12ComboSID"/>
         </item>
        </layout>
       </widget>
@@ -146,7 +142,7 @@
        <rect>
         <x>20</x>
         <y>260</y>
-        <width>291</width>
+        <width>311</width>
         <height>181</height>
        </rect>
       </property>
@@ -161,7 +157,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>291</width>
+         <width>311</width>
          <height>71</height>
         </rect>
        </property>
@@ -176,7 +172,11 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLineEdit" name="DTIdefInputText"/>
+           <widget class="QLineEdit" name="DTIdefInputText">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QToolButton" name="DTIdefInputBtn">
@@ -194,7 +194,7 @@
         <rect>
          <x>0</x>
          <y>70</y>
-         <width>291</width>
+         <width>311</width>
          <height>121</height>
         </rect>
        </property>
@@ -211,7 +211,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Header Name of path:</string>
+           <string>Header Name of Def Field:</string>
           </property>
          </widget>
         </item>
@@ -224,7 +224,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Column index of Subject ID:</string>
+           <string>Header Name of Subject ID:</string>
           </property>
          </widget>
         </item>
@@ -236,18 +236,10 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="DTIpathHeaderName">
-          <property name="text">
-           <string>Original DTI Image</string>
-          </property>
-         </widget>
+         <widget class="QComboBox" name="DTIComboPath"/>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="DTIsidHeaderName">
-          <property name="text">
-           <string>id</string>
-          </property>
-         </widget>
+         <widget class="QComboBox" name="DTIComboSID"/>
         </item>
        </layout>
       </widget>
@@ -255,24 +247,33 @@
      <widget class="QTableView" name="CSVMatchTable">
       <property name="geometry">
        <rect>
-        <x>340</x>
+        <x>390</x>
         <y>60</y>
-        <width>371</width>
+        <width>711</width>
         <height>381</height>
        </rect>
       </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="textElideMode">
+       <enum>Qt::ElideLeft</enum>
+      </property>
      </widget>
-     <widget class="QLabel" name="label_12">
+     <widget class="QPushButton" name="MatchResultBtn">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>30</y>
-        <width>111</width>
-        <height>17</height>
+        <x>390</x>
+        <y>20</y>
+        <width>99</width>
+        <height>27</height>
        </rect>
       </property>
       <property name="text">
-       <string>Match Result:</string>
+       <string>Match Result</string>
       </property>
      </widget>
     </widget>
@@ -391,7 +392,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>906</width>
+     <width>1117</width>
      <height>25</height>
     </rect>
    </property>

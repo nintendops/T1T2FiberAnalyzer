@@ -13,7 +13,6 @@ class CSVBrowser;
 class CSVBrowser : public QDialog
 {
     Q_OBJECT
-
 public:
     explicit CSVBrowser(QWidget *parent = 0);
     void loadTable(std::vector<std::vector<std::string>> csv_results, std::vector<std::string> headers);

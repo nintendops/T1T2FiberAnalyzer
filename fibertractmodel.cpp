@@ -32,7 +32,6 @@ QVariant FiberTractModel::data(const QModelIndex &index, int role) const{
     }
 
     return QVariant();
-
 }
 
 Qt::ItemFlags FiberTractModel::flags(const QModelIndex &index) const{

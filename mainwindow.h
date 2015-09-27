@@ -31,11 +31,19 @@ private slots:
 
     void on_DTIBrowseBtn_clicked();
 
+    void checkHeaderSelection();
+
+    void on_MatchResultBtn_clicked();
+
+signals:
+    void headerSelected();
+
 private:
     Ui::MainWindow *ui;
     std::map<std::string,tool::TractData> T12TractData;
     std::map<std::string,tool::TractData> DTITractData;
-
+    std::vector<std::string> T12headers;
+    std::vector<std::string> DTIheaders;
 
 
 };

@@ -719,6 +719,7 @@ namespace io{
                                                 col_begin = 0;
                                                 break;
                                         }
+
                                 if(col_begin){
                                         if(ignore_policy & ::io::ignore_extra_column)
                                                 col_order.push_back(-1);
