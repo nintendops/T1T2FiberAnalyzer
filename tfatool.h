@@ -4,7 +4,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
-#include "stdio.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <vector>
 #include <string>
 #include <map>
@@ -35,6 +36,7 @@ namespace tool{
      void tokenize(char* str, char* delimiter, vector<string> &results);
      void parseMapContent(string filename, map<string,TractData> &data, string header1, string header2);
      vector<vector<string>>  parseCSV(string dir, vector<string> &attrs);
+     string syscall(const char* cmd);
 
      // trim from start
      inline std::string &ltrim(std::string &s) {

@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(cb2,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
     QObject::connect(cb3,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
     QObject::connect(cb4,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
+
+    std::cout << tool::syscall("pwd");
 }
 
 MainWindow::~MainWindow()
@@ -61,9 +63,6 @@ void MainWindow::on_T12MapInputBtn_clicked()
     }
 
 }
-
-
-
 
 void MainWindow::on_DTIdefInputBtn_clicked()
 {

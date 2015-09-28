@@ -2,6 +2,7 @@
 #include "ui_csvbrowser.h"
 #include "csvbrowsemodel.h"
 
+
 CSVBrowser::CSVBrowser(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CSVBrowser)

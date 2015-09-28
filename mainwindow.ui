@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -58,7 +58,7 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Load CSV of T1/T2 Map: </string>
+           <string>Load CSV of T1/T2 Path: </string>
           </property>
          </widget>
         </item>
@@ -165,7 +165,7 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Load CSV of DTI and Deformation Map:</string>
+           <string>Load CSV of Deformation Path:</string>
           </property>
          </widget>
         </item>
@@ -360,7 +360,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_3"/>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLineEdit" name="pyPath"/>
+         </item>
+         <item>
+          <widget class="QToolButton" name="pyPathBtn">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QLabel" name="label_10">
@@ -370,7 +381,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_4"/>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLineEdit" name="lineEdit_2"/>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_2">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QLabel" name="label_11">
@@ -380,7 +402,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_5"/>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLineEdit" name="lineEdit_3"/>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_3">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

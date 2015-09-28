@@ -12,6 +12,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = T12FiberAnalyzer
 TEMPLATE = app
 
+# adding python scripts to build location
+copyfiles.commands = cp $$PWD/version.py $$OUT_PWD/
+QMAKE_EXTRA_TARGETS += copyfiles
+POST_TARGETDEPS += copyfiles
+
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -36,3 +41,6 @@ FORMS    += mainwindow.ui \
 
 SUBDIRS += \
     Resources/analogclock.pro
+
+OTHER_FILES += \
+    version.py

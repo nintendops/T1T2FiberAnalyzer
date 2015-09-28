@@ -33,6 +33,20 @@ int tool::getnrrdfiles (string dir, vector<tool::TractData> &files){
 
 }
 
+string tool::syscall(const char* cmd){
+    FILE* pipe = popen(cmd,"r");
+    if(!pipe) return NULL;
+    char buffer[256];
+    string result = "";
+    while(!feof(pipe)){
+        if(fgets(buffer,128,pipe)){
+            result += buffer;
+        }
+    }
+    pclose(pipe);
+    return result;
+}
+
 
 void tool::tokenize(char* str, char* delimiter, vector<string> &results){
     results.clear();
