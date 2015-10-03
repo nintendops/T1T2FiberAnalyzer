@@ -34,7 +34,8 @@ HEADERS  += mainwindow.h \
     atlasmodel.h \
     csvbrowsemodel.h \
     csvbrowser.h \
-    errorreporter.h
+    errorreporter.h \
+    stacktrace.h
 
 FORMS    += mainwindow.ui \
     csvbrowser.ui

@@ -13,11 +13,11 @@ int tool::getnrrdfiles (string dir, vector<tool::TractData> &files){
 
    while((dirp = readdir(dp)) != NULL){
 
-       // select files with nrrd prefix
+       // select files with vtk prefix
        string filepath = string(dirp->d_name);
        size_t found = filepath.find_last_of(".");
        string prefix = filepath.substr(found+1);
-       if (prefix == "nrrd"){
+       if (prefix == "vtk"){
            size_t found_name = filepath.find_last_of("/");
            string filename = filepath.substr(found_name+1);
            tool::TractData newTract = {
@@ -33,13 +33,32 @@ int tool::getnrrdfiles (string dir, vector<tool::TractData> &files){
 
 }
 
+bool tool::checkNewLine(string &s){
+    string::iterator i = s.end()-1;
+    if(*i == '\n'){
+        s.erase(i,i+1);
+        return true;
+    }else
+        return false;
+}
+
+bool tool::checkDirExist(string path){
+    struct stat info;
+    if(stat(path.c_str(),&info)!=0)
+        return false;
+    else if(info.st_mode & S_IFDIR)
+        return true;
+    else
+        return false;
+}
+
 string tool::syscall(const char* cmd){
     FILE* pipe = popen(cmd,"r");
     if(!pipe) return NULL;
     char buffer[256];
     string result = "";
     while(!feof(pipe)){
-        if(fgets(buffer,128,pipe)){
+        if(fgets(buffer,256,pipe)){
             result += buffer;
         }
     }
@@ -58,18 +77,52 @@ void tool::tokenize(char* str, char* delimiter, vector<string> &results){
 }
 
 void tool::parseMapContent(string filename, map<string,TractData> &data, string header1, string header2){
-    io::CSVReader<2> in(filename);
+
     char* path;
     char* sid;
-    in.read_header(io::ignore_extra_column,header1,header2);
-    while(in.read_row(path,sid)){
-        tool::TractData newTract = {
-            QString::fromStdString(path),
-            QString::fromStdString(sid)
-        };
-        auto element = std::make_pair(sid,newTract);
-        data.insert(element);
+    if(header1==header2){
+        io::CSVReader<1> in(filename);
+        in.read_header(io::ignore_extra_column,header1);
+        while(in.read_row(sid)){
+            tool::TractData newTract = {
+                QString::fromStdString(sid),
+                QString::fromStdString(sid)
+            };
+            auto element = std::make_pair(sid,newTract);
+            data.insert(element);
+        }
+    }else{
+        io::CSVReader<2> in(filename);
+        in.read_header(io::ignore_extra_column,header1,header2);
+        while(in.read_row(path,sid)){
+            if(header1 == header2)
+                sid = path;
+            tool::TractData newTract = {
+                QString::fromStdString(path),
+                QString::fromStdString(sid)
+            };
+            auto element = std::make_pair(sid,newTract);
+            data.insert(element);
+        }
     }
+
+}
+
+bool tool::checkExecutable(char *path){
+    struct stat sb;
+    if(stat(path,&sb)==0 && sb.st_mode & S_IXUSR)
+        return true;
+    else
+        return false;
+}
+
+bool tool::checkExecutable(string path){
+    const char* tmp = path.c_str();
+    char* result = new char[path.length()-1];
+    strcpy(result,tmp);
+    bool y = checkExecutable(result);
+    delete[] result;
+    return y;
 }
 
 // generic parsing of csv files

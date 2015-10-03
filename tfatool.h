@@ -2,6 +2,7 @@
 #define TFATOOL_H
 #include <QString>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <dirent.h>
 #include <errno.h>
 #include <stdio.h>
@@ -33,6 +34,10 @@ namespace tool{
      };
 
      int getnrrdfiles (string dir, vector<tool::TractData> &files);
+     bool checkExecutable(char* path);
+     bool checkExecutable(string path);
+     bool checkNewLine(string &s);
+     bool checkDirExist(string path);
      void tokenize(char* str, char* delimiter, vector<string> &results);
      void parseMapContent(string filename, map<string,TractData> &data, string header1, string header2);
      vector<vector<string>>  parseCSV(string dir, vector<string> &attrs);

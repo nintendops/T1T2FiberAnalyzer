@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tabWidget->setCurrentIndex(0);
     QComboBox* cb1 = ui->DTIComboPath;
     QComboBox* cb2 = ui->DTIComboSID;
     QComboBox* cb3 = ui->T12ComboPath;
@@ -26,18 +27,44 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(cb3,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
     QObject::connect(cb4,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
 
-    std::cout << tool::syscall("pwd");
+    if(tool::checkDirExist(DEFAULT_DIR))
+        DEFAULT_PATH = new QString(DEFAULT_DIR);
+    else
+        DEFAULT_PATH = new QString("./");
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete DEFAULT_PATH;
+}
+
+void MainWindow::initializePyPath(){
+    char* pypath = std::getenv("TFA_PYTHON");
+
+    if(!pypath){
+        const char* pypath = tool::syscall("which python").c_str();
+        ui->pyPath->setText(QString(pypath));
+    }
+    else if(tool::checkExecutable(pypath))
+        ui->pyPath->setText(QString(pypath));
+    else
+        ErrorReporter::fire("Provided python path is not executable!");
+
+    std::string vc = ui->pyPath->text().toStdString();
+    tool::checkNewLine(vc);
+    if(!checkPyVersion(vc)){
+        ErrorReporter::fire("Given executable is unsupported, or python version is below minimum requirement (2.5.0)!");
+        ui->pyPath->clear();
+    }
 }
 
 void MainWindow::on_T12MapInputBtn_clicked()
 {
+
     /* setting path in edit line*/
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),DEFAULT_DIR);
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),*DEFAULT_PATH);
     if(fileName == NULL) return;
     ui->T12MapInputText->setText(fileName);
 
@@ -67,7 +94,7 @@ void MainWindow::on_T12MapInputBtn_clicked()
 void MainWindow::on_DTIdefInputBtn_clicked()
 {
     /* setting path in edit line*/
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),DEFAULT_DIR);
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),*DEFAULT_PATH);
     if(fileName == NULL) return;
     ui->DTIdefInputText->setText(fileName);
     // parse headers of csv file and populate into combo boxes
@@ -95,7 +122,7 @@ void MainWindow::on_DTIdefInputBtn_clicked()
 
 void MainWindow::on_DTIAtlasPathBtn_clicked()
 {
-    QString dir = QFileDialog::getExistingDirectory(this,tr("Open Directory"),DEFAULT_DIR,
+    QString dir = QFileDialog::getExistingDirectory(this,tr("Open Directory"),*DEFAULT_PATH,
                                                     QFileDialog::ShowDirsOnly);
     if(dir == NULL) return;
     ui->DTIFiber_Path->setText(dir);
@@ -107,6 +134,10 @@ void MainWindow::on_DTIAtlasPathBtn_clicked()
     ui->Fiber_Tracts_Table->setModel(mm);
     ui->Fiber_Tracts_Table->horizontalHeader()->setStretchLastSection(true);
     if(m) delete m;
+
+    ui->FiberTableSelectAll->setEnabled(true);
+    ui->FiberTableDeselectAll->setEnabled(true);
+
 }
 
 void MainWindow::on_T12BrowseBtn_clicked()
@@ -154,8 +185,11 @@ void MainWindow::checkHeaderSelection(){
     QString str2 = ui->T12ComboSID->currentText();
     QString str3 = ui->DTIComboPath->currentText();
     QString str4 = ui->DTIComboSID->currentText();
-    if((!str1.isEmpty()) && (!str2.isEmpty()) && (!str3.isEmpty()) && (!str4.isEmpty()))
+    if((!str1.isEmpty()) && (!str2.isEmpty()) && (!str3.isEmpty()) && (!str4.isEmpty())){
         ui->MatchResultBtn->setEnabled(true);
+        ui->MatchTableSelectAll->setEnabled(true);
+        ui->MatchTableDeselectAll->setEnabled(true);
+    }
 }
 
 void MainWindow::on_MatchResultBtn_clicked()
@@ -171,10 +205,12 @@ void MainWindow::on_MatchResultBtn_clicked()
     std::string str4 = ui->DTIComboSID->currentText().toStdString();
     str4 = tool::trim(str4);
 
+    /*
     if(str1 == str2 || str3 == str4){
         ErrorReporter::fire("Header names should not be the same!");
         return;
     }
+    */
 
     QString T12_csv = ui->T12MapInputText->text();
     QString DTI_csv = ui->DTIdefInputText->text();
@@ -188,5 +224,56 @@ void MainWindow::on_MatchResultBtn_clicked()
     ui->CSVMatchTable->horizontalHeader()->setStretchLastSection(true);
     if(m!=NULL) delete m;
 
+}
 
+bool MainWindow::checkPyVersion(std::string path){
+    std::string cmd = path+" "+PYVERSION_SCRIPT_PATH;
+    std::string result = tool::syscall(cmd.c_str());
+    // removing newline character
+    tool::checkNewLine(result);
+
+    if (result == "true"){
+        return true;
+    }else
+        return false;
+}
+
+
+void MainWindow::on_pyPathBtn_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,tr("Select Python Path"), *DEFAULT_PATH);
+    if(filename == NULL) return;
+    std::string path = filename.toStdString();
+    tool::checkNewLine(path);
+    if (!tool::checkExecutable(path))
+        ErrorReporter::fire("Provided python path is not executable!");
+    else if(!checkPyVersion(path)){
+        ErrorReporter::fire("Given executable is unsupported, or python version is below minimum requirement (2.5.0)!");
+    }else
+        ui->pyPath->setText(filename);
+
+}
+
+void MainWindow::on_MatchTableSelectAll_clicked()
+{
+    AtlasModel* model = (AtlasModel*) ui->CSVMatchTable->model();
+    model->resetModel(Qt::Checked);
+}
+
+void MainWindow::on_MatchTableDeselectAll_clicked()
+{
+    AtlasModel* model = (AtlasModel*) ui->CSVMatchTable->model();
+    model->resetModel(Qt::Unchecked);
+}
+
+void MainWindow::on_FiberTableSelectAll_clicked()
+{
+    FiberTractModel* model = (FiberTractModel*) ui->Fiber_Tracts_Table->model();
+    model->resetModel(Qt::Checked);
+}
+
+void MainWindow::on_FiberTableDeselectAll_clicked()
+{
+    FiberTractModel* model = (FiberTractModel*) ui->Fiber_Tracts_Table->model();
+    model->resetModel(Qt::Unchecked);
 }

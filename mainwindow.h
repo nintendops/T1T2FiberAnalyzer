@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #define DEFAULT_DIR "/home/haiweich/Dev/repo/T1T2FiberAnalyzer/test_data/"
+#define PYVERSION_SCRIPT_PATH "./version.py"
 
 #include <QMainWindow>
 
@@ -19,6 +20,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    void initializePyPath();
+    bool checkPyVersion(std::string path);
     
 private slots:
     void on_T12MapInputBtn_clicked();
@@ -35,6 +39,16 @@ private slots:
 
     void on_MatchResultBtn_clicked();
 
+    void on_pyPathBtn_clicked();
+
+    void on_MatchTableSelectAll_clicked();
+
+    void on_MatchTableDeselectAll_clicked();
+
+    void on_FiberTableSelectAll_clicked();
+
+    void on_FiberTableDeselectAll_clicked();
+
 signals:
     void headerSelected();
 
@@ -44,6 +58,7 @@ private:
     std::map<std::string,tool::TractData> DTITractData;
     std::vector<std::string> T12headers;
     std::vector<std::string> DTIheaders;
+    const QString* DEFAULT_PATH;
 
 
 };

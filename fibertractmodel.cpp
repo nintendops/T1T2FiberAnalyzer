@@ -1,10 +1,17 @@
 #include "fibertractmodel.h"
+#include "stacktrace.h"
 #include <iostream>
 
 
 FiberTractModel::FiberTractModel(QObject *parent, std::vector<tool::TractData> db) :
     QAbstractTableModel(parent){
     tract_db = db;
+
+    checkedState = new Qt::CheckState[tract_db.size()]();
+
+    for(int i =0; i< tract_db.size(); i++){
+        checkedState[i] = Qt::Checked;
+    }
 }
 
 int FiberTractModel::rowCount(const QModelIndex &parent) const{
@@ -27,7 +34,7 @@ QVariant FiberTractModel::data(const QModelIndex &index, int role) const{
     }
     else if (role == Qt::CheckStateRole){
         if(col == 0){
-            return checkedState;
+            return checkedState[row];
         }
     }
 
@@ -59,14 +66,25 @@ QVariant FiberTractModel::headerData(int section, Qt::Orientation orientation, i
 
 bool FiberTractModel::setData(const QModelIndex & index, const QVariant & value, int role){
     if(role == Qt::CheckStateRole && index.column() == 0){
+        //print_stacktrace();
         if((Qt::CheckState)value.toInt() == Qt::Checked){
-            checkedState = Qt::Checked;
+            //std::cout << "set checked\n";
+            checkedState[index.row()] = Qt::Checked;
             return true;
         }else{
-            checkedState = Qt::Unchecked;
+            //std::cout << "set unchecked\n";
+            checkedState[index.row()] = Qt::Unchecked;
             return true;
         }
     }
     return false;
 }
 
+
+void FiberTractModel::resetModel(Qt::CheckState state){
+    this->beginResetModel();
+    for(int i =0; i< tract_db.size(); i++){
+        checkedState[i] = state;
+    }
+    this->endResetModel();
+}

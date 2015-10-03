@@ -16,9 +16,10 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
     Qt::ItemFlags flags(const QModelIndex &index) const;
+    void resetModel(Qt::CheckState state);
 private:
+    Qt::CheckState* checkedState;
     std::vector<tool::TractData> tract_db;
-    QVariant checkedState = Qt::Checked;
 
 signals:
 
