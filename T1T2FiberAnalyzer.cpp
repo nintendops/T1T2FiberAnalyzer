@@ -1,5 +1,4 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "T1T2FiberAnalyzer.h"
 #include "csvbrowser.h"
 #include "errorreporter.h"
 #include <QApplication>
@@ -11,7 +10,7 @@
 #include <utility>
 #include <functional>
 
-MainWindow::MainWindow(QWidget *parent) :
+T1T2FiberAnalyzer::T1T2FiberAnalyzer(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -34,13 +33,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
-MainWindow::~MainWindow()
+T1T2FiberAnalyzer::~T1T2FiberAnalyzer()
 {
     delete ui;
     delete DEFAULT_PATH;
 }
 
-void MainWindow::initializePyPath(){
+void T1T2FiberAnalyzer::initializePyPath(){
     char* pypath = std::getenv("TFA_PYTHON");
 
     if(!pypath){
@@ -60,7 +59,7 @@ void MainWindow::initializePyPath(){
     }
 }
 
-void MainWindow::on_T12MapInputBtn_clicked()
+void T1T2FiberAnalyzer::on_T12MapInputBtn_clicked()
 {
 
     /* setting path in edit line*/
@@ -91,7 +90,7 @@ void MainWindow::on_T12MapInputBtn_clicked()
 
 }
 
-void MainWindow::on_DTIdefInputBtn_clicked()
+void T1T2FiberAnalyzer::on_DTIdefInputBtn_clicked()
 {
     /* setting path in edit line*/
     QString fileName = QFileDialog::getOpenFileName(this,tr("Select File"),*DEFAULT_PATH);
@@ -120,7 +119,7 @@ void MainWindow::on_DTIdefInputBtn_clicked()
 
 }
 
-void MainWindow::on_DTIAtlasPathBtn_clicked()
+void T1T2FiberAnalyzer::on_DTIAtlasPathBtn_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this,tr("Open Directory"),*DEFAULT_PATH,
                                                     QFileDialog::ShowDirsOnly);
@@ -140,7 +139,7 @@ void MainWindow::on_DTIAtlasPathBtn_clicked()
 
 }
 
-void MainWindow::on_T12BrowseBtn_clicked()
+void T1T2FiberAnalyzer::on_T12BrowseBtn_clicked()
 {
     QString dir = ui->T12MapInputText->text();
     if(dir == NULL) return;
@@ -161,7 +160,7 @@ void MainWindow::on_T12BrowseBtn_clicked()
 
 }
 
-void MainWindow::on_DTIBrowseBtn_clicked()
+void T1T2FiberAnalyzer::on_DTIBrowseBtn_clicked()
 {
     QString dir = ui->DTIdefInputText->text();
     std::vector<std::vector<std::string>> csv_results;
@@ -180,7 +179,7 @@ void MainWindow::on_DTIBrowseBtn_clicked()
     bd->loadTable(csv_results,headers);
 }
 
-void MainWindow::checkHeaderSelection(){
+void T1T2FiberAnalyzer::checkHeaderSelection(){
     QString str1 = ui->T12ComboPath->currentText();
     QString str2 = ui->T12ComboSID->currentText();
     QString str3 = ui->DTIComboPath->currentText();
@@ -192,7 +191,7 @@ void MainWindow::checkHeaderSelection(){
     }
 }
 
-void MainWindow::on_MatchResultBtn_clicked()
+void T1T2FiberAnalyzer::on_MatchResultBtn_clicked()
 {
     T12TractData.clear();
     DTITractData.clear();
@@ -226,7 +225,7 @@ void MainWindow::on_MatchResultBtn_clicked()
 
 }
 
-bool MainWindow::checkPyVersion(std::string path){
+bool T1T2FiberAnalyzer::checkPyVersion(std::string path){
     std::string cmd = path+" "+PYVERSION_SCRIPT_PATH;
     std::string result = tool::syscall(cmd.c_str());
     // removing newline character
@@ -239,7 +238,7 @@ bool MainWindow::checkPyVersion(std::string path){
 }
 
 
-void MainWindow::on_pyPathBtn_clicked()
+void T1T2FiberAnalyzer::on_pyPathBtn_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this,tr("Select Python Path"), *DEFAULT_PATH);
     if(filename == NULL) return;
@@ -254,25 +253,25 @@ void MainWindow::on_pyPathBtn_clicked()
 
 }
 
-void MainWindow::on_MatchTableSelectAll_clicked()
+void T1T2FiberAnalyzer::on_MatchTableSelectAll_clicked()
 {
     AtlasModel* model = (AtlasModel*) ui->CSVMatchTable->model();
     model->resetModel(Qt::Checked);
 }
 
-void MainWindow::on_MatchTableDeselectAll_clicked()
+void T1T2FiberAnalyzer::on_MatchTableDeselectAll_clicked()
 {
     AtlasModel* model = (AtlasModel*) ui->CSVMatchTable->model();
     model->resetModel(Qt::Unchecked);
 }
 
-void MainWindow::on_FiberTableSelectAll_clicked()
+void T1T2FiberAnalyzer::on_FiberTableSelectAll_clicked()
 {
     FiberTractModel* model = (FiberTractModel*) ui->Fiber_Tracts_Table->model();
     model->resetModel(Qt::Checked);
 }
 
-void MainWindow::on_FiberTableDeselectAll_clicked()
+void T1T2FiberAnalyzer::on_FiberTableDeselectAll_clicked()
 {
     FiberTractModel* model = (FiberTractModel*) ui->Fiber_Tracts_Table->model();
     model->resetModel(Qt::Unchecked);

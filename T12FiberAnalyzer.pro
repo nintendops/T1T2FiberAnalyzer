@@ -19,15 +19,15 @@ POST_TARGETDEPS += copyfiles
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     tfatool.cpp \
     fibertractmodel.cpp \
     atlasmodel.cpp \
     csvbrowsemodel.cpp \
     csvbrowser.cpp \
-    errorreporter.cpp
+    errorreporter.cpp \
+    T1T2FiberAnalyzer.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     Resources/csv.h \
     tfatool.h \
     fibertractmodel.h \
@@ -35,7 +35,8 @@ HEADERS  += mainwindow.h \
     csvbrowsemodel.h \
     csvbrowser.h \
     errorreporter.h \
-    stacktrace.h
+    stacktrace.h \
+    T1T2FiberAnalyzer.h
 
 FORMS    += mainwindow.ui \
     csvbrowser.ui

@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>CSV Browser</string>
+   <string>csv Browser</string>
   </property>
   <property name="layoutDirection">
    <enum>Qt::RightToLeft</enum>

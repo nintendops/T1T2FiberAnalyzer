@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef T1T2FIBERANALYZER_H
+#define T1T2FIBERANALYZER_H
 #define DEFAULT_DIR "/home/haiweich/Dev/repo/T1T2FiberAnalyzer/test_data/"
 #define PYVERSION_SCRIPT_PATH "./version.py"
 
@@ -8,18 +8,19 @@
 #include "fibertractmodel.h"
 #include "atlasmodel.h"
 #include "Resources/csv.h"
+#include "ui_mainwindow.h"
 
 namespace Ui {
-class MainWindow;
+class T1T2FiberAnalyzer;
 }
 
-class MainWindow : public QMainWindow
+class T1T2FiberAnalyzer : public QMainWindow
 {
     Q_OBJECT
     
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit T1T2FiberAnalyzer(QWidget *parent = 0);
+    ~T1T2FiberAnalyzer();
 
     void initializePyPath();
     bool checkPyVersion(std::string path);

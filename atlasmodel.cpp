@@ -141,7 +141,7 @@ QVariant AtlasModel::headerData(int section, Qt::Orientation orientation, int ro
             case 1:
                 return "Subject ID";
             case 2:
-                return "Mapped ID";
+                return "Subject ID 2";
             case 3:
                 return "T1/T2 Image Path";
             case 4:
