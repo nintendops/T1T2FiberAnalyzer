@@ -1,4 +1,4 @@
-#include "T1T2FiberAnalyzer.h"
+#include "include/T1T2FiberAnalyzer.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])

@@ -1,6 +1,6 @@
-﻿#include "csvbrowser.h"
+﻿#include "include/csvbrowser.h"
 #include "ui_csvbrowser.h"
-#include "csvbrowsemodel.h"
+#include "include/csvbrowsemodel.h"
 
 
 CSVBrowser::CSVBrowser(QWidget *parent) :

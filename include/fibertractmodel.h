@@ -1,6 +1,6 @@
 #ifndef FIBERTRACTMODEL_H
 #define FIBERTRACTMODEL_H
-#define TRACT_CSV_COL_NUM 1
+#define FIBER_CSV_COL_NUM 1
 
 #include <QAbstractTableModel>
 #include "tfatool.h"

@@ -1,5 +1,5 @@
-#include "fibertractmodel.h"
-#include "stacktrace.h"
+#include "include/fibertractmodel.h"
+#include "include/stacktrace.h"
 #include <iostream>
 
 
@@ -19,7 +19,7 @@ int FiberTractModel::rowCount(const QModelIndex &parent) const{
 }
 
 int FiberTractModel::columnCount(const QModelIndex &parent) const{
-    return 1 + TRACT_CSV_COL_NUM;
+    return 1 + FIBER_CSV_COL_NUM;
 }
 
 

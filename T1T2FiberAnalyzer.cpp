@@ -1,6 +1,9 @@
-#include "T1T2FiberAnalyzer.h"
-#include "csvbrowser.h"
-#include "errorreporter.h"
+#include "include/T1T2FiberAnalyzer.h"
+#include "include/csvbrowser.h"
+#include "include/errorreporter.h"
+#include "include/Load_T1T2FiberAnalyzer.h"
+#include "include/Save_T1T2FiberAnalyzer.h"
+#include "include/Model_T1T2FiberAnalyzer.h"
 #include <QApplication>
 #include <QFileDialog>
 #include <QDialog>
@@ -147,7 +150,7 @@ void T1T2FiberAnalyzer::on_T12BrowseBtn_clicked()
     std::vector<std::string> headers;
     if(dir != NULL){
         try{
-        csv_results = tool::parseCSV(dir.toStdString(),headers);
+            csv_results = tool::parseCSV(dir.toStdString(),headers);
         }
         catch(io::error::can_not_open_file e){
             ErrorReporter::fire("CSV file is not found!");
@@ -167,7 +170,7 @@ void T1T2FiberAnalyzer::on_DTIBrowseBtn_clicked()
     std::vector<std::string> headers;
     if(dir != NULL){
         try{
-        csv_results = tool::parseCSV(dir.toStdString(),headers);
+            csv_results = tool::parseCSV(dir.toStdString(),headers);
         }
         catch(io::error::can_not_open_file e){
             ErrorReporter::fire("CSV file is not found!");
@@ -179,17 +182,7 @@ void T1T2FiberAnalyzer::on_DTIBrowseBtn_clicked()
     bd->loadTable(csv_results,headers);
 }
 
-void T1T2FiberAnalyzer::checkHeaderSelection(){
-    QString str1 = ui->T12ComboPath->currentText();
-    QString str2 = ui->T12ComboSID->currentText();
-    QString str3 = ui->DTIComboPath->currentText();
-    QString str4 = ui->DTIComboSID->currentText();
-    if((!str1.isEmpty()) && (!str2.isEmpty()) && (!str3.isEmpty()) && (!str4.isEmpty())){
-        ui->MatchResultBtn->setEnabled(true);
-        ui->MatchTableSelectAll->setEnabled(true);
-        ui->MatchTableDeselectAll->setEnabled(true);
-    }
-}
+
 
 void T1T2FiberAnalyzer::on_MatchResultBtn_clicked()
 {
@@ -214,29 +207,30 @@ void T1T2FiberAnalyzer::on_MatchResultBtn_clicked()
     QString T12_csv = ui->T12MapInputText->text();
     QString DTI_csv = ui->DTIdefInputText->text();
 
-    tool::parseMapContent(T12_csv.toStdString(),T12TractData,str1,str2);
-    tool::parseMapContent(DTI_csv.toStdString(),DTITractData,str3,str4);
+    try{
+        tool::parseMapContent(T12_csv.toStdString(),T12TractData,str1,str2);
+        tool::parseMapContent(DTI_csv.toStdString(),DTITractData,str3,str4);
+        AtlasModel *mm = new AtlasModel(0,T12TractData,DTITractData);
+        QItemSelectionModel *m = ui->CSVMatchTable->selectionModel();
+        ui->CSVMatchTable->setModel(mm);
+        ui->CSVMatchTable->horizontalHeader()->setStretchLastSection(true);
+        if(m!=NULL) delete m;
+    }catch(io::error::can_not_open_file e){
+        ErrorReporter::fire("Given csv paths can not be open.");
+        return;
+    }catch(io::error::too_few_columns e){
+        ErrorReporter::fire("Invalid csv files are given.");
+        return;
+    }catch(io::error::too_many_columns e){
+        ErrorReporter::fire("Invalid csv files are given.");
+        return;
+    }catch(io::error::missing_column_in_header e){
+        ErrorReporter::fire("Specified headers are not found in given csv path.");
+        return;
+    }
 
-    AtlasModel *mm = new AtlasModel(0,T12TractData,DTITractData);
-    QItemSelectionModel *m = ui->CSVMatchTable->selectionModel();
-    ui->CSVMatchTable->setModel(mm);
-    ui->CSVMatchTable->horizontalHeader()->setStretchLastSection(true);
-    if(m!=NULL) delete m;
 
 }
-
-bool T1T2FiberAnalyzer::checkPyVersion(std::string path){
-    std::string cmd = path+" "+PYVERSION_SCRIPT_PATH;
-    std::string result = tool::syscall(cmd.c_str());
-    // removing newline character
-    tool::checkNewLine(result);
-
-    if (result == "true"){
-        return true;
-    }else
-        return false;
-}
-
 
 void T1T2FiberAnalyzer::on_pyPathBtn_clicked()
 {
@@ -275,4 +269,32 @@ void T1T2FiberAnalyzer::on_FiberTableDeselectAll_clicked()
 {
     FiberTractModel* model = (FiberTractModel*) ui->Fiber_Tracts_Table->model();
     model->resetModel(Qt::Unchecked);
+}
+
+bool T1T2FiberAnalyzer::checkPyVersion(std::string path){
+    std::string cmd = path+" "+PYVERSION_SCRIPT_PATH;
+    std::string result = tool::syscall(cmd.c_str());
+    // removing newline character
+    tool::checkNewLine(result);
+
+    if (result == "true"){
+        return true;
+    }else
+        return false;
+}
+
+void T1T2FiberAnalyzer::SyncModelStructure(){
+
+}
+
+void T1T2FiberAnalyzer::checkHeaderSelection(){
+    QString str1 = ui->T12ComboPath->currentText();
+    QString str2 = ui->T12ComboSID->currentText();
+    QString str3 = ui->DTIComboPath->currentText();
+    QString str4 = ui->DTIComboSID->currentText();
+    if((!str1.isEmpty()) && (!str2.isEmpty()) && (!str3.isEmpty()) && (!str4.isEmpty())){
+        ui->MatchResultBtn->setEnabled(true);
+        ui->MatchTableSelectAll->setEnabled(true);
+        ui->MatchTableDeselectAll->setEnabled(true);
+    }
 }

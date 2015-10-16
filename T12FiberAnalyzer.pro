@@ -25,7 +25,10 @@ SOURCES += main.cpp\
     csvbrowsemodel.cpp \
     csvbrowser.cpp \
     errorreporter.cpp \
-    T1T2FiberAnalyzer.cpp
+    T1T2FiberAnalyzer.cpp \
+    Save_T1T2FiberAnalyzer.cpp \
+    Load_T1T2FiberAnalyzer.cpp \
+    Model_T1T2FiberAnalyzer.cpp
 
 HEADERS  += \
     Resources/csv.h \
@@ -36,7 +39,18 @@ HEADERS  += \
     csvbrowser.h \
     errorreporter.h \
     stacktrace.h \
-    T1T2FiberAnalyzer.h
+    T1T2FiberAnalyzer.h \
+    include/csvbrowsemodel.h \
+    include/errorreporter.h \
+    include/csvbrowser.h \
+    include/tfatool.h \
+    include/stacktrace.h \
+    include/atlasmodel.h \
+    include/fibertractmodel.h \
+    include/T1T2FiberAnalyzer.h \
+    include/Save_T1T2FiberAnalyzer.h \
+    include/Load_T1T2FiberAnalyzer.h \
+    include/Model_T1T2FiberAnalyzer.h
 
 FORMS    += mainwindow.ui \
     csvbrowser.ui

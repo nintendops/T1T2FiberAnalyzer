@@ -76,6 +76,9 @@
                    <property name="layoutDirection">
                     <enum>Qt::RightToLeft</enum>
                    </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -236,6 +239,9 @@
                    </property>
                    <property name="layoutDirection">
                     <enum>Qt::RightToLeft</enum>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>

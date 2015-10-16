@@ -1,4 +1,4 @@
-#include "errorreporter.h"
+#include "include/errorreporter.h"
 
 ErrorReporter::ErrorReporter(QWidget *parent) :
     QMessageBox(parent)

@@ -1,7 +1,7 @@
-#include "atlasmodel.h"
+#include "include/atlasmodel.h"
 #include <iostream>
 #include <unordered_set>
-#include <errorreporter.h>
+#include <include/errorreporter.h>
 
 AtlasModel::AtlasModel(QObject *parent, std::map<std::string,tool::TractData> db1,
                        std::map<std::string,tool::TractData> db2) :

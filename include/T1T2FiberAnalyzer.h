@@ -61,6 +61,8 @@ private:
     std::vector<std::string> DTIheaders;
     const QString* DEFAULT_PATH;
 
+    void SyncModelStructure();
+
 
 };
 
