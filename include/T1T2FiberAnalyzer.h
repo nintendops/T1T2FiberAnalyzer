@@ -5,12 +5,13 @@
 #define PYVERSION_SCRIPT_PATH "./version.py"
 
 #include <QMainWindow>
+#include <QDebug>
 
 #include "include/csvbrowser.h"
 #include "include/errorreporter.h"
-#include "include/Load_T1T2FiberAnalyzer.h"
-#include "include/Save_T1T2FiberAnalyzer.h"
-#include "include/Model_T1T2FiberAnalyzer.h"
+#include "Load_T1T2FiberAnalyzer.h"
+#include "Save_T1T2FiberAnalyzer.h"
+#include "Model_T1T2FiberAnalyzer.h"
 #include "fibertractmodel.h"
 #include "atlasmodel.h"
 #include "Resources/csv.h"
@@ -30,6 +31,7 @@ public:
 
     void initializePyPath();
     bool checkPyVersion(std::string path);
+
     
 private slots:
     void checkHeaderSelection();
@@ -67,18 +69,25 @@ private:
     Ui::MainWindow *ui;
     Model_T1T2FiberAnalyzer* m_gui;
     Save_T1T2FiberAnalyzer* s_gui;
-    Load_T1T2FiberAnalyzer* l_gui;
+    Load_T1T2FiberAnalyzer* l_gui;    
+    AtlasModel* atlas;
+    FiberTractModel* tracts;
+    const QString* DEFAULT_PATH;
+    bool isSync = false;
+
+
+    // possible optimization: localize tje following four variables?
     std::map<std::string,tool::TractData> T12TractData;
     std::map<std::string,tool::TractData> DTITractData;
     std::vector<std::string> T12headers;
     std::vector<std::string> DTIheaders;
-    const QString* DEFAULT_PATH;
 
     void InitializeState();
     void SyncToModel();
     void SyncToUI();
     void SaveGuiValue();
-
+    std::map<QString,bool> SyncFromAtlasTableView();
+    void SyncToAtlasTableView();
 
 
 };

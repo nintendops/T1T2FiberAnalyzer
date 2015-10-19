@@ -8,6 +8,7 @@
 #include <iostream>
 #include <utility>
 #include <functional>
+#include <typeinfo>
 #include "include/T1T2FiberAnalyzer.h"
 
 T1T2FiberAnalyzer::T1T2FiberAnalyzer(QWidget *parent) :
@@ -21,9 +22,14 @@ T1T2FiberAnalyzer::T1T2FiberAnalyzer(QWidget *parent) :
 T1T2FiberAnalyzer::~T1T2FiberAnalyzer()
 {
     SaveGuiValue();
-    delete m_gui, s_gui, l_gui;
+    delete m_gui;
+    delete s_gui;
+    delete l_gui;
+    delete atlas;
     delete DEFAULT_PATH;
     delete ui;
+    // deallocate memory used by TableView model?
+
 }
 
 
@@ -35,6 +41,8 @@ void T1T2FiberAnalyzer::InitializeState(){
     m_gui = new Model_T1T2FiberAnalyzer();
     s_gui = new Save_T1T2FiberAnalyzer();
     l_gui = new Load_T1T2FiberAnalyzer();
+    atlas = NULL;
+    tracts = NULL;
 
     QComboBox* cb1 = ui->DTIComboPath;
     QComboBox* cb2 = ui->DTIComboSID;
@@ -59,6 +67,7 @@ void T1T2FiberAnalyzer::InitializeState(){
     // load value from QtGUI xml if data was previously stored
     QFileInfo checkXML(QTGUI_XML_NAME);
     if(checkXML.exists() && checkXML.isFile()){
+        isSync = true;
         l_gui->load(*m_gui,QTGUI_XML_NAME);
         SyncToUI();
     }
@@ -86,6 +95,10 @@ void T1T2FiberAnalyzer::SyncToModel(){
     m_gui->setDTIComboPath(ui->DTIComboPath->currentText());
     m_gui->setDTIComboSID(ui->DTIComboSID->currentText());
     m_gui->setDTIFiber_Path(ui->DTIFiber_Path->text());
+
+    if(ui->CSVMatchTable->model()){
+        m_gui->setCSVMatchTable(SyncFromAtlasTableView());
+    }
 }
 
 void T1T2FiberAnalyzer::SyncToUI(){
@@ -108,7 +121,35 @@ void T1T2FiberAnalyzer::SyncToUI(){
     if(dsid >= 0){
         ui->DTIComboSID->setCurrentIndex(dsid);
     }
+
+    /* synchronization of table model only occurs after match button is clicked
+    */
+
+
 }
+
+std::map<QString,bool> T1T2FiberAnalyzer::SyncFromAtlasTableView(){
+    std::map<QString,bool> rmap;
+
+    for(unsigned int i = 0; i < atlas->getDataSize(); i++){
+        auto element = std::make_pair(atlas->getData(i).subjectID, atlas->getCheckState(i));
+        rmap.insert(element);
+    }
+
+    return rmap;
+}
+
+void T1T2FiberAnalyzer::SyncToAtlasTableView(){
+    std::map<QString, bool> m = m_gui->getCSVMatchTable();
+    for(std::map<QString,bool>::iterator it = m.begin(); it != m.end(); ++it){
+        if(!it->second){
+            unsigned int found = atlas->findData(it->first);
+            if(found >= 0)
+                atlas->resetModel(Qt::Unchecked,found);
+        }
+    }
+}
+
 
 void T1T2FiberAnalyzer::checkHeaderSelection(){
     QString str1 = ui->T12ComboPath->currentText();
@@ -234,11 +275,12 @@ void T1T2FiberAnalyzer::on_DTIAtlasPathBtn_clicked()
     std::vector<tool::TractData> filelist;
     tool::getnrrdfiles(dir.toStdString(),filelist);
 
-    FiberTractModel *mm = new FiberTractModel(0,filelist);
+    tracts = new FiberTractModel(0,filelist);
     QItemSelectionModel *m =ui->CSVMatchTable->selectionModel();
-    ui->Fiber_Tracts_Table->setModel(mm);
+    ui->Fiber_Tracts_Table->setModel(tracts);
     ui->Fiber_Tracts_Table->horizontalHeader()->setStretchLastSection(true);
     if(m) delete m;
+
 
     ui->FiberTableSelectAll->setEnabled(true);
     ui->FiberTableDeselectAll->setEnabled(true);
@@ -311,11 +353,17 @@ void T1T2FiberAnalyzer::on_MatchResultBtn_clicked()
     try{
         tool::parseMapContent(T12_csv.toStdString(),T12TractData,str1,str2);
         tool::parseMapContent(DTI_csv.toStdString(),DTITractData,str3,str4);
-        AtlasModel *mm = new AtlasModel(0,T12TractData,DTITractData);
+        atlas = new AtlasModel(0,T12TractData,DTITractData);
         QItemSelectionModel *m = ui->CSVMatchTable->selectionModel();
-        ui->CSVMatchTable->setModel(mm);
+
+        // synchronize states if loader exists
+        if(isSync)
+            SyncToAtlasTableView();
+
+        ui->CSVMatchTable->setModel(atlas);
         ui->CSVMatchTable->horizontalHeader()->setStretchLastSection(true);
         if(m!=NULL) delete m;
+
     }catch(io::error::can_not_open_file e){
         ErrorReporter::fire("Given csv paths can not be open.");
         return;
@@ -350,24 +398,20 @@ void T1T2FiberAnalyzer::on_pyPathBtn_clicked()
 
 void T1T2FiberAnalyzer::on_MatchTableSelectAll_clicked()
 {
-    AtlasModel* model = (AtlasModel*) ui->CSVMatchTable->model();
-    model->resetModel(Qt::Checked);
+    atlas->resetModel(Qt::Checked);
 }
 
 void T1T2FiberAnalyzer::on_MatchTableDeselectAll_clicked()
 {
-    AtlasModel* model = (AtlasModel*) ui->CSVMatchTable->model();
-    model->resetModel(Qt::Unchecked);
+    atlas->resetModel(Qt::Unchecked);
 }
 
 void T1T2FiberAnalyzer::on_FiberTableSelectAll_clicked()
 {
-    FiberTractModel* model = (FiberTractModel*) ui->Fiber_Tracts_Table->model();
-    model->resetModel(Qt::Checked);
+    tracts->resetModel(Qt::Checked);
 }
 
 void T1T2FiberAnalyzer::on_FiberTableDeselectAll_clicked()
 {
-    FiberTractModel* model = (FiberTractModel*) ui->Fiber_Tracts_Table->model();
-    model->resetModel(Qt::Unchecked);
+    tracts->resetModel(Qt::Unchecked);
 }

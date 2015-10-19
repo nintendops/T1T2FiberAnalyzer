@@ -3,6 +3,8 @@
 #include <unordered_set>
 #include <include/errorreporter.h>
 
+
+// AtlasModel is for the csv match table between csv of T1/T2 images and csv of DTI deformation fields
 AtlasModel::AtlasModel(QObject *parent, std::map<std::string,tool::TractData> db1,
                        std::map<std::string,tool::TractData> db2) :
     QAbstractTableModel(parent)
@@ -70,9 +72,13 @@ AtlasModel::AtlasModel(QObject *parent, std::map<std::string,tool::TractData> db
     }
     checkedState = new Qt::CheckState[tract_db.size()]();
 
-    for(int i =0; i< tract_db.size(); i++){
+    for(unsigned int i =0; i< tract_db.size(); i++){
         checkedState[i] = Qt::Checked;
     }
+}
+
+AtlasModel::~AtlasModel(){
+    delete checkedState;
 }
 
 int AtlasModel::rowCount(const QModelIndex &parent) const{
@@ -153,10 +159,37 @@ QVariant AtlasModel::headerData(int section, Qt::Orientation orientation, int ro
 
 }
 
-void AtlasModel::resetModel(Qt::CheckState state){
-    this->beginResetModel();
-    for(int i =0; i< tract_db.size(); i++){
-        checkedState[i] = state;
+tool::MapData AtlasModel::getData(int i){
+    return tract_db[i];
+}
+
+unsigned int AtlasModel::getDataSize(){
+    return tract_db.size();
+}
+
+//O(n) run time. Could we optimize it?
+unsigned int AtlasModel::findData(QString str){
+    unsigned int i = 0;
+    for(std::vector<tool::MapData>::iterator it = tract_db.begin(); it != tract_db.end(); ++it) {
+        if(it->subjectID == str)
+            return i;
+        i++;
     }
+
+    return -1;
+}
+
+bool AtlasModel::getCheckState(int i){
+    return checkedState[i] == Qt::Checked? true:false;
+}
+
+void AtlasModel::resetModel(Qt::CheckState state, int index){
+    this->beginResetModel();
+    if(index < 0){
+        for(unsigned int i =0; i< tract_db.size(); i++){
+            checkedState[i] = state;
+        }
+    }else
+        checkedState[index] = state;
     this->endResetModel();
 }
