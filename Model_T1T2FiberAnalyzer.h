@@ -2,6 +2,7 @@
 #define Model_T1T2FiberAnalyzer_H
 
 #include <QString>
+#include <map>
 
 class Model_T1T2FiberAnalyzer {
   QString DTIComboPath;
@@ -9,11 +10,13 @@ class Model_T1T2FiberAnalyzer {
   QString T12ComboPath;
   QString T12ComboSID;
   QString DTIFiber_Path;
+  QString DTIStatPath;
   QString DTIdefInputText;
+  QString FiberProcessPath;
   QString T12MapInputText;
-  QString lineEdit_2;
-  QString lineEdit_3;
   QString pyPath;
+  std::map<QString,bool> CSVMatchTable;
+  std::map<QString,bool> Fiber_Tracts_Table;
 
 public: 
 
@@ -32,20 +35,26 @@ public:
   QString getDTIFiber_Path();
   void setDTIFiber_Path(QString a);
 
+  QString getDTIStatPath();
+  void setDTIStatPath(QString a);
+
   QString getDTIdefInputText();
   void setDTIdefInputText(QString a);
+
+  QString getFiberProcessPath();
+  void setFiberProcessPath(QString a);
 
   QString getT12MapInputText();
   void setT12MapInputText(QString a);
 
-  QString getlineEdit_2();
-  void setlineEdit_2(QString a);
-
-  QString getlineEdit_3();
-  void setlineEdit_3(QString a);
-
   QString getpyPath();
   void setpyPath(QString a);
+
+  std::map<QString,bool> getCSVMatchTable();
+  void setCSVMatchTable(std::map<QString,bool> a);
+
+  std::map<QString,bool> getFiber_Tracts_Table();
+  void setFiber_Tracts_Table(std::map<QString,bool> a);
 
 };
 

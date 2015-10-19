@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -711,7 +711,7 @@ p, li { white-space: pre-wrap; }
           <number>180</number>
          </property>
          <item alignment="Qt::AlignRight">
-          <widget class="QLineEdit" name="lineEdit_3">
+          <widget class="QLineEdit" name="DTIStatPath">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -770,7 +770,7 @@ p, li { white-space: pre-wrap; }
           <number>180</number>
          </property>
          <item alignment="Qt::AlignRight">
-          <widget class="QLineEdit" name="lineEdit_2">
+          <widget class="QLineEdit" name="FiberProcessPath">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>

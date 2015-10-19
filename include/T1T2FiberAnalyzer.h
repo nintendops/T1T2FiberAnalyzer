@@ -1,10 +1,16 @@
 #ifndef T1T2FIBERANALYZER_H
 #define T1T2FIBERANALYZER_H
 #define DEFAULT_DIR "/home/haiweich/Dev/repo/T1T2FiberAnalyzer/test_data/"
+#define QTGUI_XML_NAME "T1T2GUI.xml"
 #define PYVERSION_SCRIPT_PATH "./version.py"
 
 #include <QMainWindow>
 
+#include "include/csvbrowser.h"
+#include "include/errorreporter.h"
+#include "include/Load_T1T2FiberAnalyzer.h"
+#include "include/Save_T1T2FiberAnalyzer.h"
+#include "include/Model_T1T2FiberAnalyzer.h"
 #include "fibertractmodel.h"
 #include "atlasmodel.h"
 #include "Resources/csv.h"
@@ -26,6 +32,12 @@ public:
     bool checkPyVersion(std::string path);
     
 private slots:
+    void checkHeaderSelection();
+
+    void T12extractHeaders();
+
+    void DTIextractHeaders();
+
     void on_T12MapInputBtn_clicked();
 
     void on_DTIdefInputBtn_clicked();
@@ -35,8 +47,6 @@ private slots:
     void on_T12BrowseBtn_clicked();
 
     void on_DTIBrowseBtn_clicked();
-
-    void checkHeaderSelection();
 
     void on_MatchResultBtn_clicked();
 
@@ -55,13 +65,20 @@ signals:
 
 private:
     Ui::MainWindow *ui;
+    Model_T1T2FiberAnalyzer* m_gui;
+    Save_T1T2FiberAnalyzer* s_gui;
+    Load_T1T2FiberAnalyzer* l_gui;
     std::map<std::string,tool::TractData> T12TractData;
     std::map<std::string,tool::TractData> DTITractData;
     std::vector<std::string> T12headers;
     std::vector<std::string> DTIheaders;
     const QString* DEFAULT_PATH;
 
-    void SyncModelStructure();
+    void InitializeState();
+    void SyncToModel();
+    void SyncToUI();
+    void SaveGuiValue();
+
 
 
 };

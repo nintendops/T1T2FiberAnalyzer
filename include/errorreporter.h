@@ -8,7 +8,6 @@ class ErrorReporter : public QMessageBox
 {
     Q_OBJECT
 public:
-    explicit ErrorReporter(QWidget *parent = 0);
     static void fire(std::string);
 signals:
 

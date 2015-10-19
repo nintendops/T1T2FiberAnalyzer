@@ -67,7 +67,7 @@ string tool::syscall(const char* cmd){
 }
 
 
-void tool::tokenize(char* str, char* delimiter, vector<string> &results){
+void tool::tokenize(char* str, const char* delimiter, vector<string> &results){
     results.clear();
     char* tok = strtok(str,delimiter);
     while(tok!= NULL){

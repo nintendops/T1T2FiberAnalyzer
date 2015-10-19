@@ -25,10 +25,10 @@ SOURCES += main.cpp\
     csvbrowsemodel.cpp \
     csvbrowser.cpp \
     errorreporter.cpp \
-    T1T2FiberAnalyzer.cpp \
     Save_T1T2FiberAnalyzer.cpp \
     Load_T1T2FiberAnalyzer.cpp \
-    Model_T1T2FiberAnalyzer.cpp
+    Model_T1T2FiberAnalyzer.cpp \
+    T1T2FiberAnalyzer.cpp
 
 HEADERS  += \
     Resources/csv.h \
@@ -48,9 +48,9 @@ HEADERS  += \
     include/atlasmodel.h \
     include/fibertractmodel.h \
     include/T1T2FiberAnalyzer.h \
-    include/Save_T1T2FiberAnalyzer.h \
-    include/Load_T1T2FiberAnalyzer.h \
-    include/Model_T1T2FiberAnalyzer.h
+    Load_T1T2FiberAnalyzer.h \
+    Model_T1T2FiberAnalyzer.h \
+    Save_T1T2FiberAnalyzer.h
 
 FORMS    += mainwindow.ui \
     csvbrowser.ui

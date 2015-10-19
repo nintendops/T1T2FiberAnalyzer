@@ -38,7 +38,7 @@ namespace tool{
      bool checkExecutable(string path);
      bool checkNewLine(string &s);
      bool checkDirExist(string path);
-     void tokenize(char* str, char* delimiter, vector<string> &results);
+     void tokenize(char* str, const char* delimiter, vector<string> &results);
      void parseMapContent(string filename, map<string,TractData> &data, string header1, string header2);
      vector<vector<string>>  parseCSV(string dir, vector<string> &attrs);
      string syscall(const char* cmd);
