@@ -6,6 +6,14 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include <QApplication>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QDialog>
+#include <QtDebug>
+#include <QTableView>
+#include <QTabWidget>
+#include <QDirIterator>
 
 #include "include/csvbrowser.h"
 #include "include/errorreporter.h"

@@ -3,6 +3,6 @@
 
 import sys
 if sys.version_info < (2, 5):
-    print "false"
+    print("false")
 else:
-    print "true"
+    print("true")

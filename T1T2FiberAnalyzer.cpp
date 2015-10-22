@@ -1,10 +1,3 @@
-#include <QApplication>
-#include <QFileDialog>
-#include <QFileInfo>
-#include <QDialog>
-#include <QtDebug>
-#include <QTableView>
-#include <QTabWidget>
 #include <iostream>
 #include <utility>
 #include <functional>
@@ -80,9 +73,9 @@ bool T1T2FiberAnalyzer::checkPyVersion(std::string path){
     // removing newline character
     tool::checkNewLine(result);
 
-    if (result == "true"){
+    if(result == "true")
         return true;
-    }else
+    else
         return false;
 }
 
@@ -149,7 +142,6 @@ void T1T2FiberAnalyzer::SyncToAtlasTableView(){
         }
     }
 }
-
 
 void T1T2FiberAnalyzer::checkHeaderSelection(){
     QString str1 = ui->T12ComboPath->currentText();
@@ -231,14 +223,45 @@ void T1T2FiberAnalyzer::SaveGuiValue(){
 void T1T2FiberAnalyzer::initializePyPath(){
     char* pypath = std::getenv("TFA_PYTHON");
 
+    // write to version.py (to-do: integrate this into cmake configuration)
+    // tool::writePyVersion()
+
     if(!pypath){
-        const char* pypath = tool::syscall("which python").c_str();
+        char* path = std::getenv("PATH");
+        std::vector<std::string> checkpath;
+        tool::tokenize(path,":",checkpath);
+        if(checkpath.empty())
+            ErrorReporter::fire("Failed to locate a python compiler in $PATH! Please configure it manually.");
+        else{
+            for(std::string p: checkpath){
+                QDirIterator dirit(QString::fromStdString(p));
+                while(dirit.hasNext()){
+                    QString fn = dirit.next();
+                    QFileInfo info(fn);
+                    if(!info.isDir() && info.isExecutable() && fn.toStdString().find("python") != std::string::npos){
+                        //qDebug() << fn;
+                        if(checkPyVersion(fn.toStdString())){
+                            ui->pyPath->setText(fn);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // failed to find python compiler
+            ErrorReporter::fire("Failed to locate a python compiler in $PATH! Please configure it manually.");
+            return;
+        }
+
+    }
+    else if(tool::checkExecutable(pypath)){
+        // to-do: codes need cleanup here. Python version should be checked first before populating it to gui
         ui->pyPath->setText(QString(pypath));
     }
-    else if(tool::checkExecutable(pypath))
-        ui->pyPath->setText(QString(pypath));
-    else
-        ErrorReporter::fire("Provided python path is not executable!");
+    else{
+        ErrorReporter::fire("Given path in $TFA_PYTHON is not executable!");
+        return;
+    }
 
     std::string vc = ui->pyPath->text().toStdString();
     tool::checkNewLine(vc);

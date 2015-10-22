@@ -1,6 +1,7 @@
 #ifndef TFATOOL_H
 #define TFATOOL_H
 #include <QString>
+#include <QFileInfo>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
