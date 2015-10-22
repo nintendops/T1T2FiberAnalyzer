@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+   <title>T1T2FiberAnalyzer</title>
+   <description>A tool for the diffusion fiber based analysis of T1w/T2w ratio maps.</description>
+   <contributor>Haiwei Chen</contributor>
+   <version>1.0</version>
+   <parameters>
+      <boolean>
+         <name>noGUI</name>
+         <longflag>noGui</longflag>
+         <description>If you do not need the GUI</description>
+         <label>No GUI</label>
+         <default>false</default>
+      </boolean>
+      <file>
+	 <name>txml</name>	
+	 <description>Path of the T1w/T2w ratio map XML file that contains the parameters configuration</description>
+	 <longflag>parameters</longflag>
+	 <label>xml file</label>
+      </file>
+      <file>
+	 <name>dxml</name>	
+	 <description>Path of the DTI deformation field XML file that contains the parameters configuration</description>
+	 <longflag>parameters</longflag>
+	 <label>xml file</label>
+      </file>
+   </parameters>
+</executable>
+

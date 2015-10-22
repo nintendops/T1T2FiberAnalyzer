@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html class="" lang="en"><head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="viewport" content="width=1020">
+    
+    
+    <title>ben-strasser/fast-cpp-csv-parser</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="https://github.com/opensearch.xml" title="GitHub">
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://github.com/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://github.com/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://github.com/apple-touch-icon-144.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://github.com/apple-touch-icon-144.png">
+    <meta property="fb:app_id" content="1401488693436528">
+
+      <meta content="@github" name="twitter:site"><meta content="summary" name="twitter:card"><meta content="ben-strasser/fast-cpp-csv-parser" name="twitter:title"><meta content="fast-cpp-csv-parser" name="twitter:description"><meta content="https://avatars1.githubusercontent.com/u/11960463?v=3&amp;s=400" name="twitter:image:src">
+      <meta content="GitHub" property="og:site_name"><meta content="object" property="og:type"><meta content="https://avatars1.githubusercontent.com/u/11960463?v=3&amp;s=400" property="og:image"><meta content="ben-strasser/fast-cpp-csv-parser" property="og:title"><meta content="https://github.com/ben-strasser/fast-cpp-csv-parser" property="og:url"><meta content="fast-cpp-csv-parser" property="og:description">
+      <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
+    <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
+    <link rel="assets" href="https://assets-cdn.github.com/">
+    <link rel="web-socket" href="wss://live.github.com/_sockets/NjY2MDk1NjoxOTg0MDI1MWU5MTQ3NjlmOTA4ZTllMDdjZjMwNzU1ODpiZjE4YzBjODg0NGZmZDBhOGUyMzZiZWQ1MThkM2U1MGZjN2U3ODRiOTZkYTEyMDUxZjQwYzgzZjdkYWI5MDhi--be09ef650a2a73e99eb7c897b5580518704e7a96">
+    <meta name="pjax-timeout" content="1000">
+    <link rel="sudo-modal" href="https://github.com/sessions/sudo_modal">
+
+    <meta name="msapplication-TileImage" content="/windows-tile.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="selected-link" value="repo_source" data-pjax-transient="">
+
+    <meta name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
+        <meta name="google-analytics" content="UA-3769691-2">
+
+    <meta content="collector.githubapp.com" name="octolytics-host"><meta content="collector-cdn.github.com" name="octolytics-script-host"><meta content="github" name="octolytics-app-id"><meta content="621A69C5:3FB9:50371E8:55FE1AE8" name="octolytics-dimension-request_id"><meta content="6660956" name="octolytics-actor-id"><meta content="nintendops" name="octolytics-actor-login"><meta content="25b9fe68d8f1c0574cdc20797cf256335080ab6ed60666e09f13f3441377d5e1" name="octolytics-actor-hash">
+    
+    <meta content="Rails, view, files#disambiguate" data-pjax-transient="true" name="analytics-event">
+    <meta class="js-ga-set" name="dimension1" content="Logged In">
+      <meta class="js-ga-set" name="dimension4" content="Current repo nav">
+    <meta name="is-dotcom" content="true">
+        <meta name="hostname" content="github.com">
+    <meta name="user-login" content="nintendops">
+
+      <link rel="mask-icon" href="https://assets-cdn.github.com/pinned-octocat.svg" color="#4078c0">
+      <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <!-- </textarea> --><!-- '"` --><meta content="authenticity_token" name="csrf-param">
+<meta content="UiYd/egiJgzd1zR2LaZeNPOaoapcVjt7zc+R6yLeueAlHeqAQmgdcVHR3avhNQgSczROEIUsCfZun3n37IktxQ==" name="csrf-token">
+    <meta content="b1c8654a11fe630eeef48be6978a09a79c1a3da7" name="form-nonce">
+
+    <link crossorigin="anonymous" href="ben-strasser_fast-cpp-csv-parser_files/github-aef3088517c60128e10c5cce8d392985504018745a58a13691f1a.css" media="all" rel="stylesheet">
+    <link crossorigin="anonymous" href="ben-strasser_fast-cpp-csv-parser_files/github2-eba1f472eb1c7c893e4310c05138905845443f7f2469812a9bd2.css" media="all" rel="stylesheet">
+    
+    
+
+
+    <meta http-equiv="x-pjax-version" content="87dbf4dad0b70976ed64b3bf4976701e">
+
+      
+  <meta name="description" content="fast-cpp-csv-parser">
+  <meta name="go-import" content="github.com/ben-strasser/fast-cpp-csv-parser git https://github.com/ben-strasser/fast-cpp-csv-parser.git">
+
+  <meta content="11960463" name="octolytics-dimension-user_id"><meta content="ben-strasser" name="octolytics-dimension-user_login"><meta content="33989658" name="octolytics-dimension-repository_id"><meta content="ben-strasser/fast-cpp-csv-parser" name="octolytics-dimension-repository_nwo"><meta content="true" name="octolytics-dimension-repository_public"><meta content="false" name="octolytics-dimension-repository_is_fork"><meta content="33989658" name="octolytics-dimension-repository_network_root_id"><meta content="ben-strasser/fast-cpp-csv-parser" name="octolytics-dimension-repository_network_root_nwo">
+  <link href="https://github.com/ben-strasser/fast-cpp-csv-parser/commits/master.atom" rel="alternate" title="Recent Commits to fast-cpp-csv-parser:master" type="application/atom+xml">
+
+  <script src="ben-strasser_fast-cpp-csv-parser_files/api.js" async="" type="text/javascript"></script></head>
+
+
+  <body class="logged_in  env-production linux vis-public">
+    <a href="#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
+
+    
+    
+    
+
+
+
+      <div class="header header-logged-in true" role="banner">
+  <div class="container clearfix">
+
+    <a class="header-logo-invertocat" href="https://github.com/" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
+  <span class="mega-octicon octicon-mark-github"></span>
+</a>
+
+
+      <div class="site-search repo-scope js-site-search" role="search">
+          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/ben-strasser/fast-cpp-csv-parser/search" class="js-site-search-form" data-global-search-url="/search" data-repo-search-url="/ben-strasser/fast-cpp-csv-parser/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"></div>
+  <label class="js-chromeless-input-container form-control">
+    <div class="scope-badge">This repository</div>
+    <input class="js-site-search-focus js-site-search-field is-clearable chromeless-input" data-hotkey="s" name="q" placeholder="Search" aria-label="Search this repository" data-global-scope-placeholder="Search GitHub" data-repo-scope-placeholder="Search" tabindex="1" autocapitalize="off" type="text">
+  </label>
+</form>
+      </div>
+
+      <ul class="header-nav left" role="navigation">
+        <li class="header-nav-item">
+          <a href="https://github.com/pulls" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:pulls context:user" data-hotkey="g p" data-selected-links="/pulls /pulls/assigned /pulls/mentioned /pulls">
+            Pull requests
+</a>        </li>
+        <li class="header-nav-item">
+          <a href="https://github.com/issues" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:issues context:user" data-hotkey="g i" data-selected-links="/issues /issues/assigned /issues/mentioned /issues">
+            Issues
+</a>        </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="https://gist.github.com/" data-ga-click="Header, go to gist, text:gist">Gist</a>
+          </li>
+      </ul>
+
+    
+<ul class="header-nav user-nav right" id="user-links">
+  <li class="header-nav-item">
+      <span class="js-socket-channel js-updatable-content" data-channel="notification-changed:nintendops" data-url="/notifications/header">
+      <a href="https://github.com/notifications" aria-label="You have no unread notifications" class="header-nav-link notification-indicator tooltipped tooltipped-s" data-ga-click="Header, go to notifications, icon:read" data-hotkey="g n">
+          <span class="mail-status all-read"></span>
+          <span class="octicon octicon-bell"></span>
+</a>  </span>
+
+  </li>
+
+  <li class="header-nav-item dropdown js-menu-container">
+    <a class="header-nav-link tooltipped tooltipped-s js-menu-target" href="https://github.com/new" aria-label="Create new…" data-ga-click="Header, create new, icon:add">
+      <span class="octicon octicon-plus left"></span>
+      <span class="dropdown-caret"></span>
+    </a>
+
+    <div class="dropdown-menu-content js-menu-content">
+      <ul class="dropdown-menu dropdown-menu-sw">
+        
+<a class="dropdown-item" href="https://github.com/new" data-ga-click="Header, create new repository">
+  New repository
+</a>
+
+
+  <a class="dropdown-item" href="https://github.com/organizations/new" data-ga-click="Header, create new organization">
+    New organization
+  </a>
+
+
+
+  <div class="dropdown-divider"></div>
+  <div class="dropdown-header">
+    <span title="ben-strasser/fast-cpp-csv-parser">This repository</span>
+  </div>
+    <a class="dropdown-item" href="https://github.com/ben-strasser/fast-cpp-csv-parser/issues/new" data-ga-click="Header, create new issue">
+      New issue
+    </a>
+
+      </ul>
+    </div>
+  </li>
+
+  <li class="header-nav-item dropdown js-menu-container">
+    <a class="header-nav-link name tooltipped tooltipped-s js-menu-target" href="https://github.com/nintendops" aria-label="View profile and more" data-ga-click="Header, show menu, icon:avatar">
+      <img alt="@nintendops" class="avatar" src="ben-strasser_fast-cpp-csv-parser_files/6660956.png" height="20" width="20">
+      <span class="dropdown-caret"></span>
+    </a>
+
+    <div class="dropdown-menu-content js-menu-content">
+      <div class="dropdown-menu dropdown-menu-sw">
+        <div class="dropdown-header header-nav-current-user css-truncate">
+          Signed in as <strong class="css-truncate-target">nintendops</strong>
+        </div>
+        <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item" href="https://github.com/nintendops" data-ga-click="Header, go to profile, text:your profile">
+          Your profile
+        </a>
+        <a class="dropdown-item" href="https://github.com/stars" data-ga-click="Header, go to starred repos, text:your stars">
+          Your stars
+        </a>
+        <a class="dropdown-item" href="https://github.com/explore" data-ga-click="Header, go to explore, text:explore">
+          Explore
+        </a>
+        <a class="dropdown-item" href="https://help.github.com/" data-ga-click="Header, go to help, text:help">
+          Help
+        </a>
+        <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item" href="https://github.com/settings/profile" data-ga-click="Header, go to settings, icon:settings">
+          Settings
+        </a>
+
+        <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/logout" class="logout-form" data-form-nonce="b1c8654a11fe630eeef48be6978a09a79c1a3da7" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="n2ud8GMH+n8Uht7yWjzubmhWM9XAUKH75Zrk/D4z2uYDtawi3Vt+QbeTZSZwsdAR/8QZWvG4lpvbwjlyHLU3pg==" type="hidden"></div>
+          <button class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
+            Sign out
+          </button>
+</form>      </div>
+    </div>
+  </li>
+</ul>
+
+
+    
+  </div>
+</div>
+
+      
+
+      
+
+
+    <div id="start-of-content" class="accessibility-aid"></div>
+
+    <div id="js-flash-container">
+</div>
+
+
+    <div role="main" class="main-content">
+        <div itemscope="" itemtype="http://schema.org/WebPage">
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+
+      <div class="container">
+
+        <div class="clearfix">
+          
+<ul class="pagehead-actions">
+
+  <li>
+      <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-form-nonce="b1c8654a11fe630eeef48be6978a09a79c1a3da7" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="lZOhVnUPhU1cOhYrV1u3gYP2xf7XNvnLXi25FeqJRgOKj99NB/O920eQ4iCR+ElJsA4u1LnbV3+5j/T7B26fuQ==" type="hidden"></div>    <input id="repository_id" name="repository_id" value="33989658" type="hidden">
+
+      <div class="select-menu js-menu-container js-select-menu">
+        <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/subscription" class="btn btn-sm btn-with-count select-menu-button js-menu-target" role="button" tabindex="0" aria-haspopup="true" data-ga-click="Repository, click Watch settings, action:files#disambiguate">
+          <span class="js-select-button">
+            <span class="octicon octicon-eye"></span>
+            Watch
+          </span>
+        </a>
+        <a class="social-count js-social-count" href="https://github.com/ben-strasser/fast-cpp-csv-parser/watchers">
+          8
+        </a>
+
+        <div class="select-menu-modal-holder">
+          <div class="select-menu-modal subscription-menu-modal js-menu-content" aria-hidden="true">
+            <div class="select-menu-header">
+              <span class="select-menu-title">Notifications</span>
+              <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+            </div>
+
+            <div class="select-menu-list js-navigation-container" role="menu">
+
+              <div class="select-menu-item js-navigation-item selected" role="menuitem" tabindex="0">
+                <span class="select-menu-item-icon octicon octicon-check"></span>
+                <div class="select-menu-item-text">
+                  <input checked="checked" id="do_included" name="do" value="included" type="radio">
+                  <span class="select-menu-item-heading">Not watching</span>
+                  <span class="description">Be notified when participating or @mentioned.</span>
+                  <span class="js-select-button-text hidden-select-button-text">
+                    <span class="octicon octicon-eye"></span>
+                    Watch
+                  </span>
+                </div>
+              </div>
+
+              <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+                <span class="select-menu-item-icon octicon octicon octicon-check"></span>
+                <div class="select-menu-item-text">
+                  <input id="do_subscribed" name="do" value="subscribed" type="radio">
+                  <span class="select-menu-item-heading">Watching</span>
+                  <span class="description">Be notified of all conversations.</span>
+                  <span class="js-select-button-text hidden-select-button-text">
+                    <span class="octicon octicon-eye"></span>
+                    Unwatch
+                  </span>
+                </div>
+              </div>
+
+              <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+                <span class="select-menu-item-icon octicon octicon-check"></span>
+                <div class="select-menu-item-text">
+                  <input id="do_ignore" name="do" value="ignore" type="radio">
+                  <span class="select-menu-item-heading">Ignoring</span>
+                  <span class="description">Never be notified.</span>
+                  <span class="js-select-button-text hidden-select-button-text">
+                    <span class="octicon octicon-mute"></span>
+                    Stop ignoring
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+</form>
+  </li>
+
+  <li>
+    
+  <div class="js-toggler-container js-social-container starring-container on">
+
+    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/ben-strasser/fast-cpp-csv-parser/unstar" class="js-toggler-form starred js-unstar-button" data-form-nonce="b1c8654a11fe630eeef48be6978a09a79c1a3da7" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="wmI5HxX1CY/NZKNbtnK8PhSeg5Mu4bHCYRF9cN3fOVfzO035nwWnoyzIjS0zCC3YsPQoqBz98mccQTz3tScJ6w==" type="hidden"></div>
+      <button class="btn btn-sm btn-with-count js-toggler-target" aria-label="Unstar this repository" title="Unstar ben-strasser/fast-cpp-csv-parser" data-ga-click="Repository, click unstar button, action:files#disambiguate; text:Unstar">
+        <span class="octicon octicon-star"></span>
+        Unstar
+      </button>
+        <a class="social-count js-social-count" href="https://github.com/ben-strasser/fast-cpp-csv-parser/stargazers">
+          25
+        </a>
+</form>
+    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/ben-strasser/fast-cpp-csv-parser/star" class="js-toggler-form unstarred js-star-button" data-form-nonce="b1c8654a11fe630eeef48be6978a09a79c1a3da7" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="XMKKIvsDmhiqqIjFxFy63HydMtJcQyLA53AHStzSkqZ1PXgPcS6n7rELf+u/0fgDMoy68ADADIXOhoxKjO6f0Q==" type="hidden"></div>
+      <button class="btn btn-sm btn-with-count js-toggler-target" aria-label="Star this repository" title="Star ben-strasser/fast-cpp-csv-parser" data-ga-click="Repository, click star button, action:files#disambiguate; text:Star">
+        <span class="octicon octicon-star"></span>
+        Star
+      </button>
+        <a class="social-count js-social-count" href="https://github.com/ben-strasser/fast-cpp-csv-parser/stargazers">
+          25
+        </a>
+</form>  </div>
+
+  </li>
+
+  <li>
+          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/ben-strasser/fast-cpp-csv-parser/fork" class="btn-with-count" data-form-nonce="b1c8654a11fe630eeef48be6978a09a79c1a3da7" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="xuwqHMaElZ4zHGtnWlO43ve/pU+r2Ukx8Wo8QsTC2HgTldV7AjJ3ciCQmgQ9vQ77KexQ+QSFR5BdkgORcyVQqg==" type="hidden"></div>
+            <button type="submit" class="btn btn-sm btn-with-count" data-ga-click="Repository, show fork modal, action:files#disambiguate; text:Fork" title="Fork your own copy of ben-strasser/fast-cpp-csv-parser to your account" aria-label="Fork your own copy of ben-strasser/fast-cpp-csv-parser to your account">
+              <span class="octicon octicon-repo-forked"></span>
+              Fork
+            </button>
+</form>
+    <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/network" class="social-count">
+      12
+    </a>
+  </li>
+</ul>
+
+          <h1 itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public ">
+  <span class="mega-octicon octicon-repo"></span>
+  <span class="author"><a href="https://github.com/ben-strasser" class="url fn" itemprop="url" rel="author"><span itemprop="title">ben-strasser</span></a></span><!--
+--><span class="path-divider">/</span><!--
+--><strong><a href="https://github.com/ben-strasser/fast-cpp-csv-parser" data-pjax="#js-repo-pjax-container">fast-cpp-csv-parser</a></strong>
+
+  <span class="page-context-loader">
+    <img alt="" src="ben-strasser_fast-cpp-csv-parser_files/octocat-spinner-32.gif" height="16" width="16">
+  </span>
+
+</h1>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="repository-with-sidebar repo-container new-discussion-timeline with-full-navigation">
+        <div class="repository-sidebar clearfix">
+          
+<nav class="sunken-menu repo-nav js-repo-nav js-sidenav-container-pjax js-octicon-loaders" role="navigation" data-pjax="#js-repo-pjax-container" data-issue-count-url="/ben-strasser/fast-cpp-csv-parser/issues/counts">
+  <ul class="sunken-menu-group">
+    <li class="tooltipped tooltipped-w" aria-label="Code">
+      <a href="https://github.com/ben-strasser/fast-cpp-csv-parser" aria-label="Code" aria-selected="true" class="js-selected-navigation-item selected sunken-menu-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /ben-strasser/fast-cpp-csv-parser">
+        <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
+        <img alt="" class="mini-loader" src="ben-strasser_fast-cpp-csv-parser_files/octocat-spinner-32.gif" height="16" width="16">
+</a>    </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Issues">
+        <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /ben-strasser/fast-cpp-csv-parser/issues">
+          <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
+          <span class="counter">5</span>
+
+          <img alt="" class="mini-loader" src="ben-strasser_fast-cpp-csv-parser_files/octocat-spinner-32.gif" height="16" width="16">
+</a>      </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Pull requests">
+      <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/pulls" aria-label="Pull requests" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g p" data-selected-links="repo_pulls /ben-strasser/fast-cpp-csv-parser/pulls">
+          <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull requests</span>
+          <span class="counter">1</span>
+
+          <img alt="" class="mini-loader" src="ben-strasser_fast-cpp-csv-parser_files/octocat-spinner-32.gif" height="16" width="16">
+</a>    </li>
+
+  </ul>
+  <div class="sunken-menu-separator"></div>
+  <ul class="sunken-menu-group">
+
+    <li class="tooltipped tooltipped-w" aria-label="Pulse">
+      <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-selected-links="pulse /ben-strasser/fast-cpp-csv-parser/pulse">
+        <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
+        <img alt="" class="mini-loader" src="ben-strasser_fast-cpp-csv-parser_files/octocat-spinner-32.gif" height="16" width="16">
+</a>    </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Graphs">
+      <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-selected-links="repo_graphs repo_contributors /ben-strasser/fast-cpp-csv-parser/graphs">
+        <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
+        <img alt="" class="mini-loader" src="ben-strasser_fast-cpp-csv-parser_files/octocat-spinner-32.gif" height="16" width="16">
+</a>    </li>
+  </ul>
+
+
+</nav>
+
+            <div class="only-with-full-nav">
+                
+<div class="js-clone-url clone-url open" data-protocol-type="http">
+  <h3><span class="text-emphasized">HTTPS</span> clone URL</h3>
+  <div class="input-group js-zeroclipboard-container has-zeroclipboard-disabled">
+    <input class="input-mini input-monospace js-url-field js-zeroclipboard-target" value="https://github.com/ben-strasser/fast-cpp-csv-parser.git" readonly="readonly" aria-label="HTTPS clone URL" type="text">
+    <span class="input-group-button">
+      
+    </span>
+  </div>
+</div>
+
+  
+<div class="js-clone-url clone-url " data-protocol-type="ssh">
+  <h3><span class="text-emphasized">SSH</span> clone URL</h3>
+  <div class="input-group js-zeroclipboard-container has-zeroclipboard-disabled">
+    <input class="input-mini input-monospace js-url-field js-zeroclipboard-target" value="git@github.com:ben-strasser/fast-cpp-csv-parser.git" readonly="readonly" aria-label="SSH clone URL" type="text">
+    <span class="input-group-button">
+      
+    </span>
+  </div>
+</div>
+
+  
+<div class="js-clone-url clone-url " data-protocol-type="subversion">
+  <h3><span class="text-emphasized">Subversion</span> checkout URL</h3>
+  <div class="input-group js-zeroclipboard-container has-zeroclipboard-disabled">
+    <input class="input-mini input-monospace js-url-field js-zeroclipboard-target" value="https://github.com/ben-strasser/fast-cpp-csv-parser" readonly="readonly" aria-label="Subversion checkout URL" type="text">
+    <span class="input-group-button">
+      
+    </span>
+  </div>
+</div>
+
+
+
+<div class="clone-options">You can clone with
+  <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=http&amp;protocol_type=clone" class="inline-form js-clone-selector-form is-enabled" data-form-nonce="b1c8654a11fe630eeef48be6978a09a79c1a3da7" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="GFYsoRG4+6rP4BYEM2GDvovlE6Ln0CxJp3q1nNSqf4VP9L3P3VczYFdXDpyPJ8HyWygTMYOvGPwGOr73MpWz7g==" type="hidden"></div><button class="btn-link js-clone-selector" data-protocol="http" type="submit">HTTPS</button></form>, <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=ssh&amp;protocol_type=clone" class="inline-form js-clone-selector-form is-enabled" data-form-nonce="b1c8654a11fe630eeef48be6978a09a79c1a3da7" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="9/L4HN8rUZHetlXldMdUCMLYHkF6p9CuVXv/7Tl+fT0YOuly7XYBUPJ/keRYV+e3p9x8rAmmyqpGWzur3C4LBg==" type="hidden"></div><button class="btn-link js-clone-selector" data-protocol="ssh" type="submit">SSH</button></form>, or <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=subversion&amp;protocol_type=clone" class="inline-form js-clone-selector-form is-enabled" data-form-nonce="b1c8654a11fe630eeef48be6978a09a79c1a3da7" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="okl3dLNRMXT1LlStnZqPn08sEA/QeLfdQPVHAPN2rFfKpNQWNeKH7QNDF+jZp/a2YC5S12Swy9PWpWALOR8Vng==" type="hidden"></div><button class="btn-link js-clone-selector" data-protocol="subversion" type="submit">Subversion</button></form>.
+  <a href="https://help.github.com/articles/which-remote-url-should-i-use" class="help tooltipped tooltipped-n" aria-label="Get help on which URL is right for you.">
+    <span class="octicon octicon-question"></span>
+  </a>
+</div>
+
+              <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/archive/master.zip" class="btn btn-sm sidebar-button" aria-label="Download the contents of ben-strasser/fast-cpp-csv-parser as a zip file" title="Download the contents of ben-strasser/fast-cpp-csv-parser as a zip file" rel="nofollow">
+                <span class="octicon octicon-cloud-download"></span>
+                Download ZIP
+              </a>
+            </div>
+        </div>
+        <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container="">
+
+          
+<span id="js-show-full-navigation"></span>
+
+  <div class="repository-meta js-details-container ">
+    <div class="repository-description">
+      fast-cpp-csv-parser
+    </div>
+
+
+</div>
+
+
+<div class="overall-summary overall-summary-bottomless">
+
+  <div class="stats-switcher-viewport js-stats-switcher-viewport">
+    <div class="stats-switcher-wrapper">
+    <ul class="numbers-summary">
+      <li class="commits">
+        <a data-pjax="" href="https://github.com/ben-strasser/fast-cpp-csv-parser/commits/master">
+            <span class="octicon octicon-history"></span>
+            <span class="num text-emphasized">
+              9
+            </span>
+            commits
+        </a>
+      </li>
+      <li>
+        <a data-pjax="" href="https://github.com/ben-strasser/fast-cpp-csv-parser/branches">
+          <span class="octicon octicon-git-branch"></span>
+          <span class="num text-emphasized">
+            1
+          </span>
+          branch
+        </a>
+      </li>
+
+      <li>
+        <a data-pjax="" href="https://github.com/ben-strasser/fast-cpp-csv-parser/releases">
+          <span class="octicon octicon-tag"></span>
+          <span class="num text-emphasized">
+            0
+          </span>
+          releases
+        </a>
+      </li>
+
+      <li>
+        
+  <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/graphs/contributors">
+    <span class="octicon octicon-organization"></span>
+    <span class="num text-emphasized">
+      1
+    </span>
+    contributor
+  </a>
+      </li>
+    </ul>
+
+      <div class="repository-lang-stats">
+        <ol class="repository-lang-stats-numbers">
+          <li>
+              <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/search?l=cpp">
+                <span class="color-block language-color" style="background-color:#f34b7d;"></span>
+                <span class="lang">C++</span>
+                <span class="percent">100.0%</span>
+              </a>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <div class="repository-lang-stats-graph js-toggle-lang-stats" title="Click for language details">
+    <span class="language-color" aria-label="C++ 100.0%" style="width:100.0%; background-color:#f34b7d;" itemprop="keywords">C++</span>
+  </div>
+
+
+
+  <div class="file-navigation in-mid-page">
+  <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/find/master" class="js-show-file-finder btn btn-sm empty-icon tooltipped tooltipped-s right" data-pjax="" data-hotkey="t" aria-label="Quickly jump between files" data-ga-click="Repository, find file, location:repo overview">
+    <span class="octicon octicon-list-unordered"></span>
+  </a>
+    <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/compare" aria-label="Compare, review, create a pull request" class="btn btn-sm btn-primary tooltipped tooltipped-se left compare-button" data-pjax="" data-ga-click="Repository, go to compare view, location:repo overview; icon:git-compare">
+      <span class="octicon octicon-git-compare"></span>
+    </a>
+
+  
+<div class="select-menu js-menu-container js-select-menu left">
+  <span class="btn btn-sm select-menu-button js-menu-target css-truncate" data-hotkey="w" data-ref="master" title="master" role="button" aria-label="Switch branches or tags" tabindex="0" aria-haspopup="true">
+    <i>Branch:</i>
+    <span class="js-select-button css-truncate-target">master</span>
+  </span>
+
+  <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax="" aria-hidden="true">
+
+    <div class="select-menu-modal">
+      <div class="select-menu-header">
+        <span class="select-menu-title">Switch branches/tags</span>
+        <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+      </div>
+
+      <div class="select-menu-filters">
+        <div class="select-menu-text-filter">
+          <input aria-label="Filter branches/tags" id="context-commitish-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Filter branches/tags" type="text">
+        </div>
+        <div class="select-menu-tabs">
+          <ul>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="branches" data-filter-placeholder="Filter branches/tags" class="js-select-menu-tab" role="tab">Branches</a>
+            </li>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="tags" data-filter-placeholder="Find a tag…" class="js-select-menu-tab" role="tab">Tags</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="branches" role="menu">
+
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <a class="select-menu-item js-navigation-item js-navigation-open selected" href="https://github.com/ben-strasser/fast-cpp-csv-parser/tree/master" data-name="master" data-skip-pjax="true" rel="nofollow">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <span class="select-menu-item-text css-truncate-target" title="master">
+                master
+              </span>
+            </a>
+        </div>
+
+          <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="tags">
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+        </div>
+
+        <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="breadcrumb"><span class="repo-root js-repo-root"><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://github.com/ben-strasser/fast-cpp-csv-parser" class="" data-branch="master" data-pjax="true" itemscope="url"><span itemprop="title">fast-cpp-csv-parser</span></a></span></span><span class="separator">/</span>
+  <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/ben-strasser/fast-cpp-csv-parser/new/master" class="js-new-blob-form inline-form" data-form-nonce="b1c8654a11fe630eeef48be6978a09a79c1a3da7" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="cRe3WNZAATQ3Gdv4US7Xgkfvbxug7BnmAjmYSQ+UIPt6cj0b+AmTKfxnRmHQH3m0uW6BRzbdJmzqiHzQGbJLEw==" type="hidden"></div>
+    <button class="btn-link tooltipped tooltipped-e" type="submit" data-disable-with="working…" aria-label="Fork this project and create a new file">
+      <span class="js-new-blob-submit octicon octicon-plus"></span>
+    </button>
+</form></div>
+</div>
+
+
+
+
+
+  <div class="commit commit-tease js-details-container">
+    <p class="commit-title ">
+        <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/commit/8188f356e8721a2d7244c0a9c26cf95f86d2b290" class="message" data-pjax="true" title="removed nop line">removed nop line</a>
+        
+    </p>
+    <div class="commit-meta">
+      
+      <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/commit/8188f356e8721a2d7244c0a9c26cf95f86d2b290" class="sha-block" data-pjax="">latest commit <span class="sha">8188f356e8</span></a>
+
+      <div class="authorship">
+        <img alt="" class="avatar" src="ben-strasser_fast-cpp-csv-parser_files/e2e53f487371ba53707ad6c197e28e3b.png" height="20" width="20">
+        <span class="author-name"><span>Ben Strasser</span></span>
+        authored <time title="Jul 13, 2015, 8:39 AM PDT" class="updated" datetime="2015-07-13T15:39:10Z" is="relative-time">on Jul 13</time>
+
+      </div>
+    </div>
+  </div>
+
+
+<div class="file-wrap">
+  <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/tree/8188f356e8721a2d7244c0a9c26cf95f86d2b290" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
+
+  <table class="files js-navigation-container js-active-navigation-container" data-pjax="">
+
+
+    <tbody>
+      <tr class="warning include-fragment-error">
+        <td class="icon"><span class="octicon octicon-alert"></span></td>
+        <td class="content" colspan="3">Failed to load latest commit information.</td>
+      </tr>
+
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" src="ben-strasser_fast-cpp-csv-parser_files/octocat-spinner-32.gif" height="16" width="16">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="https://github.com/ben-strasser/fast-cpp-csv-parser/blob/master/LICENSE" class="js-directory-link js-navigation-open" id="9879d6db96fd29134fc802214163b95a-da603a96be217c7a8ca2542b351a5a95d3c30c78" title="LICENSE">LICENSE</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+              <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/commit/b7697066f7aa132d4d89eb3945bf913f21da1884" class="message" data-pjax="true" title="Initial commit">Initial commit</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time title="Apr 15, 2015, 4:21 AM PDT" datetime="2015-04-15T11:21:50Z" is="time-ago">5 months ago</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" src="ben-strasser_fast-cpp-csv-parser_files/octocat-spinner-32.gif" height="16" width="16">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="https://github.com/ben-strasser/fast-cpp-csv-parser/blob/master/README.md" class="js-directory-link js-navigation-open" id="04c6e90faac2675aa89e2176d2eec7d8-546fa1ef122b77bb2e4dac43e60b87c129151d38" title="README.md">README.md</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+              <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/commit/27c1a2e668bcad9796999e1363d7770a7a3da6ae" class="message" data-pjax="true" title="update to README">update to README</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time title="Apr 15, 2015, 5:05 AM PDT" datetime="2015-04-15T12:05:06Z" is="time-ago">5 months ago</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item navigation-focus">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" src="ben-strasser_fast-cpp-csv-parser_files/octocat-spinner-32.gif" height="16" width="16">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="https://github.com/ben-strasser/fast-cpp-csv-parser/blob/master/csv.h" class="js-directory-link js-navigation-open" id="ef7f3342d40d9604321eba8dd7e59f5d-3f0371df819a004fd755d32f480ed5b8f78d475e" title="csv.h">csv.h</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+              <a href="https://github.com/ben-strasser/fast-cpp-csv-parser/commit/8188f356e8721a2d7244c0a9c26cf95f86d2b290" class="message" data-pjax="true" title="removed nop line">removed nop line</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time title="Jul 13, 2015, 8:39 AM PDT" datetime="2015-07-13T15:39:10Z" is="time-ago">2 months ago</time></span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+  <div id="readme" class="boxed-group flush clearfix announce instapaper_body md">
+    <h3>
+      <span class="octicon octicon-book"></span>
+      README.md
+    </h3>
+
+    <article class="markdown-body entry-content" itemprop="mainContentOfPage"><h1><a id="user-content-fast-c-csv-parser" class="anchor" href="#fast-c-csv-parser" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fast C++ Csv Parser</h1>
+
+<p>This is a small, easy-to-use and fast header-only library for reading comma separated value (CSV) files. </p>
+
+<h2><a id="user-content-features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Automatically rearranges columns by parsing the header line.</li>
+<li>Disk I/O and CSV-parsing are overlapped using threads for efficiency.</li>
+<li>Parsing features such as escaped strings can be enabled and disabled
+ at compile time using templates. You only pay in speed for the features
+ you actually use.</li>
+<li>Can read multiple GB files in reasonable time.</li>
+<li>Support for custom columns separators (i.e. Tab separated value 
+files are supported), quote escaped strings, automatic space trimming. </li>
+<li>Works with <code>*</code>nix and Windows newlines and automatically ignores UTF-8 BOMs.</li>
+<li>Exception classes with enough context to format useful error 
+messages. what() returns error messages ready to be shown to a user. </li>
+</ul>
+
+<h2><a id="user-content-getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>The following small example should contain most of the syntax you need to use the library.</p>
+
+<div class="highlight highlight-source-c++"><pre># <span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>csv.h<span class="pl-pds">"</span></span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>(){
+  io::CSVReader&lt;<span class="pl-c1">3</span>&gt; <span class="pl-c1">in</span>(<span class="pl-s"><span class="pl-pds">"</span>ram.csv<span class="pl-pds">"</span></span>);
+  in.<span class="pl-c1">read_header</span>(io::ignore_extra_column, <span class="pl-s"><span class="pl-pds">"</span>vendor<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>size<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>speed<span class="pl-pds">"</span></span>);
+  std::string vendor; <span class="pl-k">int</span> size; <span class="pl-k">double</span> speed;
+  <span class="pl-k">while</span>(in.<span class="pl-c1">read_row</span>(vendor, size, speed)){
+    <span class="pl-c">// do stuff with the data</span>
+  }
+}</pre></div>
+
+<h2><a id="user-content-installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>The library only needs a standard conformant C++11 compiler. It has 
+no further dependencies. The library is completely contained inside a 
+single header file and therefore it is sufficient to copy this file to 
+some place on your include path. The library does not have to be 
+explicitly build. </p>
+
+<p>Note however, that std::future is used and some compiler (f.e. GCC) 
+require you to link against additional libraries (i.e. -lpthread) to 
+make it work. With GCC it is important to add -lpthread as the last item
+ when linking, i.e. the order in </p>
+
+<pre><code>g++ a.o b.o -o prog -lpthread
+</code></pre>
+
+<p>is important.</p>
+
+<p>Remember that the library makes use of C++11 features and therefore 
+you have to enable support for it (f.e. add -std=C++0x or -std=gnu++0x).</p>
+
+<p>The library was developed and tested with GCC 4.6.1</p>
+
+<p>Note that VS2013 is not C++11 compilant and will therefore not work out of the box. See <a href="https://code.google.com/p/fast-cpp-csv-parser/issues/detail?id=6">here</a> for what needs to be adjusted to make the code work.</p>
+
+<h2><a id="user-content-documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>The libary provides two classes: </p>
+
+<ul>
+<li><code>LineReader</code>: A class to efficiently read large files line by line.</li>
+<li><code>CSVReader</code>: A class that efficiently reads large CSV files.</li>
+</ul>
+
+<p>Note that everything is contained in the <code>io</code> namespace.</p>
+
+<h3><a id="user-content-linereader" class="anchor" href="#linereader" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>LineReader</code></h3>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">class</span> <span class="pl-en">LineReader</span>{
+<span class="pl-k">public:</span>
+  <span class="pl-c">// Constructors</span>
+  <span class="pl-en">LineReader</span>(some_string_type file_name);
+  <span class="pl-en">LineReader</span>(some_string_type file_name, std::<span class="pl-c1">FILE</span>*file);
+
+  <span class="pl-c">// Reading</span>
+  <span class="pl-k">char</span>*<span class="pl-en">next_line</span>();
+
+  <span class="pl-c">// File Location</span>
+  <span class="pl-k">void</span> <span class="pl-en">set_file_line</span>(<span class="pl-k">unsigned</span>);
+  <span class="pl-k">unsigned</span> <span class="pl-en">get_file_line</span>(<span class="pl-k">unsigned</span>)<span class="pl-k">const</span>;
+  <span class="pl-k">void</span> <span class="pl-en">set_file_name</span>(some_string_type file_name);
+  <span class="pl-k">const</span> <span class="pl-k">char</span>*<span class="pl-en">get_truncated_file_name</span>()<span class="pl-k">const</span>;
+};</pre></div>
+
+<p>The constructor takes a file name and optionally a <code>stdio.h</code> file handle. If no file handle is provided the class tries to open the file and throws an <code>error::can_not_open_file exception</code> on failure. If a file handle is provided then the file name is only used to format error messages. The library will call <code>std::fclose</code> on the file handle. <code>some_string_type</code> can be a <code>std::string</code> or a <code>char*</code>.</p>
+
+<p>Lines are read by calling the <code>next_line</code> function. It 
+returns a pointer to a null terminated C-string that contains the line. 
+If the end of file is reached a null pointer is returned. The newline 
+character is not included in the string. You may modify the string as 
+long as you do not write past the null terminator. The string stays 
+valid until the destructor is called or until next_line is called again.
+ Windows and <code>*</code>nix newlines are handled transparently. UTF-8
+ BOMs are automatically ignored and missing newlines at the end of the 
+file are no problem.</p>
+
+<p><strong>Important:</strong> There is a limit of 2^24-1 characters per line. If this limit is exceeded a <code>error::line_length_limit_exceeded</code> exception is thrown.</p>
+
+<p>Looping over all the lines in a file can be done in the following way.</p>
+
+<div class="highlight highlight-source-c++"><pre>LineReader <span class="pl-en">in</span>(...);
+<span class="pl-k">while</span>(<span class="pl-k">char</span>*line = in.next_line()){
+  ...
+}</pre></div>
+
+<p>The remaining functions are mainly used used to format error 
+messages. The file line indicates the current position in the file, 
+i.e., after the first <code>next_line</code> call it is 1 and after the 
+second 2. Before the first call it is 0. The file name is truncated as 
+internally C-strings are used to avoid <code>std::bad_alloc</code> exceptions during error reporting.</p>
+
+<p><strong>Note:</strong> It is not possible to exchange the line termination character.</p>
+
+<h3><a id="user-content-csvreader" class="anchor" href="#csvreader" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>CSVReader</code></h3>
+
+<p><code>CSVReader</code> uses policies. These are classes with only static members to allow core functionality to be exchanged in an efficient way.</p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">template</span>&lt;
+  <span class="pl-k">unsigned</span> column_count,
+  <span class="pl-k">class</span> <span class="pl-en">trim_policy</span> = trim_chars&lt;<span class="pl-s"><span class="pl-pds">'</span> <span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span><span class="pl-cce">\t</span><span class="pl-pds">'</span></span>&gt;, 
+  <span class="pl-k">class</span> <span class="pl-en">quote_policy</span> = no_quote_escape&lt;<span class="pl-s"><span class="pl-pds">'</span>,<span class="pl-pds">'</span></span>&gt;,
+  <span class="pl-k">class</span> <span class="pl-en">overflow_policy</span> = throw_on_overflow,
+  <span class="pl-k">class</span> <span class="pl-en">comment_policy</span> = no_comment
+&gt;
+<span class="pl-k">class</span> <span class="pl-en">CSVReader</span>{
+<span class="pl-k">public:</span>
+  <span class="pl-c">// Constructors</span>
+  <span class="pl-en">CSVReader</span>(some_string_type file_name);
+  <span class="pl-en">CSVReader</span>(some_string_type file_name, std::<span class="pl-c1">FILE</span>*file);
+
+  <span class="pl-c">// Parsing Header</span>
+  <span class="pl-k">void</span> <span class="pl-en">read_header</span>(ignore_column ignore_policy, some_string_type col_name1, some_string_type col_name2, ...);
+  <span class="pl-k">void</span> <span class="pl-en">set_header</span>(some_string_type col_name1, some_string_type col_name2, ...);
+  <span class="pl-k">bool</span> <span class="pl-en">has_column</span>(some_string_type col_name)<span class="pl-k">const</span>;
+
+  <span class="pl-c">// Read</span>
+  <span class="pl-k">bool</span> <span class="pl-en">read_row</span>(ColType1&amp;col1, ColType2&amp;col2, ...);
+
+  <span class="pl-c">// File Location </span>
+  <span class="pl-k">void</span> <span class="pl-en">set_file_line</span>(<span class="pl-k">unsigned</span>);
+  <span class="pl-k">unsigned</span> <span class="pl-en">get_file_line</span>(<span class="pl-k">unsigned</span>)<span class="pl-k">const</span>;
+  <span class="pl-k">void</span> <span class="pl-en">set_file_name</span>(some_string_type file_name);
+  <span class="pl-k">const</span> <span class="pl-k">char</span>*<span class="pl-en">get_truncated_file_name</span>()<span class="pl-k">const</span>;
+};</pre></div>
+
+<p>The <code>column_count</code> template parameter indicates how many 
+columns you want to read from the CSV file. This must not necessarily 
+coincide with the actual number of columns in the file. The three 
+policies govern various aspects of the parsing.</p>
+
+<p>The trim policy indicates what characters should be ignored at the 
+begin and the end of every column. The default ignores spaces and tabs. 
+This makes sure that</p>
+
+<pre><code>a,b,c
+1,2,3
+</code></pre>
+
+<p>is interpreted in the same way as</p>
+
+<pre><code>  a, b,   c
+1  , 2,   3
+</code></pre>
+
+<p>The trim_chars can take any number of template parameters. For example <code>trim_chars&lt;' ', '\t', '_'&gt;</code>is also valid. If no character should be trimmed use <code>trim_chars&lt;&gt;</code>.</p>
+
+<p>The quote policy indicates how string should be escaped. It also specifies the column separator. The predefined policies are:</p>
+
+<ul>
+<li><code>no_quote_escape&lt;sep&gt;</code> : Strings are not escaped. "<code>sep</code>" is used as column separator.</li>
+<li><code>double_quote_escape&lt;sep, quote&gt;</code> : Strings are escaped using quotes. Quotes are escaped using two consecutive quotes. "<code>sep</code>" is used as column separator and "<code>quote</code>" as quoting character.</li>
+</ul>
+
+<p><strong>Important</strong>: When combining trimming and quoting the 
+rows are first trimmed and then unquoted. A consequence is that spaces 
+inside the quotes will be conserved. If you want to get rid of spaces 
+inside the quotes, you need to remove them yourself.</p>
+
+<p><strong>Important</strong>: Quoting can be quite expensive. Disable it if you do not need it.</p>
+
+<p>The overflow policy indicates what should be done if the integers in 
+the input are too large to fit into the variables. There following 
+policies are predefined:</p>
+
+<ul>
+<li><code>throw_on_overflow</code> : Throw an <code>error::integer_overflow</code> or <code>error::integer_underflow</code> exception.</li>
+<li><code>ignore_overflow</code> : Do nothing and let the overflow happen.</li>
+<li><code>set_to_max_on_overflow</code> : Set the value to <code>numeric_limits&lt;...&gt;::max()</code> (or to the min-pendant).</li>
+</ul>
+
+<p>The comment policy allows to skip lines based on some criteria. Valid predefined policies are:</p>
+
+<ul>
+<li><code>no_comment</code> : Do not ignore any line.</li>
+<li><code>empty_line_comment</code> : Ignore all lines that are empty or only contains spaces and tabs. </li>
+<li><code>single_line_comment&lt;com1, com2, ...&gt;</code> : Ignore all
+ lines that start with com1 or com2 or ... as the first character. There
+ may not be any space between the beginning of the line and the comment 
+character. </li>
+<li><code>single_and_empty_line_comment&lt;com1, com2, ...&gt;</code> : Ignore all empty lines and single line comments.</li>
+</ul>
+
+<p>Examples:</p>
+
+<ul>
+<li><code>CSVReader&lt;4, trim_chars&lt;' '&gt;, double_quote_escape&lt;',','\"'&gt; &gt;</code> reads 4 columns from a normal CSV file with string escaping enabled.</li>
+<li><code>CSVReader&lt;3, trim_chars&lt;' '&gt;, no_quote_escape&lt;'\t'&gt;, single_line_comment&lt;'#'&gt; &gt;</code> reads 3 columns from a tab separated file with string escaping disabled. Lines starting with a # are ignored.</li>
+</ul>
+
+<p>The constructors and the file location functions are exactly the same as for <code>LineReader</code>. See its documentation for details.</p>
+
+<p>There are three methods that deal with headers. The <code>read_header</code>
+ methods reads a line from the file and rearranges the columns to match 
+that order. It also checks whether all necessary columns are present. 
+The <code>set_header</code> method does <em>not</em> read any input. Use
+ it if the file does not have any header. Obviously it is impossible to 
+rearrange columns or check for their availability when using it. The 
+order in the file and in the program must match when using <code>set_header</code>. The <code>has_column</code> method checks whether a column is present in the file. The first argument of <code>read_header</code> is a bitfield that determines how the function should react to column mismatches. The default behavior is to throw an <code>error::extra_column_in_header</code> exception if the file contains more columns than expected and an <code>error::missing_column_in_header</code> when there are not enough. This behavior can be altered using the following flags.</p>
+
+<ul>
+<li><code>ignore_no_column</code>: The default behavior, no flags are set</li>
+<li><code>ignore_extra_column</code>: If a column with a name is in the file but not in the argument list, then it is silently ignored.</li>
+<li><code>ignore_missing_column</code>: If a column with a name is not in the file but is in the argument list, then <code>read_row</code> will not modify the corresponding variable. </li>
+</ul>
+
+<p>When using <code>ignore_column_missing</code> it is a good idea to initialize the variables passed to <code>read_row</code> with a default value, for example:</p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-c">// The file only contains column "a"</span>
+CSVReader&lt;<span class="pl-c1">2</span>&gt;<span class="pl-en">in</span>(...);
+in.read_header(ignore_missing_column, <span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>);
+<span class="pl-k">int</span> a,b = <span class="pl-c1">42</span>;
+<span class="pl-k">while</span>(in.read_row(a,b)){
+  <span class="pl-c">// a contains the value from the file</span>
+  <span class="pl-c">// b is left unchanged by read_row, i.e., it is 42</span>
+}</pre></div>
+
+<p>If only some columns are optional or their default value depends on other columns you have to use <code>has_column</code>, for example:</p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-c">// The file only contains the columns "a" and "b"</span>
+CSVReader&lt;<span class="pl-c1">2</span>&gt;<span class="pl-en">in</span>(...);
+in.read_header(ignore_missing_column, <span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>sum<span class="pl-pds">"</span></span>);
+<span class="pl-k">if</span>(!in.has_column(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>) || !in.has_column(<span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>))
+  <span class="pl-k">throw</span> <span class="pl-en">my_neat_error_class</span>();
+<span class="pl-k">bool</span> has_sum = in.has_column(<span class="pl-s"><span class="pl-pds">"</span>sum<span class="pl-pds">"</span></span>);
+<span class="pl-k">int</span> a,b,sum;
+<span class="pl-k">while</span>(in.read_row(a,b,sum)){
+  <span class="pl-k">if</span>(!has_sum)
+    sum = a+b;
+}</pre></div>
+
+<p><strong>Important</strong>: Do not call <code>has_column</code> from within the read-loop. It would work correctly but significantly slowdown processing.</p>
+
+<p>If two columns have the same name an error::duplicated_column_in_header exception is thrown. If <code>read_header</code> is called but the file is empty a <code>error::header_missing</code> exception is thrown.</p>
+
+<p>The <code>read_row</code> function reads a line, splits it into the 
+columns and arranges them correctly. It trims the entries and unescapes 
+them. If requested the content is interpreted as integer or as floating 
+point. The variables passed to read_row may be of the following types.</p>
+
+<ul>
+<li>builtin signed integer: These are <code>signed char</code>, <code>short</code>, <code>int</code>, <code>long</code> and <code>long long</code>.
+ The input must be encoded as a base 10 ASCII number optionally preceded
+ by a + or -. The function detects whether the integer is too large 
+would overflow (or underflow) and behaves as indicated by 
+overflow_policy.</li>
+<li>builtin unsigned integer: Just as the signed counterparts except that a leading + or - is not allowed.</li>
+<li>builtin floating point: These are <code>float</code>, <code>double</code> and <code>long double</code>.
+ The input may have a leading + or -. The number must be base 10 
+encoded. The decimal point may either be a dot or a comma. (Note that a 
+comma will only work if it is not also used as column separator or the 
+number is escaped.) A base 10 exponent may be specified using the "1e10"
+ syntax. The "e" may be lower- or uppercase. Examples for valid floating
+ points are "1", "-42.42" and "+123.456E789". The input is rounded to 
+the next floating point or infinity if it is too large or small.</li>
+<li><code>char</code>: The column content must be a single character.</li>
+<li><code>std::string</code>: The column content is assigned to the string. The std::string is filled with the trimmed and unescaped version.</li>
+<li><code>char*</code>: A pointer directly into the buffer. The string 
+is trimmed and unescaped and null terminated. This pointer stays valid 
+until read_row is called again or the CSVReader is destroyed. Use this 
+for user defined types. </li>
+</ul>
+
+<p>Note that there is no inherent overhead to using <code>char*</code> and then interpreting it compared to using one of the parsers directly build into <code>CSVReader</code>. The builtin number parsers are pure convenience. If you need a slightly different syntax then use <code>char*</code> and do the parsing yourself.</p>
+
+<h2><a id="user-content-faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAQ</h2>
+
+<p>Q: The library is throwing a std::system_error with code -1. How to get it to work?</p>
+
+<p>A: Your compiler's std::thread implementation is broken. Define CSV_IO_NO_THREAD to disable threading support.</p>
+
+<p>Q: My values are not just ints or strings. I want to parse my customized type. Is this possible?</p>
+
+<p>A: Read a <code>char*</code> and parse the string. At first this 
+seems expensive but it is not as the pointer you get points directly 
+into the memory buffer. In fact there is no inherent reason why a custom
+ int-parser realized this way must be any slower than the int-parser 
+build into the library. By reading a <code>char*</code> the library 
+takes care of column reordering and quote escaping and leaves the actual
+ parsing to you. Note that using a std::string is slower as it involves a
+ memory copy.</p>
+
+<p>Q: I get lots of compiler errors when compiling the header! Please fix it. :(</p>
+
+<p>A: Have you enabled the C++11 mode of your compiler? If you use GCC 
+you have to add -std=c++0x to the commandline. If this does not resolve 
+the problem, then please open a ticket.</p>
+
+<p>Q: The library crashes when parsing large files! Please fix it. :(</p>
+
+<p>A: When using GCC have you linked against -lpthread? Read the 
+installation section for details on how to do this. If this does not 
+resolve the issue then please open a ticket. (The reason why it only 
+crashes only on large files is that the first chuck is read synchronous 
+and if the whole file fits into this chuck then no asynchronous call is 
+performed.) Alternatively you can define CSV_IO_NO_THREAD.</p>
+
+<p>Q: Does the library support UTF?</p>
+
+<p>A: The library has basic UTF-8 support, or to be more precise it does
+ not break when passing UTF-8 strings through it. If you read a <code>char*</code>
+ then you get a pointer to the UTF-8 string. You will have to decode the
+ string on your own. The separator, quoting, and commenting characters 
+used by the library can only be ASCII characters.</p>
+</article>
+  </div>
+
+
+        </div>
+      </div>
+      <div class="modal-backdrop"></div>
+    </div>
+  </div>
+
+
+    </div>
+
+      <div class="container">
+  <div class="site-footer" role="contentinfo">
+    <ul class="site-footer-links right">
+        <li><a href="https://status.github.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
+      <li><a href="https://developer.github.com/" data-ga-click="Footer, go to api, text:api">API</a></li>
+      <li><a href="https://training.github.com/" data-ga-click="Footer, go to training, text:training">Training</a></li>
+      <li><a href="https://shop.github.com/" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
+        <li><a href="https://github.com/blog" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
+        <li><a href="https://github.com/about" data-ga-click="Footer, go to about, text:about">About</a></li>
+        <li><a href="https://github.com/pricing" data-ga-click="Footer, go to pricing, text:pricing">Pricing</a></li>
+
+    </ul>
+
+    <a href="https://github.com/" aria-label="Homepage">
+      <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+</a>
+    <ul class="site-footer-links">
+      <li>© 2015 <span title="0.08257s from github-fe120-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+        <li><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
+        <li><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
+        <li><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
+        <li><a href="https://github.com/contact" data-ga-click="Footer, go to contact, text:contact">Contact</a></li>
+        <li><a href="https://help.github.com/" data-ga-click="Footer, go to help, text:help">Help</a></li>
+    </ul>
+  </div>
+</div>
+
+
+
+    
+    
+    
+
+    <div id="ajax-error-message" class="flash flash-error">
+      <span class="octicon octicon-alert"></span>
+      <button type="button" class="flash-close js-flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
+        <span class="octicon octicon-x"></span>
+      </button>
+      Something went wrong with that request. Please try again.
+    </div>
+
+
+      <script crossorigin="anonymous" src="ben-strasser_fast-cpp-csv-parser_files/frameworks-f8473dece7242da6a20d52313634881b3975c52cebaa1e6c38.js"></script>
+      <script async="async" crossorigin="anonymous" src="ben-strasser_fast-cpp-csv-parser_files/github-29b731620373d510227f8d67ff64cca1a52a6fb5f88f49d60ab0c3.js"></script>
+      
+      
+    <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner hidden">
+      <span class="octicon octicon-alert"></span>
+      <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="">Reload</a> to refresh your session.</span>
+      <span class="signed-out-tab-flash">You signed out in another tab or window. <a href="">Reload</a> to refresh your session.</span>
+    </div>
+  
+
+
+</body></html>
