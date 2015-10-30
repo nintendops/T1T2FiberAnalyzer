@@ -18,7 +18,13 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>16</width>
+        <height>16</height>
+       </size>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -60,7 +66,7 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout">
                  <item>
-                  <widget class="QLineEdit" name="T12MapInputText">
+                  <widget class="QLineEdit" name="para_T12MapInputText">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -148,7 +154,7 @@
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QComboBox" name="T12ComboPath">
+                <widget class="QComboBox" name="para_T12ComboPath">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -177,7 +183,7 @@
                 </widget>
                </item>
                <item row="4" column="1">
-                <widget class="QComboBox" name="T12ComboSID">
+                <widget class="QComboBox" name="para_T12ComboSID">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -224,7 +230,7 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_2">
                  <item>
-                  <widget class="QLineEdit" name="DTIdefInputText">
+                  <widget class="QLineEdit" name="para_DTIdefInputText">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -319,10 +325,10 @@
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QComboBox" name="DTIComboPath"/>
+                <widget class="QComboBox" name="para_DTIComboPath"/>
                </item>
                <item row="4" column="1">
-                <widget class="QComboBox" name="DTIComboSID"/>
+                <widget class="QComboBox" name="para_DTIComboSID"/>
                </item>
               </layout>
              </item>
@@ -341,7 +347,7 @@
             <property name="sizeConstraint">
              <enum>QLayout::SetMaximumSize</enum>
             </property>
-            <item alignment="Qt::AlignLeft">
+            <item>
              <widget class="QPushButton" name="MatchResultBtn">
               <property name="enabled">
                <bool>false</bool>
@@ -428,7 +434,7 @@
            </layout>
           </item>
           <item>
-           <widget class="QTableView" name="CSVMatchTable">
+           <widget class="QTableView" name="para_CSVMatchTable">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -503,7 +509,7 @@
              <number>0</number>
             </property>
             <item alignment="Qt::AlignTop">
-             <widget class="QLineEdit" name="DTIFiber_Path">
+             <widget class="QLineEdit" name="para_DTIFiber_Path">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -614,7 +620,7 @@
            </layout>
           </item>
           <item>
-           <widget class="QTableView" name="Fiber_Tracts_Table">
+           <widget class="QTableView" name="para_Fiber_Tracts_Table">
             <property name="minimumSize">
              <size>
               <width>800</width>
@@ -624,6 +630,41 @@
            </widget>
           </item>
          </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Run Analyzer</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QPushButton" name="RunBtn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>27</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Run</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -711,7 +752,7 @@ p, li { white-space: pre-wrap; }
           <number>180</number>
          </property>
          <item alignment="Qt::AlignRight">
-          <widget class="QLineEdit" name="DTIStatPath">
+          <widget class="QLineEdit" name="conf_DTIStatPath">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -770,7 +811,7 @@ p, li { white-space: pre-wrap; }
           <number>180</number>
          </property>
          <item alignment="Qt::AlignRight">
-          <widget class="QLineEdit" name="FiberProcessPath">
+          <widget class="QLineEdit" name="conf_FiberProcessPath">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -832,7 +873,7 @@ p, li { white-space: pre-wrap; }
           <number>0</number>
          </property>
          <item alignment="Qt::AlignRight">
-          <widget class="QLineEdit" name="pyPath">
+          <widget class="QLineEdit" name="conf_pypath">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -946,11 +987,52 @@ p, li { white-space: pre-wrap; }
    </property>
    <widget class="QMenu" name="menuT1_T2_Fiber_Analyzer">
     <property name="title">
-     <string>T1/T2 Fiber Analyzer</string>
+     <string>File</string>
     </property>
+    <addaction name="actionSave"/>
+    <addaction name="actionLoad"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuConfiguration">
+    <property name="title">
+     <string>Configuration</string>
+    </property>
+    <addaction name="actionSave_Configuration"/>
+    <addaction name="actionLoad_Configuration"/>
    </widget>
    <addaction name="menuT1_T2_Fiber_Analyzer"/>
+   <addaction name="menuConfiguration"/>
   </widget>
+  <action name="actionFile">
+   <property name="text">
+    <string>File</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save Parameter</string>
+   </property>
+  </action>
+  <action name="actionLoad">
+   <property name="text">
+    <string>Load Parameter</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionSave_Configuration">
+   <property name="text">
+    <string>Save Configuration</string>
+   </property>
+  </action>
+  <action name="actionLoad_Configuration">
+   <property name="text">
+    <string>Load Configuration</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

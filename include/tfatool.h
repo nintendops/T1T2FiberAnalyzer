@@ -2,22 +2,24 @@
 #define TFATOOL_H
 #include <QString>
 #include <QFileInfo>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <QtDebug>
 #include <vector>
 #include <string>
 #include <map>
 #include <iostream>
 #include <algorithm>
 #include <functional>
+#include <cstddef>
 #include <cctype>
 #include <locale>
 #include <utility>
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <csvparser.h>
 
 using namespace std;
 
@@ -40,8 +42,8 @@ namespace tool{
      bool checkNewLine(string &s);
      bool checkDirExist(string path);
      void tokenize(char* str, const char* delimiter, vector<string> &results);
-     void parseMapContent(string filename, map<string,TractData> &data, string header1, string header2);
-     vector<vector<string>>  parseCSV(string dir, vector<string> &attrs);
+     void parseMapContent(QString filename, map<string,TractData> &data, string header1, string header2);
+     vector<vector<string> >  parseCSV(string dir, vector<string> &attrs);
      string syscall(const char* cmd);
 
      // trim from start

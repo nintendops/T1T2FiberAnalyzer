@@ -35,7 +35,7 @@
       </sizepolicy>
      </property>
      <property name="layoutDirection">
-      <enum>Qt::RightToLeft</enum>
+      <enum>Qt::LeftToRight</enum>
      </property>
     </widget>
    </item>

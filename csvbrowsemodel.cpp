@@ -17,7 +17,7 @@ int CSVBrowseModel::columnCount(const QModelIndex &parent) const{
 QVariant CSVBrowseModel::data(const QModelIndex &index, int role) const{
     int row = index.row();
     int col = index.column();
-
+    std::string s = table[row][col];
     if (role == Qt::DisplayRole){
         return QString::fromStdString(table[row][col]);
     }

@@ -1,6 +1,4 @@
 #include "include/tfatool.h"
-#include "Resources/csv.h"
-#include <cstddef>
 using namespace tool;
 
 int tool::getnrrdfiles (string dir, vector<tool::TractData> &files){
@@ -76,34 +74,19 @@ void tool::tokenize(char* str, const char* delimiter, vector<string> &results){
     }
 }
 
-void tool::parseMapContent(string filename, map<string,TractData> &data, string header1, string header2){
+void tool::parseMapContent(QString filename, map<string,TractData> &data, string header1, string header2){
 
-    char* path;
-    char* sid;
-    if(header1==header2){
-        io::CSVReader<1> in(filename);
-        in.read_header(io::ignore_extra_column,header1);
-        while(in.read_row(sid)){
-            tool::TractData newTract = {
-                QString::fromStdString(sid),
-                QString::fromStdString(sid)
-            };
-            auto element = std::make_pair(sid,newTract);
-            data.insert(element);
-        }
-    }else{
-        io::CSVReader<2> in(filename);
-        in.read_header(io::ignore_extra_column,header1,header2);
-        while(in.read_row(path,sid)){
-            if(header1 == header2)
-                sid = path;
-            tool::TractData newTract = {
-                QString::fromStdString(path),
-                QString::fromStdString(sid)
-            };
-            auto element = std::make_pair(sid,newTract);
-            data.insert(element);
-        }
+    char path[1024];
+    char sid[1024];
+    csvparser in(filename);
+    in.read(header1,header2);
+    while(in.read_row(path,sid)){
+        tool::TractData newTract = {
+            QString::fromStdString(path),
+            QString::fromStdString(sid)
+        };
+        auto element = std::make_pair(sid,newTract);
+        data.insert(element);
     }
 
 }
@@ -117,28 +100,29 @@ bool tool::checkExecutable(char *path){
 }
 
 bool tool::checkExecutable(string path){
-    const char* tmp = path.c_str();
-    char* result = new char[path.length()-1];
-    strcpy(result,tmp);
-    bool y = checkExecutable(result);
-    delete[] result;
-    return y;
+    QFileInfo info(QString::fromStdString(path));
+    if(!info.isDir() && info.isExecutable())
+        return true;
+    return false;
 }
 
 // generic parsing of csv files
 vector<vector<string>> tool::parseCSV(string dir, vector<string> &attrs){
-    io::LineReader scanner(dir);
+    csvparser scanner(QString::fromStdString(dir));
     attrs.clear();
-    // header line
-    char* header = scanner.next_line();
-    tokenize(header,",",attrs);
-    int colnum = attrs.size();
-
+    // header line                       
+    char line[10000];
+    scanner.next_line(line,sizeof(line));
+    tokenize(line,",",attrs);
     vector<vector<string>> results;
-    while (char* line = scanner.next_line()){
+    // content
+    // to-do: check for csv consistency
+    while (scanner.next_line(line,sizeof(line))){
+        //qDebug() << line << "XXXX\n";
         vector<string> new_arr;
         tokenize(line,",",new_arr);
         results.push_back(new_arr);
     }
+    scanner.close();
     return results;
 }
