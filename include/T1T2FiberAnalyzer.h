@@ -91,8 +91,8 @@ private:
     void SyncToUI();
     void SaveGuiValue();
     QMessageBox::StandardButton SaveGuiValue(QString filename);
-    //std::map<QString,bool> SyncFromAtlasTableView();
-    //void SyncToAtlasTableView();
+    std::vector<std::vector<QString>> SyncFromAtlasTableView();
+    void SyncToAtlasTableView();
 
 protected:
     void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;

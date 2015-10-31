@@ -2,7 +2,8 @@
 #define para_Model_T1T2FiberAnalyzer_H
 
 #include <QString>
-#include <map>
+#include <vector>
+#include <stdexcept>
 
 class para_Model_T1T2FiberAnalyzer {
   QString para_DTIComboPath;
@@ -12,11 +13,12 @@ class para_Model_T1T2FiberAnalyzer {
   QString para_DTIFiber_Path;
   QString para_DTIdefInputText;
   QString para_T12MapInputText;
-  std::map<QString,bool> para_CSVMatchTable;
-  std::map<QString,bool> para_Fiber_Tracts_Table;
+  std::vector<std::vector<QString> > para_CSVMatchTable;
+  std::vector<std::vector<QString> > para_Fiber_Tracts_Table;
 
 public: 
 
+  para_Model_T1T2FiberAnalyzer();
   QString getpara_DTIComboPath();
   void setpara_DTIComboPath(QString a);
 
@@ -38,11 +40,11 @@ public:
   QString getpara_T12MapInputText();
   void setpara_T12MapInputText(QString a);
 
-  std::map<QString,bool> getpara_CSVMatchTable();
-  void setpara_CSVMatchTable(std::map<QString,bool> a);
+  std::vector<std::vector<QString> > getpara_CSVMatchTable();
+  void setpara_CSVMatchTable(std::vector<std::vector<QString> > a);
 
-  std::map<QString,bool> getpara_Fiber_Tracts_Table();
-  void setpara_Fiber_Tracts_Table(std::map<QString,bool> a);
+  std::vector<std::vector<QString> > getpara_Fiber_Tracts_Table();
+  void setpara_Fiber_Tracts_Table(std::vector<std::vector<QString> > a);
 
 };
 

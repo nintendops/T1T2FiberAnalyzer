@@ -10,6 +10,7 @@ class conf_Model_T1T2FiberAnalyzer {
 
 public: 
 
+  conf_Model_T1T2FiberAnalyzer();
   QString getconf_DTIStatPath();
   void setconf_DTIStatPath(QString a);
 

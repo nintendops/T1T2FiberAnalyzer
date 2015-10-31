@@ -156,7 +156,7 @@ void T1T2FiberAnalyzer::SyncToModel(){
     m_gui->setpara_DTIFiber_Path(ui->para_DTIFiber_Path->text());
 
     if(ui->para_CSVMatchTable->model()){
-        //m_gui->setpara_CSVMatchTable(SyncFromAtlasTableView());
+        m_gui->setpara_CSVMatchTable(SyncFromAtlasTableView());
     }
 }
 
@@ -186,29 +186,39 @@ void T1T2FiberAnalyzer::SyncToUI(){
 
 
 }
-/*
-std::map<QString,bool> T1T2FiberAnalyzer::SyncFromAtlasTableView(){
-    std::map<QString,bool> rmap;
 
-    for(unsigned int i = 0; i < atlas->getDataSize(); i++){
-        auto element = std::make_pair(atlas->getData(i).subjectID, atlas->getCheckState(i));
-        rmap.insert(element);
-    }
-
-    return rmap;
-}*/
-/*
 void T1T2FiberAnalyzer::SyncToAtlasTableView(){
-    std::map<QString, bool> m = m_gui->getpara_CSVMatchTable();
-    for(std::map<QString,bool>::iterator it = m.begin(); it != m.end(); ++it){
-        if(!it->second){
-            unsigned int found = atlas->findData(it->first);
-            if(found >= 0)
-                atlas->resetModel(Qt::Unchecked,found);
+    std::vector<std::vector<QString>> m = m_gui->getpara_CSVMatchTable();
+    for(std::vector<std::vector<QString>>::iterator it1 = m.begin(); it1 != m.end(); ++it1){
+        // integrity check
+        if (it1->size() != 2)
+            continue;
+        for(std::vector<QString>::iterator it2 = (*it1).begin(); it2 != (*it1).end(); ++it2){
+            if(it2->at(0) == QString("false")){
+                unsigned int found = atlas->findData(it2->at(1));
+                if(found >= 0)
+                    atlas->resetModel(Qt::Unchecked,found);
+            }
         }
     }
 }
-*/
+
+// issue: match subjectID, or match everything?
+std::vector<std::vector<QString>> T1T2FiberAnalyzer::SyncFromAtlasTableView(){
+    std::vector<std::vector<QString>> data;
+    for(unsigned int i =0; i < atlas->getDataSize(); i++){
+        std::vector<QString> row;
+        if(atlas->getCheckState(i))
+            row.push_back("true");
+        else
+            row.push_back("false");
+        row.push_back(atlas->getData(i).subjectID);
+        data.push_back(row);
+    }
+
+    return data;
+}
+
 void T1T2FiberAnalyzer::T12extractHeaders(){
     QString fileName = ui->para_T12MapInputText->text();
     // parse headers of csv file and populate into combo boxes
@@ -431,7 +441,7 @@ void T1T2FiberAnalyzer::on_MatchResultBtn_clicked()
 
         // synchronize states if loader exists
         if(isSync)
-            //SyncToAtlasTableView();
+            SyncToAtlasTableView();
 
         ui->para_CSVMatchTable->setModel(atlas);
         ui->para_CSVMatchTable->horizontalHeader()->setStretchLastSection(true);

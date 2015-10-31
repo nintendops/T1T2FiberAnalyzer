@@ -1,5 +1,18 @@
 #include "para_Model_T1T2FiberAnalyzer.h"
 
+  para_Model_T1T2FiberAnalyzer::para_Model_T1T2FiberAnalyzer()
+  {
+    para_DTIComboPath = "" ;
+    para_DTIComboSID = "" ;
+    para_T12ComboPath = "" ;
+    para_T12ComboSID = "" ;
+    para_DTIFiber_Path = "" ;
+    para_DTIdefInputText = "" ;
+    para_T12MapInputText = "" ;
+    // para_CSVMatchTable : std::vector<std::vector<QString> > does not require any initialization
+    // para_Fiber_Tracts_Table : std::vector<std::vector<QString> > does not require any initialization
+}
+
   QString para_Model_T1T2FiberAnalyzer::getpara_DTIComboPath(){
     return para_DTIComboPath;
   }
@@ -42,15 +55,39 @@
   void para_Model_T1T2FiberAnalyzer::setpara_T12MapInputText(QString a){
     para_T12MapInputText=a;
   }
-  std::map<QString,bool> para_Model_T1T2FiberAnalyzer::getpara_CSVMatchTable(){
+  std::vector<std::vector<QString> > para_Model_T1T2FiberAnalyzer::getpara_CSVMatchTable(){
     return para_CSVMatchTable;
   }
-  void para_Model_T1T2FiberAnalyzer::setpara_CSVMatchTable(std::map<QString,bool> a){
+  void para_Model_T1T2FiberAnalyzer::setpara_CSVMatchTable(std::vector<std::vector<QString> > a){
+    if( !a.empty() )
+    {
+      std::vector<std::vector<QString> >::iterator it = a.begin(); 
+      std::vector<std::vector<QString> >::size_type first_size = a[0].size();
+      for( ; it != a.end() ; ++it )
+      {
+        if( it->size() != first_size )
+        {
+          throw std::runtime_error("Failed: All rows do not have the same size");
+        }
+      }
+    }
     para_CSVMatchTable=a;
   }
-  std::map<QString,bool> para_Model_T1T2FiberAnalyzer::getpara_Fiber_Tracts_Table(){
+  std::vector<std::vector<QString> > para_Model_T1T2FiberAnalyzer::getpara_Fiber_Tracts_Table(){
     return para_Fiber_Tracts_Table;
   }
-  void para_Model_T1T2FiberAnalyzer::setpara_Fiber_Tracts_Table(std::map<QString,bool> a){
+  void para_Model_T1T2FiberAnalyzer::setpara_Fiber_Tracts_Table(std::vector<std::vector<QString> > a){
+    if( !a.empty() )
+    {
+      std::vector<std::vector<QString> >::iterator it = a.begin(); 
+      std::vector<std::vector<QString> >::size_type first_size = a[0].size();
+      for( ; it != a.end() ; ++it )
+      {
+        if( it->size() != first_size )
+        {
+          throw std::runtime_error("Failed: All rows do not have the same size");
+        }
+      }
+    }
     para_Fiber_Tracts_Table=a;
   }

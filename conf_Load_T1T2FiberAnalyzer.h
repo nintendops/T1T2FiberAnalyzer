@@ -5,6 +5,7 @@
 #include <QString>
 #include <QDebug>
 #include <map>
+#include <list>
 #include <QFile>
 #include <QStringList>
 #include <iostream>

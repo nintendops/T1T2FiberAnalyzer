@@ -1,5 +1,12 @@
 #include "conf_Model_T1T2FiberAnalyzer.h"
 
+  conf_Model_T1T2FiberAnalyzer::conf_Model_T1T2FiberAnalyzer()
+  {
+    conf_DTIStatPath = "" ;
+    conf_FiberProcessPath = "" ;
+    conf_pypath = "" ;
+}
+
   QString conf_Model_T1T2FiberAnalyzer::getconf_DTIStatPath(){
     return conf_DTIStatPath;
   }

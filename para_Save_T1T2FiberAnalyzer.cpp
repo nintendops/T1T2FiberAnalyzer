@@ -52,30 +52,48 @@
 		writer.writeAttribute("name","para_T12MapInputText");
 		writer.writeAttribute("value",m.getpara_T12MapInputText());
 		writer.writeEmptyElement("Parameter");
-		writer.writeAttribute("type","std::map<QString,bool>");
+		writer.writeAttribute("type","std::vector<std::vector<QString> >");
 		writer.writeAttribute("name","para_CSVMatchTable");
-		std::map<QString,bool> map_para_CSVMatchTable = m.getpara_CSVMatchTable();
-		std::map<QString,bool>::iterator it_para_CSVMatchTable = map_para_CSVMatchTable.begin();
-		for( int count = 0 ; it_para_CSVMatchTable != map_para_CSVMatchTable.end() ; count++ , it_para_CSVMatchTable++ )
 		{
-			std::string item = "item" + QString::number(count).toStdString() ;
-			std::string itemName = item+"Name" ;
-			writer.writeAttribute(itemName.c_str(),it_para_CSVMatchTable->first);
-			std::string itemState = item+"isChecked" ;
-			writer.writeAttribute(itemState.c_str(),QString::number(it_para_CSVMatchTable->second));
+			std::vector<std::vector<QString> > table = m.getpara_CSVMatchTable();
+			if( !table.empty() )
+			{
+				writer.writeAttribute("row", QString::number(table.size()) );
+				writer.writeAttribute("column", QString::number(table[0].size()) );
+			}
+			std::vector<std::vector<QString> >::iterator it_table_1 = table.begin();
+			for( size_t count = 0 ; it_table_1 != table.end() ; count++ , it_table_1++ )
+			{
+				std::vector<QString> list_2 = *it_table_1;
+				std::vector<QString>::iterator it_table_2 = list_2.begin();
+				for( std::vector<QString>::size_type count2 = 0 ; it_table_2 != list_2.end() ; count2++ , it_table_2++ )
+				{
+					std::string item = "item_" + QString::number(count).toStdString() + "_" + QString::number(count2).toStdString() ;
+					writer.writeAttribute(item.c_str(),*it_table_2);
+				}
+			}
 		}
 		writer.writeEmptyElement("Parameter");
-		writer.writeAttribute("type","std::map<QString,bool>");
+		writer.writeAttribute("type","std::vector<std::vector<QString> >");
 		writer.writeAttribute("name","para_Fiber_Tracts_Table");
-		std::map<QString,bool> map_para_Fiber_Tracts_Table = m.getpara_Fiber_Tracts_Table();
-		std::map<QString,bool>::iterator it_para_Fiber_Tracts_Table = map_para_Fiber_Tracts_Table.begin();
-		for( int count = 0 ; it_para_Fiber_Tracts_Table != map_para_Fiber_Tracts_Table.end() ; count++ , it_para_Fiber_Tracts_Table++ )
 		{
-			std::string item = "item" + QString::number(count).toStdString() ;
-			std::string itemName = item+"Name" ;
-			writer.writeAttribute(itemName.c_str(),it_para_Fiber_Tracts_Table->first);
-			std::string itemState = item+"isChecked" ;
-			writer.writeAttribute(itemState.c_str(),QString::number(it_para_Fiber_Tracts_Table->second));
+			std::vector<std::vector<QString> > table = m.getpara_Fiber_Tracts_Table();
+			if( !table.empty() )
+			{
+				writer.writeAttribute("row", QString::number(table.size()) );
+				writer.writeAttribute("column", QString::number(table[0].size()) );
+			}
+			std::vector<std::vector<QString> >::iterator it_table_1 = table.begin();
+			for( size_t count = 0 ; it_table_1 != table.end() ; count++ , it_table_1++ )
+			{
+				std::vector<QString> list_2 = *it_table_1;
+				std::vector<QString>::iterator it_table_2 = list_2.begin();
+				for( std::vector<QString>::size_type count2 = 0 ; it_table_2 != list_2.end() ; count2++ , it_table_2++ )
+				{
+					std::string item = "item_" + QString::number(count).toStdString() + "_" + QString::number(count2).toStdString() ;
+					writer.writeAttribute(item.c_str(),*it_table_2);
+				}
+			}
 		}
 		writer.writeEndElement();
 
