@@ -38,7 +38,7 @@ class T1T2FiberAnalyzer : public QMainWindow
 public:
     explicit T1T2FiberAnalyzer(QWidget *parent = 0);
     ~T1T2FiberAnalyzer();
-    void initializePyPath();
+    void initializeConfPath();
 
 
 private slots:
@@ -60,6 +60,10 @@ private slots:
     void on_MatchTableDeselectAll_clicked();
     void on_FiberTableSelectAll_clicked();
     void on_FiberTableDeselectAll_clicked();
+
+    void on_FiberProcessBtn_clicked();
+
+    void on_DTIStatBtn_clicked();
 
 signals:
     void headerSelected();

@@ -168,7 +168,7 @@ unsigned int AtlasModel::getDataSize(){
 }
 
 //O(n) run time. Could we optimize it?
-unsigned int AtlasModel::findData(QString str){
+int AtlasModel::findData(QString str){
     unsigned int i = 0;
     for(std::vector<tool::MapData>::iterator it = tract_db.begin(); it != tract_db.end(); ++it) {
         if(it->subjectID == str)

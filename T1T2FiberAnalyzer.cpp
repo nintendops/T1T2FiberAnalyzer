@@ -28,7 +28,7 @@ T1T2FiberAnalyzer::~T1T2FiberAnalyzer()
 
 }
 
-void T1T2FiberAnalyzer::initializePyPath(){
+void T1T2FiberAnalyzer::initializeConfPath(){
     char* pypath = std::getenv("TFA_PYTHON");
 
     // write to version.py
@@ -195,7 +195,7 @@ void T1T2FiberAnalyzer::SyncToAtlasTableView(){
             continue;
         for(std::vector<QString>::iterator it2 = (*it1).begin(); it2 != (*it1).end(); ++it2){
             if(it2->at(0) == QString("false")){
-                unsigned int found = atlas->findData(it2->at(1));
+                int found = atlas->findData(it2->at(1));
                 if(found >= 0)
                     atlas->resetModel(Qt::Unchecked,found);
             }
@@ -470,6 +470,32 @@ void T1T2FiberAnalyzer::on_pyPathBtn_clicked()
 
 }
 
+void T1T2FiberAnalyzer::on_FiberProcessBtn_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,tr("Select Fiber Process Path"), *DEFAULT_PATH);
+    if(filename == NULL) return;
+    std::string path = filename.toStdString();
+    tool::checkNewLine(path);
+    if (!tool::checkExecutable(path))
+        ErrorReporter::fire("Provided path is not executable!");
+    else
+        ui->conf_FiberProcessPath->setText(filename);
+
+}
+
+void T1T2FiberAnalyzer::on_DTIStatBtn_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,tr("Select DTI Tract Stat Path"), *DEFAULT_PATH);
+    if(filename == NULL) return;
+    std::string path = filename.toStdString();
+    tool::checkNewLine(path);
+    if (!tool::checkExecutable(path))
+        ErrorReporter::fire("Provided path is not executable!");
+    else
+        ui->conf_DTIStatPath->setText(filename);
+
+}
+
 void T1T2FiberAnalyzer::on_MatchTableSelectAll_clicked()
 {
     atlas->resetModel(Qt::Checked);
@@ -489,3 +515,5 @@ void T1T2FiberAnalyzer::on_FiberTableDeselectAll_clicked()
 {
     tracts->resetModel(Qt::Unchecked);
 }
+
+

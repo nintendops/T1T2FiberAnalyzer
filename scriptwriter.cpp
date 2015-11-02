@@ -17,37 +17,28 @@ ScriptWriter::ScriptWriter(QString tool,QString pipeline){
 
 
 void ScriptWriter::writePreliminary(){
-    if(toollock && toollock->isLocked()){
-        // to-do: throw exception
-        return;
-    }
 
-    QFileInfo info(tool_script);
-    if(info.exists()){
-        // to-do: throw exception
+    QFile file(tool_script);
+    if(file.exists()){
+        ErrorReporter::fire("Overwriting file " + tool_script.toStdString());
+    }
+    if(file.open(QIODevice::WriteOnly)){
+        // obtaining lock of file
+        file.write("#! /usr/bin/env python\n");
+        file.write("# -*- coding: utf-8 -*-\n\n");
+        file.write("import sys\n");
+        file.write("if sys.version_info<(2,5):\n");
+        file.write("\tprint(\"false\")\n");
+        file.write("else:\n");
+        file.write("\tprint(\"true\")\n");
+        file.close();
+
     }else{
-        toollock = new QLockFile(tool_script);
-        toollock->setStaleLockTime(3000);
-
-        if(!toollock->tryLock()){
-            // to-do: throw exception
-            return;
-        }
-
-        QFile file(tool_script);
-        if(file.open(QIODevice::WriteOnly)){
-            // obtaining lock of file
-            file.write("xxx");
-            file.write("yyy");
-            file.close();
-
-
-        }else{
-            // to-do: open failed. Should throw an error
-
-        }
+        // to-do: open failed. Should throw an error
 
     }
+
+
 }
 
 
@@ -55,11 +46,14 @@ void ScriptWriter::writeData(){
 
 }
 
+QString ScriptWriter::getToolScriptName(){
+    return tool_script;
+}
+
+QString ScriptWriter::getPipelineScriptName(){
+    return pipeline_script;
+}
+
 void ScriptWriter::close(){
-    if(toollock && toollock->isLocked()){
-        toollock->unlock();
-    }
-    QFile file(tool_script);
-    if(file.exists())
-        file.remove();
+
 }

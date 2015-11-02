@@ -23,7 +23,7 @@ public:
     tool::MapData getData(int i);
     bool getCheckState(int i);
     unsigned int getDataSize();
-    unsigned int findData(QString str);
+    int findData(QString str);
 private:
     Qt::CheckState* checkedState;
     std::vector<tool::MapData> tract_db;

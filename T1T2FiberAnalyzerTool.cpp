@@ -6,7 +6,7 @@ int main(int argc, char **argv)
     QApplication a(argc, argv);
     T1T2FiberAnalyzer w;
     w.show();
-    w.initializePyPath();
+    w.initializeConfPath();
 
     return a.exec();
 }
