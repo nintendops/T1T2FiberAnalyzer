@@ -37,7 +37,6 @@ namespace tool{
      };
 
      int getnrrdfiles (string dir, vector<tool::TractData> &files);
-     bool checkExecutable(char* path);
      bool checkExecutable(string path);
      bool checkNewLine(string &s);
      bool checkDirExist(string path);

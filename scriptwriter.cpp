@@ -20,7 +20,8 @@ void ScriptWriter::writePreliminary(){
 
     QFile file(tool_script);
     if(file.exists()){
-        ErrorReporter::fire("Overwriting file " + tool_script.toStdString());
+        // shall we do something?
+        //ErrorReporter::fire("Overwriting file " + tool_script.toStdString());
     }
     if(file.open(QIODevice::WriteOnly)){
         // obtaining lock of file
@@ -35,7 +36,7 @@ void ScriptWriter::writePreliminary(){
 
     }else{
         // to-do: open failed. Should throw an error
-
+        ErrorReporter::fire("Failed to open file " + tool_script.toStdString() + " for script generation.");
     }
 
 

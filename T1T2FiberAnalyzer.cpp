@@ -29,12 +29,12 @@ T1T2FiberAnalyzer::~T1T2FiberAnalyzer()
 }
 
 void T1T2FiberAnalyzer::initializeConfPath(){
-    char* pypath = std::getenv("TFA_PYTHON");
-
     // write to version.py
     // tool::writePyVersion()
-    writer = ScriptWriter::getInstance("version2.py","version3.py");
+    writer = ScriptWriter::getInstance("tool.py","pipeline.py");
     writer->writePreliminary();
+
+    char* pypath = std::getenv("TFA_PYTHON");
 
     if(!pypath){
         char* path = std::getenv("PATH");
@@ -134,7 +134,7 @@ void T1T2FiberAnalyzer::SetEventTriggers(){
 }
 
 bool T1T2FiberAnalyzer::checkPyVersion(std::string path){
-    std::string cmd = path+" "+PYVERSION_SCRIPT_PATH;
+    std::string cmd = path+" "+ writer->getToolScriptName().toStdString();
     std::string result = tool::syscall(cmd.c_str());
     // removing newline character
     tool::checkNewLine(result);
@@ -188,24 +188,22 @@ void T1T2FiberAnalyzer::SyncToUI(){
 }
 
 void T1T2FiberAnalyzer::SyncToAtlasTableView(){
-    std::vector<std::vector<QString>> m = m_gui->getpara_CSVMatchTable();
-    for(std::vector<std::vector<QString>>::iterator it1 = m.begin(); it1 != m.end(); ++it1){
+    std::vector<std::vector<QString> > m = m_gui->getpara_CSVMatchTable();
+    for(std::vector<std::vector<QString> >::iterator it1 = m.begin(); it1 != m.end(); ++it1){
         // integrity check
         if (it1->size() != 2)
             continue;
-        for(std::vector<QString>::iterator it2 = (*it1).begin(); it2 != (*it1).end(); ++it2){
-            if(it2->at(0) == QString("false")){
-                int found = atlas->findData(it2->at(1));
-                if(found >= 0)
-                    atlas->resetModel(Qt::Unchecked,found);
-            }
+        if(it1->at(0) == QString("false")){
+            int found = atlas->findData(it1->at(1));
+            if(found >= 0)
+                atlas->resetModel(Qt::Unchecked,found);
         }
     }
 }
 
 // issue: match subjectID, or match everything?
-std::vector<std::vector<QString>> T1T2FiberAnalyzer::SyncFromAtlasTableView(){
-    std::vector<std::vector<QString>> data;
+std::vector<std::vector<QString> > T1T2FiberAnalyzer::SyncFromAtlasTableView(){
+    std::vector<std::vector<QString> > data;
     for(unsigned int i =0; i < atlas->getDataSize(); i++){
         std::vector<QString> row;
         if(atlas->getCheckState(i))
@@ -374,7 +372,7 @@ void T1T2FiberAnalyzer::on_T12BrowseBtn_clicked()
 {
     QString dir = ui->para_T12MapInputText->text();
     if(dir == NULL) return;
-    std::vector<std::vector<std::string>> csv_results;
+    std::vector<std::vector<std::string> > csv_results;
     std::vector<std::string> headers;
     if(dir != NULL){
         try{
@@ -394,7 +392,7 @@ void T1T2FiberAnalyzer::on_T12BrowseBtn_clicked()
 void T1T2FiberAnalyzer::on_DTIBrowseBtn_clicked()
 {
     QString dir = ui->para_DTIdefInputText->text();
-    std::vector<std::vector<std::string>> csv_results;
+    std::vector<std::vector<std::string> > csv_results;
     std::vector<std::string> headers;
     if(dir != NULL){
         try{
@@ -467,6 +465,23 @@ void T1T2FiberAnalyzer::on_pyPathBtn_clicked()
         ErrorReporter::fire("Given executable is unsupported, or python version is below minimum requirement (2.5.0)!");
     }else
         ui->conf_pypath->setText(filename);
+
+}
+
+
+void T1T2FiberAnalyzer::on_conf_pypath_editingFinished()
+{
+    QString path = ui->conf_pypath->text();
+    if(path == "")
+        return;
+    if (!tool::checkExecutable(path.toStdString())){
+        ErrorReporter::fire("Provided python path is not executable!");
+        ui->conf_pypath->clear();
+    }
+    else if(!checkPyVersion(path.toStdString())){
+        ErrorReporter::fire("Given executable is unsupported, or python version is below minimum requirement (2.5.0)!");
+        ui->conf_pypath->clear();
+    }
 
 }
 

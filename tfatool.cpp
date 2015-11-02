@@ -91,13 +91,6 @@ void tool::parseMapContent(QString filename, map<string,TractData> &data, string
 
 }
 
-bool tool::checkExecutable(char *path){
-    struct stat sb;
-    if(stat(path,&sb)==0 && sb.st_mode & S_IXUSR)
-        return true;
-    else
-        return false;
-}
 
 bool tool::checkExecutable(string path){
     QFileInfo info(QString::fromStdString(path));
@@ -118,7 +111,6 @@ vector<vector<string>> tool::parseCSV(string dir, vector<string> &attrs){
     // content
     // to-do: check for csv consistency
     while (scanner.next_line(line,sizeof(line))){
-        //qDebug() << line << "XXXX\n";
         vector<string> new_arr;
         tokenize(line,",",new_arr);
         results.push_back(new_arr);

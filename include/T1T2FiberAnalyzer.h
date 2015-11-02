@@ -2,7 +2,6 @@
 #define T1T2FIBERANALYZER_H
 #define DEFAULT_DIR "/home/haiweich/Dev/repo/T1T2FiberAnalyzer/test_data/"
 #define QTGUI_XML_NAME "T1T2GUI.xml"
-#define PYVERSION_SCRIPT_PATH "./version.py"
 
 #include <QMainWindow>
 #include <QDebug>
@@ -65,6 +64,8 @@ private slots:
 
     void on_DTIStatBtn_clicked();
 
+    void on_conf_pypath_editingFinished();
+
 signals:
     void headerSelected();
 
@@ -95,7 +96,7 @@ private:
     void SyncToUI();
     void SaveGuiValue();
     QMessageBox::StandardButton SaveGuiValue(QString filename);
-    std::vector<std::vector<QString>> SyncFromAtlasTableView();
+    std::vector<std::vector<QString> > SyncFromAtlasTableView();
     void SyncToAtlasTableView();
 
 protected:
