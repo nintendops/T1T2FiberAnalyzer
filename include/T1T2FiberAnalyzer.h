@@ -66,9 +66,10 @@ private slots:
 
     void on_conf_pypath_editingFinished();
 
-signals:
-    void headerSelected();
 
+    void on_OutputDirBtn_clicked();
+
+    void on_RunBtn_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -91,6 +92,7 @@ private:
 
     void InitializeState();
     bool checkPyVersion(std::string path);
+    void checkRunCondition();
     void SetEventTriggers();
     void SyncToModel();
     void SyncToUI();

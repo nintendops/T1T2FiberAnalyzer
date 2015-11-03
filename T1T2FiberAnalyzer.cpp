@@ -114,18 +114,13 @@ void T1T2FiberAnalyzer::InitializeState(){
 }
 
 void T1T2FiberAnalyzer::SetEventTriggers(){
-    QComboBox* cb1 = ui->para_DTIComboPath;
-    QComboBox* cb2 = ui->para_DTIComboSID;
-    QComboBox* cb3 = ui->para_T12ComboPath;
-    QComboBox* cb4 = ui->para_T12ComboSID;
-
-    // set/check header selection
+   // set/check header selection
     QObject::connect(ui->para_T12MapInputText,SIGNAL(textChanged(QString)),this,SLOT(T12extractHeaders()));
     QObject::connect(ui->para_DTIdefInputText,SIGNAL(textChanged(QString)),this,SLOT(DTIextractHeaders()));
-    QObject::connect(cb1,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
-    QObject::connect(cb2,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
-    QObject::connect(cb3,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
-    QObject::connect(cb4,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
+    QObject::connect(ui->para_DTIComboPath,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
+    QObject::connect(ui->para_DTIComboSID,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
+    QObject::connect(ui->para_T12ComboPath,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
+    QObject::connect(ui->para_T12ComboSID,SIGNAL(currentIndexChanged(int)),this,SLOT(checkHeaderSelection()));
 
     // menu actions
     QObject::connect(ui->actionExit,SIGNAL(triggered()),this,SLOT(close()));
@@ -143,6 +138,12 @@ bool T1T2FiberAnalyzer::checkPyVersion(std::string path){
         return true;
     else
         return false;
+}
+
+void T1T2FiberAnalyzer::checkRunCondition(){
+    if(!ui->RunBtn->isEnabled() && atlas && tracts && ui->output_dir->text() != ""){
+        ui->RunBtn->setEnabled(true);
+    }
 }
 
 void T1T2FiberAnalyzer::SyncToModel(){
@@ -354,7 +355,7 @@ void T1T2FiberAnalyzer::on_DTIAtlasPathBtn_clicked()
     if(dir == NULL) return;
     ui->para_DTIFiber_Path->setText(dir);
     std::vector<tool::TractData> filelist;
-    tool::getnrrdfiles(dir.toStdString(),filelist);
+    tool::getvtkfiles(dir.toStdString(),filelist);
 
     tracts = new FiberTractModel(0,filelist);
     QItemSelectionModel *m =ui->para_CSVMatchTable->selectionModel();
@@ -365,6 +366,7 @@ void T1T2FiberAnalyzer::on_DTIAtlasPathBtn_clicked()
 
     ui->FiberTableSelectAll->setEnabled(true);
     ui->FiberTableDeselectAll->setEnabled(true);
+    checkRunCondition();
 
 }
 
@@ -450,7 +452,7 @@ void T1T2FiberAnalyzer::on_MatchResultBtn_clicked()
         return;
     }
 
-
+    checkRunCondition();
 }
 
 void T1T2FiberAnalyzer::on_pyPathBtn_clicked()
@@ -532,3 +534,33 @@ void T1T2FiberAnalyzer::on_FiberTableDeselectAll_clicked()
 }
 
 
+
+void T1T2FiberAnalyzer::on_OutputDirBtn_clicked()
+{
+    QString filename = QFileDialog::getExistingDirectory(this,tr("Select an output directory"), *DEFAULT_PATH);
+    if(filename == NULL) return;
+    ui->output_dir->setText(filename);
+    checkRunCondition();
+}
+
+void T1T2FiberAnalyzer::on_RunBtn_clicked()
+{
+    std::vector<tool::MapData> data;
+    std::vector<tool::TractData> t_data;
+    for(unsigned int i =0; i < atlas->getDataSize(); i++){
+        if(atlas->getCheckState(i))
+            data.push_back(atlas->getData(i));
+    }
+
+    for(unsigned int i =0; i < tracts->getDataSize(); i++){
+        if(tracts->getCheckState(i))
+            t_data.push_back(tracts->getData(i));
+    }
+
+    QString abs_out_dir = QFileInfo(ui->output_dir->text()).absoluteFilePath();
+
+    if(writer->writeData(abs_out_dir, data, t_data)){
+        // do something?
+    }
+
+}

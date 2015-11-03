@@ -25,6 +25,8 @@ using namespace std;
 
 namespace tool{
 
+
+     // to-do: struct naming here is problematic
      struct TractData{
         QString csv_path;
         QString subjectID;
@@ -36,7 +38,7 @@ namespace tool{
          QString mapID;
      };
 
-     int getnrrdfiles (string dir, vector<tool::TractData> &files);
+     int getvtkfiles (string dir, vector<tool::TractData> &files);
      bool checkExecutable(string path);
      bool checkNewLine(string &s);
      bool checkDirExist(string path);

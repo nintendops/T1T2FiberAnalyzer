@@ -8,7 +8,8 @@ class ErrorReporter : public QMessageBox
 {
     Q_OBJECT
 public:
-    static void fire(std::string);
+    static void fire(std::string str);
+    static void friendly_fire(std::string str);
 signals:
 
 public slots:

@@ -17,13 +17,14 @@ public:
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
     Qt::ItemFlags flags(const QModelIndex &index) const;
     void resetModel(Qt::CheckState state);
+    tool::TractData getData(int i);
+    bool getCheckState(int i);
+    unsigned int getDataSize();
+
 private:
     Qt::CheckState* checkedState;
     std::vector<tool::TractData> tract_db;
 
-signals:
-
-public slots:
 
 };
 

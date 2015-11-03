@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QString>
+#include <include/tfatool.h>
 #include <include/errorreporter.h>
 
 
@@ -14,7 +15,8 @@ class ScriptWriter
 public:
     static ScriptWriter *getInstance(QString tool, QString pipeline);
     void writePreliminary();
-    void writeData();
+    bool writeData(QString outdir, std::vector<tool::MapData> data,
+                   std::vector<tool::TractData> tracts);
     QString getToolScriptName();
     QString getPipelineScriptName();
     void close();

@@ -27,9 +27,7 @@ public:
 private:
     Qt::CheckState* checkedState;
     std::vector<tool::MapData> tract_db;
-signals:
 
-public slots:
 
 };
 

@@ -1,7 +1,7 @@
 #include "include/tfatool.h"
 using namespace tool;
 
-int tool::getnrrdfiles (string dir, vector<tool::TractData> &files){
+int tool::getvtkfiles (string dir, vector<tool::TractData> &files){
    DIR *dp;
    struct dirent *dirp;
    if((dp  = opendir(dir.c_str())) == NULL) {
