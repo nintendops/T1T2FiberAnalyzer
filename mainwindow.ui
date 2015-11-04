@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -700,7 +700,7 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_13">
            <item>
-            <widget class="QLineEdit" name="output_dir"/>
+            <widget class="QLineEdit" name="para_output_dir"/>
            </item>
            <item>
             <widget class="QToolButton" name="OutputDirBtn">

@@ -1,4 +1,4 @@
-#include "include/tfatool.h"
+#include "tfatool.h"
 using namespace tool;
 
 int tool::getvtkfiles (string dir, vector<tool::TractData> &files){

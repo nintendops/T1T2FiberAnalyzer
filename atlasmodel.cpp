@@ -1,7 +1,7 @@
-#include "include/atlasmodel.h"
+#include "atlasmodel.h"
 #include <iostream>
 #include <unordered_set>
-#include <include/errorreporter.h>
+#include <errorreporter.h>
 
 
 // AtlasModel is for the csv match table between csv of T1/T2 images and csv of DTI deformation fields

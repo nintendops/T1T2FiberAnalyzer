@@ -11,12 +11,14 @@ csvparser::csvparser(QString filepath)
     }
 }
 
-csvparser::~csvparser(){
+csvparser::~csvparser()
+{
     delete file;
 }
 
 // read the first line and parse it as header
-void csvparser::read(string header1, string header2){
+void csvparser::read(string header1, string header2)
+{
     if(!file->isOpen())
         return;
     char buf[10000];
@@ -42,7 +44,8 @@ void csvparser::read(string header1, string header2){
 
 }
 
-bool csvparser::read_row(char *a, char *b){
+bool csvparser::read_row(char *a, char *b)
+{
     if(!file->isOpen() || h1 < 0 || h2 < 0 || columns == 0)
         return false;
     char buf[10000];
@@ -68,7 +71,8 @@ bool csvparser::read_row(char *a, char *b){
         return false;
 }
 
-bool csvparser::next_line(char buf[],qint64 size){
+bool csvparser::next_line(char buf[],qint64 size)
+{
     if(!file->isOpen())
         return false;
     qint64 l = file->readLine(buf,size);
@@ -81,7 +85,8 @@ bool csvparser::next_line(char buf[],qint64 size){
 }
 
 
-void csvparser::close(){
+void csvparser::close()
+{
     if(!file->isOpen())
         return;
     file->close();

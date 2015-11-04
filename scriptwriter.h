@@ -4,8 +4,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QString>
-#include <include/tfatool.h>
-#include <include/errorreporter.h>
+#include <tfatool.h>
+#include <errorreporter.h>
 
 
 // class used for writing python script

@@ -15,17 +15,15 @@ include(${GenerateCLP_USE_FILE})
 find_package(QtToCppXML REQUIRED)
 include(${QtToCppXML_USE_FILE})
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set(srcheaders
 scriptwriter.h
 csvparser.h
-include/atlasmodel.h
-include/csvbrowsemodel.h
-include/fibertractmodel.h
-include/csvbrowser.h
-include/T1T2FiberAnalyzer.h
-include/errorreporter.h
+atlasmodel.h
+csvbrowsemodel.h
+fibertractmodel.h
+csvbrowser.h
+T1T2FiberAnalyzer.h
+errorreporter.h
 )
 
 set(srcfiles
@@ -57,13 +55,13 @@ ${QT5_HEADERS_MOC}
 ${UI_FILES}
 )
 
-#SEMMacroBuildCLI(
-#  NAME T1T2FiberAnalyzerTool
-#  EXECUTABLE_ONLY
-#  ADDITIONAL_SRCS ${srcfiles}
-#  TARGET_LIBRARIES ${Qt5Widgets_LIBRARIES} 
-#  INCLUDE_DIRECTORIES ${Qt5Widgets_INCLUDE_DIRS} 
-# )
+SEMMacroBuildCLI(
+  NAME T1T2FiberAnalyzerTool
+  EXECUTABLE_ONLY
+  ADDITIONAL_SRCS ${srcfiles}
+  TARGET_LIBRARIES ${Qt5Widgets_LIBRARIES}
+  INCLUDE_DIRECTORIES ${Qt5Widgets_INCLUDE_DIRS} 
+)
 
-add_executable(T1T2FiberAnalyzer ${srcfiles})
-target_link_libraries(T1T2FiberAnalyzer Qt5::Widgets)
+#add_executable(T1T2FiberAnalyzer ${srcfiles})
+#target_link_libraries(T1T2FiberAnalyzer Qt5::Widgets)

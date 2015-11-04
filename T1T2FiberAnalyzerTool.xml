@@ -15,13 +15,13 @@
       <file>
 	 <name>txml</name>	
 	 <description>Path of the T1w/T2w ratio map XML file that contains the parameters configuration</description>
-	 <longflag>parameters</longflag>
+	 <longflag>txml</longflag>
 	 <label>xml file</label>
       </file>
       <file>
 	 <name>dxml</name>	
 	 <description>Path of the DTI deformation field XML file that contains the parameters configuration</description>
-	 <longflag>parameters</longflag>
+	 <longflag>dxml</longflag>
 	 <label>xml file</label>
       </file>
    </parameters>

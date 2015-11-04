@@ -1,4 +1,4 @@
-#include "include/csvbrowsemodel.h"
+#include "csvbrowsemodel.h"
 #include <iostream>
 
 CSVBrowseModel::CSVBrowseModel (QObject *parent,  vector<vector<string>> csv_results, vector<string> h)

@@ -2,7 +2,7 @@
 #include <utility>
 #include <functional>
 #include <typeinfo>
-#include "include/T1T2FiberAnalyzer.h"
+#include "T1T2FiberAnalyzer.h"
 
 T1T2FiberAnalyzer::T1T2FiberAnalyzer(QWidget *parent) :
     QMainWindow(parent),
@@ -28,7 +28,8 @@ T1T2FiberAnalyzer::~T1T2FiberAnalyzer()
 
 }
 
-void T1T2FiberAnalyzer::initializeConfPath(){
+void T1T2FiberAnalyzer::initializeConfPath()
+{
     // write to version.py
     // tool::writePyVersion()
     writer = ScriptWriter::getInstance("tool.py","pipeline.py");
@@ -83,7 +84,8 @@ void T1T2FiberAnalyzer::initializeConfPath(){
 
 // private methods
 
-void T1T2FiberAnalyzer::InitializeState(){
+void T1T2FiberAnalyzer::InitializeState()
+{
     SetEventTriggers();
 
     ui->tabWidget->setCurrentIndex(0);
@@ -128,7 +130,8 @@ void T1T2FiberAnalyzer::SetEventTriggers(){
     QObject::connect(ui->actionLoad,SIGNAL(triggered()),this,SLOT(loadPara()));
 }
 
-bool T1T2FiberAnalyzer::checkPyVersion(std::string path){
+bool T1T2FiberAnalyzer::checkPyVersion(std::string path)
+{
     std::string cmd = path+" "+ writer->getToolScriptName().toStdString();
     std::string result = tool::syscall(cmd.c_str());
     // removing newline character
@@ -140,13 +143,15 @@ bool T1T2FiberAnalyzer::checkPyVersion(std::string path){
         return false;
 }
 
-void T1T2FiberAnalyzer::checkRunCondition(){
-    if(!ui->RunBtn->isEnabled() && atlas && tracts && ui->output_dir->text() != ""){
+void T1T2FiberAnalyzer::checkRunCondition()
+{
+    if(!ui->RunBtn->isEnabled() && atlas && tracts && ui->para_output_dir->text() != ""){
         ui->RunBtn->setEnabled(true);
     }
 }
 
-void T1T2FiberAnalyzer::SyncToModel(){
+void T1T2FiberAnalyzer::SyncToModel()
+{
     // concerns about racing condition?
     m_gui->setpara_T12MapInputText(ui->para_T12MapInputText->text());
     m_gui->setpara_T12ComboPath(ui->para_T12ComboPath->currentText());
@@ -155,15 +160,26 @@ void T1T2FiberAnalyzer::SyncToModel(){
     m_gui->setpara_DTIComboPath(ui->para_DTIComboPath->currentText());
     m_gui->setpara_DTIComboSID(ui->para_DTIComboSID->currentText());
     m_gui->setpara_DTIFiber_Path(ui->para_DTIFiber_Path->text());
+    m_gui->setpara_DTIFiber_Path(ui->para_DTIFiber_Path->text());
+    m_gui->setpara_output_dir(ui->para_output_dir->text());
 
-    if(ui->para_CSVMatchTable->model()){
+    if(atlas){
         m_gui->setpara_CSVMatchTable(SyncFromAtlasTableView());
     }
+
+    if(tracts){
+        m_gui->setpara_Fiber_Tracts_Table(SyncFromTractsTableView());
+    }
+
+
 }
 
-void T1T2FiberAnalyzer::SyncToUI(){
+void T1T2FiberAnalyzer::SyncToUI()
+{
     ui->para_T12MapInputText->setText(m_gui->getpara_T12MapInputText());
     ui->para_DTIdefInputText->setText(m_gui->getpara_DTIdefInputText());
+    ui->para_DTIFiber_Path->setText(m_gui->getpara_DTIFiber_Path());
+    ui->para_output_dir->setText(m_gui->getpara_output_dir());
 
     int tid = ui->para_T12ComboPath->findText(m_gui->getpara_T12ComboPath());
     if(tid >= 0){
@@ -188,7 +204,8 @@ void T1T2FiberAnalyzer::SyncToUI(){
 
 }
 
-void T1T2FiberAnalyzer::SyncToAtlasTableView(){
+void T1T2FiberAnalyzer::SyncToAtlasTableView()
+{
     std::vector<std::vector<QString> > m = m_gui->getpara_CSVMatchTable();
     for(std::vector<std::vector<QString> >::iterator it1 = m.begin(); it1 != m.end(); ++it1){
         // integrity check
@@ -203,7 +220,9 @@ void T1T2FiberAnalyzer::SyncToAtlasTableView(){
 }
 
 // issue: match subjectID, or match everything?
-std::vector<std::vector<QString> > T1T2FiberAnalyzer::SyncFromAtlasTableView(){
+// currently matches only the subjectID
+std::vector<std::vector<QString> > T1T2FiberAnalyzer::SyncFromAtlasTableView()
+{
     std::vector<std::vector<QString> > data;
     for(unsigned int i =0; i < atlas->getDataSize(); i++){
         std::vector<QString> row;
@@ -218,7 +237,41 @@ std::vector<std::vector<QString> > T1T2FiberAnalyzer::SyncFromAtlasTableView(){
     return data;
 }
 
-void T1T2FiberAnalyzer::T12extractHeaders(){
+void T1T2FiberAnalyzer::SyncToTractsTableView()
+{
+    std::vector<std::vector<QString> > m = m_gui->getpara_Fiber_Tracts_Table();
+    for(std::vector<std::vector<QString> >::iterator it1 = m.begin(); it1 != m.end(); ++it1){
+        // integrity check
+        if (it1->size() != 2)
+            continue;
+        if(it1->at(0) == QString("false")){
+            int found = tracts->findData(it1->at(1));
+            if(found >= 0)
+                tracts->resetModel(Qt::Unchecked,found);
+        }
+    }
+}
+
+std::vector<std::vector<QString> > T1T2FiberAnalyzer::SyncFromTractsTableView()
+{
+    std::vector<std::vector<QString> > data;
+    for(unsigned int i =0; i < tracts->getDataSize(); i++){
+        std::vector<QString> row;
+        if(tracts->getCheckState(i))
+            row.push_back("true");
+        else
+            row.push_back("false");
+        row.push_back(tracts->getData(i).subjectID);
+        data.push_back(row);
+    }
+
+    return data;
+}
+
+
+
+void T1T2FiberAnalyzer::T12extractHeaders()
+{
     QString fileName = ui->para_T12MapInputText->text();
     // parse headers of csv file and populate into combo boxes
     T12headers.clear();
@@ -241,7 +294,8 @@ void T1T2FiberAnalyzer::T12extractHeaders(){
         }
 }
 
-void T1T2FiberAnalyzer::DTIextractHeaders(){
+void T1T2FiberAnalyzer::DTIextractHeaders()
+{
     QString fileName = ui->para_DTIdefInputText->text();
     // parse headers of csv file and populate into combo boxes
     DTIheaders.clear();
@@ -264,7 +318,8 @@ void T1T2FiberAnalyzer::DTIextractHeaders(){
         }
 }
 
-QMessageBox::StandardButton T1T2FiberAnalyzer::SaveGuiValue(QString filename){
+QMessageBox::StandardButton T1T2FiberAnalyzer::SaveGuiValue(QString filename)
+{
     SyncToModel();
     QMessageBox::StandardButton rtn = QMessageBox::question(this, "","Save Changed Value to Configuration File "+ filename  +"?",
                                                             QMessageBox::Yes|QMessageBox::No| QMessageBox::Cancel);
@@ -277,11 +332,13 @@ QMessageBox::StandardButton T1T2FiberAnalyzer::SaveGuiValue(QString filename){
 
 // protected methods
 
-void T1T2FiberAnalyzer::contextMenuEvent(QContextMenuEvent *event){
+void T1T2FiberAnalyzer::contextMenuEvent(QContextMenuEvent *event)
+{
     ui->menuConfiguration->exec(event->globalPos());
 }
 
-void T1T2FiberAnalyzer::closeEvent(QCloseEvent *event){
+void T1T2FiberAnalyzer::closeEvent(QCloseEvent *event)
+{
     QMessageBox::StandardButton rtn = SaveGuiValue(para_File);
 
     if(rtn == QMessageBox::Cancel || rtn == QMessageBox::Escape){
@@ -292,7 +349,8 @@ void T1T2FiberAnalyzer::closeEvent(QCloseEvent *event){
 
 // slots
 
-void T1T2FiberAnalyzer::savePara(){
+void T1T2FiberAnalyzer::savePara()
+{
     // to-do: add a cancel button
 
     SyncToModel();
@@ -308,7 +366,8 @@ void T1T2FiberAnalyzer::savePara(){
 
 }
 
-void T1T2FiberAnalyzer::loadPara(){
+void T1T2FiberAnalyzer::loadPara()
+{
     // to-do: check for corner cases
 
     QString m_DialogDir = para_File;
@@ -320,7 +379,8 @@ void T1T2FiberAnalyzer::loadPara(){
     }
 }
 
-void T1T2FiberAnalyzer::checkHeaderSelection(){
+void T1T2FiberAnalyzer::checkHeaderSelection()
+{
     QString str1 = ui->para_T12ComboPath->currentText();
     QString str2 = ui->para_T12ComboSID->currentText();
     QString str3 = ui->para_DTIComboPath->currentText();
@@ -359,6 +419,11 @@ void T1T2FiberAnalyzer::on_DTIAtlasPathBtn_clicked()
 
     tracts = new FiberTractModel(0,filelist);
     QItemSelectionModel *m =ui->para_CSVMatchTable->selectionModel();
+
+    // synchronize states if loader exists
+    if(isSync)
+        SyncToTractsTableView();
+
     ui->para_Fiber_Tracts_Table->setModel(tracts);
     ui->para_Fiber_Tracts_Table->horizontalHeader()->setStretchLastSection(true);
     if(m) delete m;
@@ -367,6 +432,9 @@ void T1T2FiberAnalyzer::on_DTIAtlasPathBtn_clicked()
     ui->FiberTableSelectAll->setEnabled(true);
     ui->FiberTableDeselectAll->setEnabled(true);
     checkRunCondition();
+
+
+    m_gui->setpara_Fiber_Tracts_Table(SyncFromTractsTableView());
 
 }
 
@@ -539,7 +607,7 @@ void T1T2FiberAnalyzer::on_OutputDirBtn_clicked()
 {
     QString filename = QFileDialog::getExistingDirectory(this,tr("Select an output directory"), *DEFAULT_PATH);
     if(filename == NULL) return;
-    ui->output_dir->setText(filename);
+    ui->para_output_dir->setText(filename);
     checkRunCondition();
 }
 
@@ -557,7 +625,7 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
             t_data.push_back(tracts->getData(i));
     }
 
-    QString abs_out_dir = QFileInfo(ui->output_dir->text()).absoluteFilePath();
+    QString abs_out_dir = QFileInfo(ui->para_output_dir->text()).absoluteFilePath();
 
     if(writer->writeData(abs_out_dir, data, t_data)){
         // do something?

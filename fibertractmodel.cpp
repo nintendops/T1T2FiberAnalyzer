@@ -1,5 +1,4 @@
-#include "include/fibertractmodel.h"
-#include "include/stacktrace.h"
+#include "fibertractmodel.h"
 #include <iostream>
 
 
@@ -81,6 +80,17 @@ bool FiberTractModel::setData(const QModelIndex & index, const QVariant & value,
     return false;
 }
 
+int FiberTractModel::findData(QString str){
+    unsigned int i = 0;
+    for(std::vector<tool::TractData>::iterator it = tract_db.begin(); it != tract_db.end(); ++it) {
+        if(it->subjectID == str)
+            return i;
+        i++;
+    }
+
+    return -1;
+}
+
 unsigned int FiberTractModel::getDataSize(){
     return tract_db.size();
 }
@@ -94,10 +104,13 @@ bool FiberTractModel::getCheckState(int i){
 }
 
 
-void FiberTractModel::resetModel(Qt::CheckState state){
+void FiberTractModel::resetModel(Qt::CheckState state, int index){
     this->beginResetModel();
-    for(int i =0; i< tract_db.size(); i++){
-        checkedState[i] = state;
-    }
+    if(index < 0){
+        for(unsigned int i =0; i< tract_db.size(); i++){
+            checkedState[i] = state;
+        }
+    }else
+        checkedState[index] = state;
     this->endResetModel();
 }

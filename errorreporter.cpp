@@ -1,4 +1,4 @@
-#include "include/errorreporter.h"
+#include "errorreporter.h"
 
 
 void ErrorReporter::fire(std::string str){
