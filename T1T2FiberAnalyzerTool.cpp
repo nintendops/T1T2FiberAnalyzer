@@ -1,10 +1,10 @@
-#include "T1T2FiberAnalyzerToolCLP.h"
+//#include "T1T2FiberAnalyzerToolCLP.h"
 #include "T1T2FiberAnalyzer.h"
 #include <QApplication>
 
 int main(int argc, char **argv)
 {
-    PARSE_ARGS;
+    //  PARSE_ARGS;
 
     QApplication a(argc, argv);
     T1T2FiberAnalyzer w;

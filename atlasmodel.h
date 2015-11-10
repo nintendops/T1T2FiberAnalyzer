@@ -3,6 +3,7 @@
 #define TRACT_CSV_COL_NUM 4
 
 #include <QAbstractTableModel>
+#include <QDebug>
 #include "tfatool.h"
 
 class AtlasModel : public QAbstractTableModel

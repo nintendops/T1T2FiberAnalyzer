@@ -143,11 +143,13 @@ bool T1T2FiberAnalyzer::checkPyVersion(std::string path)
         return false;
 }
 
-void T1T2FiberAnalyzer::checkRunCondition()
+bool T1T2FiberAnalyzer::checkRunCondition()
 {
     if(!ui->RunBtn->isEnabled() && atlas && tracts && ui->para_output_dir->text() != ""){
         ui->RunBtn->setEnabled(true);
+        return true;
     }
+    return false;
 }
 
 void T1T2FiberAnalyzer::SyncToModel()
@@ -198,12 +200,21 @@ void T1T2FiberAnalyzer::SyncToUI()
         ui->para_DTIComboSID->setCurrentIndex(dsid);
     }
 
+    if(m_gui->getpara_DTIFiber_Path() != ""){
+        PopulateTractsTable(m_gui->getpara_DTIFiber_Path());
+    }
+
+    if(checkHeaderSelection()){
+        PopulateAtlasTable();
+    }
+
     /* synchronization of table model only occurs after match button is clicked
     */
 
 
 }
 
+// issue: loading does not verify if header names and file names are consistent
 void T1T2FiberAnalyzer::SyncToAtlasTableView()
 {
     std::vector<std::vector<QString> > m = m_gui->getpara_CSVMatchTable();
@@ -261,7 +272,7 @@ std::vector<std::vector<QString> > T1T2FiberAnalyzer::SyncFromTractsTableView()
             row.push_back("true");
         else
             row.push_back("false");
-        row.push_back(tracts->getData(i).subjectID);
+        row.push_back(tracts->getData(i).file_path);
         data.push_back(row);
     }
 
@@ -321,7 +332,7 @@ void T1T2FiberAnalyzer::DTIextractHeaders()
 QMessageBox::StandardButton T1T2FiberAnalyzer::SaveGuiValue(QString filename)
 {
     SyncToModel();
-    QMessageBox::StandardButton rtn = QMessageBox::question(this, "","Save Changed Value to Configuration File "+ filename  +"?",
+    QMessageBox::StandardButton rtn = QMessageBox::question(this, "","Save Current Values to Configuration File "+ filename  +"?",
                                                             QMessageBox::Yes|QMessageBox::No| QMessageBox::Cancel);
     if(rtn == QMessageBox::Yes || rtn == QMessageBox::NoButton){
         s_gui->save(*m_gui,filename.toStdString());
@@ -334,7 +345,7 @@ QMessageBox::StandardButton T1T2FiberAnalyzer::SaveGuiValue(QString filename)
 
 void T1T2FiberAnalyzer::contextMenuEvent(QContextMenuEvent *event)
 {
-    ui->menuConfiguration->exec(event->globalPos());
+    // to-do: right-click menu (copy?)
 }
 
 void T1T2FiberAnalyzer::closeEvent(QCloseEvent *event)
@@ -379,7 +390,7 @@ void T1T2FiberAnalyzer::loadPara()
     }
 }
 
-void T1T2FiberAnalyzer::checkHeaderSelection()
+bool T1T2FiberAnalyzer::checkHeaderSelection()
 {
     QString str1 = ui->para_T12ComboPath->currentText();
     QString str2 = ui->para_T12ComboSID->currentText();
@@ -389,7 +400,9 @@ void T1T2FiberAnalyzer::checkHeaderSelection()
         ui->MatchResultBtn->setEnabled(true);
         ui->MatchTableSelectAll->setEnabled(true);
         ui->MatchTableDeselectAll->setEnabled(true);
+        return true;
     }
+    return false;
 }
 
 void T1T2FiberAnalyzer::on_T12MapInputBtn_clicked()
@@ -414,28 +427,67 @@ void T1T2FiberAnalyzer::on_DTIAtlasPathBtn_clicked()
                                                     QFileDialog::ShowDirsOnly);
     if(dir == NULL) return;
     ui->para_DTIFiber_Path->setText(dir);
+    PopulateTractsTable(dir);
+
+}
+
+bool T1T2FiberAnalyzer::PopulateAtlasTable(){
+    T12TractData.clear();
+    DTITractData.clear();
+    std::string str1 = ui->para_T12ComboPath->currentText().toStdString();
+    str1 = tool::trim(str1);
+    std::string str2 = ui->para_T12ComboSID->currentText().toStdString();
+    str2 = tool::trim(str2);
+    std::string str3 = ui->para_DTIComboPath->currentText().toStdString();
+    str3 = tool::trim(str3);
+    std::string str4 = ui->para_DTIComboSID->currentText().toStdString();
+    str4 = tool::trim(str4);
+
+    QString T12_csv = ui->para_T12MapInputText->text();
+    QString DTI_csv = ui->para_DTIdefInputText->text();
+
+    try{
+        tool::parseMapContent(T12_csv,T12TractData,str1,str2);
+        tool::parseMapContent(DTI_csv,DTITractData,str3,str4);
+        atlas = new AtlasModel(0,T12TractData,DTITractData);
+        QItemSelectionModel *m = ui->para_CSVMatchTable->selectionModel();
+
+        // synchronize states if loader exists
+        if(isSync)
+            SyncToAtlasTableView();
+
+        ui->para_CSVMatchTable->setModel(atlas);
+        ui->para_CSVMatchTable->horizontalHeader()->setStretchLastSection(true);
+        if(m!=NULL) delete m;
+
+    }catch(csvparser::ReadError e){
+        ErrorReporter::fire(string(e.what()));
+        return false;
+    }
+
+    checkRunCondition();
+    return true;
+}
+
+bool T1T2FiberAnalyzer::PopulateTractsTable(QString str){
+    QDir dir(str);
+    if (!dir.exists())
+        return false;
     std::vector<tool::TractData> filelist;
-    tool::getvtkfiles(dir.toStdString(),filelist);
-
+    tool::getvtkfiles(str.toStdString(),filelist);
     tracts = new FiberTractModel(0,filelist);
-    QItemSelectionModel *m =ui->para_CSVMatchTable->selectionModel();
-
-    // synchronize states if loader exists
     if(isSync)
         SyncToTractsTableView();
-
+    QItemSelectionModel *m =ui->para_CSVMatchTable->selectionModel();
     ui->para_Fiber_Tracts_Table->setModel(tracts);
     ui->para_Fiber_Tracts_Table->horizontalHeader()->setStretchLastSection(true);
-    if(m) delete m;
-
-
     ui->FiberTableSelectAll->setEnabled(true);
     ui->FiberTableDeselectAll->setEnabled(true);
+    if(m) delete m;
+
     checkRunCondition();
-
-
-    m_gui->setpara_Fiber_Tracts_Table(SyncFromTractsTableView());
-
+    return true;
+    //m_gui->setpara_Fiber_Tracts_Table(SyncFromTractsTableView());
 }
 
 void T1T2FiberAnalyzer::on_T12BrowseBtn_clicked()
@@ -478,49 +530,10 @@ void T1T2FiberAnalyzer::on_DTIBrowseBtn_clicked()
     bd->loadTable(csv_results,headers);
 }
 
+
 void T1T2FiberAnalyzer::on_MatchResultBtn_clicked()
 {
-    T12TractData.clear();
-    DTITractData.clear();
-    std::string str1 = ui->para_T12ComboPath->currentText().toStdString();
-    str1 = tool::trim(str1);
-    std::string str2 = ui->para_T12ComboSID->currentText().toStdString();
-    str2 = tool::trim(str2);
-    std::string str3 = ui->para_DTIComboPath->currentText().toStdString();
-    str3 = tool::trim(str3);
-    std::string str4 = ui->para_DTIComboSID->currentText().toStdString();
-    str4 = tool::trim(str4);
-
-    /*
-    if(str1 == str2 || str3 == str4){
-        ErrorReporter::fire("Header names should not be the same!");
-        return;
-    }
-    */
-
-    QString T12_csv = ui->para_T12MapInputText->text();
-    QString DTI_csv = ui->para_DTIdefInputText->text();
-
-    try{
-        tool::parseMapContent(T12_csv,T12TractData,str1,str2);
-        tool::parseMapContent(DTI_csv,DTITractData,str3,str4);
-        atlas = new AtlasModel(0,T12TractData,DTITractData);
-        QItemSelectionModel *m = ui->para_CSVMatchTable->selectionModel();
-
-        // synchronize states if loader exists
-        if(isSync)
-            SyncToAtlasTableView();
-
-        ui->para_CSVMatchTable->setModel(atlas);
-        ui->para_CSVMatchTable->horizontalHeader()->setStretchLastSection(true);
-        if(m!=NULL) delete m;
-
-    }catch(csvparser::ReadError e){
-        ErrorReporter::fire(string(e.what()));
-        return;
-    }
-
-    checkRunCondition();
+    PopulateAtlasTable();
 }
 
 void T1T2FiberAnalyzer::on_pyPathBtn_clicked()

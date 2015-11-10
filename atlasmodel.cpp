@@ -36,8 +36,8 @@ AtlasModel::AtlasModel(QObject *parent, std::map<std::string,tool::TractData> db
 
             if(key == mkey){
                 tool::MapData mapd = {
-                    it->second.csv_path,
-                    itt->second.csv_path,
+                    it->second.file_path,
+                    itt->second.file_path,
                     QString::fromStdString(key),
                     QString::fromStdString(mkey)
                 };
@@ -47,8 +47,8 @@ AtlasModel::AtlasModel(QObject *parent, std::map<std::string,tool::TractData> db
             }
             else if(key.length() <= mkey.length() && mkey.find(key) != std::string::npos){
                 tool::MapData mapd = {
-                    it->second.csv_path,
-                    itt->second.csv_path,
+                    it->second.file_path,
+                    itt->second.file_path,
                     QString::fromStdString(key),
                     QString::fromStdString(mkey)
                 };
@@ -58,8 +58,8 @@ AtlasModel::AtlasModel(QObject *parent, std::map<std::string,tool::TractData> db
             }
             else if(mkey.length() < key.length() && key.find(mkey) != std::string::npos){
                 tool::MapData mapd = {
-                    it->second.csv_path,
-                    itt->second.csv_path,
+                    it->second.file_path,
+                    itt->second.file_path,
                     QString::fromStdString(key),
                     QString::fromStdString(mkey)
                 };
@@ -94,6 +94,7 @@ QVariant AtlasModel::data(const QModelIndex &index, int role) const{
     int row = index.row();
     int col = index.column();
 
+    // issue: no way that the entire path can be seen when it is too long
     if (role == Qt::DisplayRole){
         switch(col){
         case 1:

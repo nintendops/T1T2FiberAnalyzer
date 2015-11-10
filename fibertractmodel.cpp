@@ -29,7 +29,7 @@ QVariant FiberTractModel::data(const QModelIndex &index, int role) const{
     if (role == Qt::DisplayRole){
         if(col==1){
             // issue: to avoid confusion, the csv path here stores the path to fiber tract, not csv
-            return tract_db[row].csv_path;
+            return tract_db[row].file_path;
         }
     }
     else if (role == Qt::CheckStateRole){
@@ -83,7 +83,7 @@ bool FiberTractModel::setData(const QModelIndex & index, const QVariant & value,
 int FiberTractModel::findData(QString str){
     unsigned int i = 0;
     for(std::vector<tool::TractData>::iterator it = tract_db.begin(); it != tract_db.end(); ++it) {
-        if(it->subjectID == str)
+        if(it->file_path == str)
             return i;
         i++;
     }

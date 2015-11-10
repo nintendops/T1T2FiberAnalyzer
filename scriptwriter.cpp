@@ -67,7 +67,7 @@ bool ScriptWriter::writeData(QString outdir, std::vector<tool::MapData> data,
                 char buffer[1024];
                 std::sprintf(buffer,"\trun_process('%s','%s','%s','%s')\n",
                              it1->subjectID.toStdString().c_str(),it1->t12_path.toStdString().c_str(),
-                             it1->def_path.toStdString().c_str(), it2->csv_path.toStdString().c_str());
+                             it1->def_path.toStdString().c_str(), it2->file_path.toStdString().c_str());
                 file.write(buffer);
             }
         }

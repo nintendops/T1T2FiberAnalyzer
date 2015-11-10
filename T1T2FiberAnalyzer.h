@@ -41,7 +41,7 @@ public:
 
 
 private slots:
-    void checkHeaderSelection();
+    bool checkHeaderSelection();
     void savePara();
     //void saveConf();
     void loadPara();
@@ -59,19 +59,14 @@ private slots:
     void on_MatchTableDeselectAll_clicked();
     void on_FiberTableSelectAll_clicked();
     void on_FiberTableDeselectAll_clicked();
-
     void on_FiberProcessBtn_clicked();
-
     void on_DTIStatBtn_clicked();
-
     void on_conf_pypath_editingFinished();
-
-
     void on_OutputDirBtn_clicked();
-
     void on_RunBtn_clicked();
 
 private:
+    // vars
     Ui::MainWindow *ui;
     para_Model_T1T2FiberAnalyzer* m_gui;
     para_Save_T1T2FiberAnalyzer* s_gui;
@@ -82,17 +77,16 @@ private:
     const QString* DEFAULT_PATH;
     bool isSync = false;
     QString para_File = QTGUI_XML_NAME;
-
-
-    // possible optimization: localize tje following four variables?
+    // possible optimization: localize the following four variables?
     std::map<std::string,tool::TractData> T12TractData;
     std::map<std::string,tool::TractData> DTITractData;
     std::vector<std::string> T12headers;
     std::vector<std::string> DTIheaders;
 
+    // methods
     void InitializeState();
     bool checkPyVersion(std::string path);
-    void checkRunCondition();
+    bool checkRunCondition();
     void SetEventTriggers();
     void SyncToModel();
     void SyncToUI();
@@ -100,6 +94,8 @@ private:
     void SyncToAtlasTableView();
     std::vector<std::vector<QString> > SyncFromTractsTableView();
     void SyncToTractsTableView();
+    bool PopulateAtlasTable();
+    bool PopulateTractsTable(QString str);
     void SaveGuiValue();
     QMessageBox::StandardButton SaveGuiValue(QString filename);
 

@@ -26,10 +26,10 @@ using namespace std;
 namespace tool{
 
 
-     // to-do: struct naming here is problematic
+     // to-do: struct naming and usage are problematic
      struct TractData
      {
-        QString csv_path;
+        QString file_path;
         QString subjectID;
      };
      struct MapData

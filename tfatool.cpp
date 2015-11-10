@@ -1,6 +1,8 @@
 #include "tfatool.h"
 using namespace tool;
 
+
+// to-do: use QDir instead of c++ library
 int tool::getvtkfiles (string dir, vector<tool::TractData> &files){
    DIR *dp;
    struct dirent *dirp;
@@ -18,6 +20,7 @@ int tool::getvtkfiles (string dir, vector<tool::TractData> &files){
        if (prefix == "vtk"){
            size_t found_name = filepath.find_last_of("/");
            string filename = filepath.substr(found_name+1);
+           // to-do: subject ID is trivial
            tool::TractData newTract = {
                QString::fromStdString(filename),  // file name
                QString("UniTract")  //subject ID
