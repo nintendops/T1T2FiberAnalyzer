@@ -6,6 +6,7 @@
 #include <QString>
 #include <tfatool.h>
 #include <errorreporter.h>
+#include <cstdio>
 
 
 // class used for writing python script
@@ -15,7 +16,7 @@ class ScriptWriter
 public:
     static ScriptWriter *getInstance(QString tool, QString pipeline);
     void writePreliminary();
-    bool writeData(QString outdir, std::vector<tool::MapData> data,
+    bool writeData(QString outdir, QString fiber_dir, std::vector<tool::MapData> data,
                    std::vector<tool::TractData> tracts);
     QString getToolScriptName();
     QString getPipelineScriptName();

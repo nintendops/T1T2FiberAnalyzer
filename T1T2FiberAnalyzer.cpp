@@ -639,8 +639,8 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
     }
 
     QString abs_out_dir = QFileInfo(ui->para_output_dir->text()).absoluteFilePath();
-
-    if(writer->writeData(abs_out_dir, data, t_data)){
+    QString abs_fiber_dir = QFileInfo(ui->para_DTIFiber_Path->text()).absoluteFilePath();
+    if(writer->writeData(abs_out_dir, abs_fiber_dir,data, t_data)){
         // do something?
     }
 

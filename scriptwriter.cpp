@@ -43,7 +43,7 @@ void ScriptWriter::writePreliminary(){
 }
 
 
-bool ScriptWriter::writeData(QString outdir, std::vector<tool::MapData> data,
+bool ScriptWriter::writeData(QString outdir, QString fiber_dir, std::vector<tool::MapData> data,
                std::vector<tool::TractData> tracts){
     // issue: window path may not take slash
     QFile file(outdir + "/" +pipeline_script);
@@ -56,7 +56,12 @@ bool ScriptWriter::writeData(QString outdir, std::vector<tool::MapData> data,
 
         // global declaration
         file.write("# global declaration \n");
-        file.write("out_dir = \"\"\n\n");
+        char out[18+outdir.size()];
+        snprintf(out,sizeof out, "out_dir = \"%s\"\n",outdir.toStdString().c_str());
+        file.write(out);
+        char fout[24+ outdir.size()];
+        snprintf(fout,sizeof fout, "fiber_dir = \"%s\"\n",fiber_dir.toStdString().c_str());
+        file.write(fout);
         file.write("# procedure run for each case\n");
         file.write("def run_process(sid,dti_path,def_path,fiber_path):\n");
         file.write("\tpass\n\n");
