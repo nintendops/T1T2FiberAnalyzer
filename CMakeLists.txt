@@ -30,7 +30,7 @@ set(srcfiles
 tfatool.cpp
 errorreporter.cpp
 T1T2FiberAnalyzer.cpp
-T1T2FiberAnalyzerTool.cpp
+ScalarFiberAnalyzer.cpp
 csvbrowser.cpp
 csvbrowsemodel.cpp
 fibertractmodel.cpp
@@ -55,8 +55,9 @@ ${QT5_HEADERS_MOC}
 ${UI_FILES}
 )
 
+
 SEMMacroBuildCLI(
-  NAME T1T2FiberAnalyzerTool
+  NAME ScalarFiberAnalyzer
   EXECUTABLE_ONLY
   ADDITIONAL_SRCS ${srcfiles}
   TARGET_LIBRARIES ${Qt5Widgets_LIBRARIES}

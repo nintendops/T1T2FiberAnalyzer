@@ -71,6 +71,7 @@ private:
     para_Model_T1T2FiberAnalyzer* m_gui;
     para_Save_T1T2FiberAnalyzer* s_gui;
     para_Load_T1T2FiberAnalyzer* l_gui;
+    // to-do: conf-prefix values are not saved and loaded
     AtlasModel* atlas;
     FiberTractModel* tracts;
     ScriptWriter* writer;

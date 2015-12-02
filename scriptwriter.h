@@ -16,7 +16,7 @@ class ScriptWriter
 public:
     static ScriptWriter *getInstance(QString tool, QString pipeline);
     void writePreliminary();
-    bool writeData(QString outdir, QString fiber_dir, std::vector<tool::MapData> data,
+    bool writeData(QString outdir, QString fiber_dir, QString fiber_process, QString scalar_name, std::vector<tool::MapData> data,
                    std::vector<tool::TractData> tracts);
     QString getToolScriptName();
     QString getPipelineScriptName();

@@ -17,10 +17,8 @@ AtlasModel::AtlasModel(QObject *parent, std::map<std::string,tool::TractData> db
     for(std::map<std::string,tool::TractData>::iterator it = db1.begin(); it!= db1.end(); ++it){
         std::string key = it->first;
 
-
         // iteratively search data in DTI csv to match an DTI csv file id with an T1/T2 map csv file id.
         // matching conditions: s1 equal s2, or s1 contains s2, or s2 contains s1
-
 
         for(std::map<std::string,tool::TractData>::iterator itt = db2.begin(); itt!= db2.end(); ++itt){
             std::string mkey = itt->first;

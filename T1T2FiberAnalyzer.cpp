@@ -162,8 +162,9 @@ void T1T2FiberAnalyzer::SyncToModel()
     m_gui->setpara_DTIComboPath(ui->para_DTIComboPath->currentText());
     m_gui->setpara_DTIComboSID(ui->para_DTIComboSID->currentText());
     m_gui->setpara_DTIFiber_Path(ui->para_DTIFiber_Path->text());
-    m_gui->setpara_DTIFiber_Path(ui->para_DTIFiber_Path->text());
     m_gui->setpara_output_dir(ui->para_output_dir->text());
+    //m_gui->setpara_scalarname(ui->para_scalarname->text());
+
 
     if(atlas){
         m_gui->setpara_CSVMatchTable(SyncFromAtlasTableView());
@@ -182,6 +183,7 @@ void T1T2FiberAnalyzer::SyncToUI()
     ui->para_DTIdefInputText->setText(m_gui->getpara_DTIdefInputText());
     ui->para_DTIFiber_Path->setText(m_gui->getpara_DTIFiber_Path());
     ui->para_output_dir->setText(m_gui->getpara_output_dir());
+    //ui->para_scalarname->setText(m_gui->getpara_scalarname());
 
     int tid = ui->para_T12ComboPath->findText(m_gui->getpara_T12ComboPath());
     if(tid >= 0){
@@ -345,7 +347,7 @@ QMessageBox::StandardButton T1T2FiberAnalyzer::SaveGuiValue(QString filename)
 
 void T1T2FiberAnalyzer::contextMenuEvent(QContextMenuEvent *event)
 {
-    // to-do: right-click menu (copy?)
+    // to-do: right-click menu (copy&paste, etc.)
 }
 
 void T1T2FiberAnalyzer::closeEvent(QCloseEvent *event)
@@ -362,7 +364,6 @@ void T1T2FiberAnalyzer::closeEvent(QCloseEvent *event)
 
 void T1T2FiberAnalyzer::savePara()
 {
-    // to-do: add a cancel button
 
     SyncToModel();
     QString m_DialogDir = para_File;
@@ -640,8 +641,9 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
 
     QString abs_out_dir = QFileInfo(ui->para_output_dir->text()).absoluteFilePath();
     QString abs_fiber_dir = QFileInfo(ui->para_DTIFiber_Path->text()).absoluteFilePath();
-    if(writer->writeData(abs_out_dir, abs_fiber_dir,data, t_data)){
-        // do something?
+    QString abs_fiberprocess = QFileInfo(ui->conf_FiberProcessPath->text()).absoluteFilePath();
+    if(writer->writeData(abs_out_dir, abs_fiber_dir, abs_fiberprocess, ui->para_scalarname->text(), data, t_data)){
+        // run the script if data has successfully been written
     }
 
 }
