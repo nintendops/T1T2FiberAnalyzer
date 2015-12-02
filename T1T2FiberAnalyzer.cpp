@@ -165,7 +165,7 @@ void T1T2FiberAnalyzer::SyncToModel()
     m_gui->setpara_DTIComboSID(ui->para_DTIComboSID->currentText());
     m_gui->setpara_DTIFiber_Path(ui->para_DTIFiber_Path->text());
     m_gui->setpara_output_dir(ui->para_output_dir->text());
-    //m_gui->setpara_scalarname(ui->para_scalarname->text());
+    m_gui->setpara_scalarname(ui->para_scalarname->text());
 
 
     if(atlas){
@@ -185,7 +185,7 @@ void T1T2FiberAnalyzer::SyncToUI()
     ui->para_DTIdefInputText->setText(m_gui->getpara_DTIdefInputText());
     ui->para_DTIFiber_Path->setText(m_gui->getpara_DTIFiber_Path());
     ui->para_output_dir->setText(m_gui->getpara_output_dir());
-    //ui->para_scalarname->setText(m_gui->getpara_scalarname());
+    ui->para_scalarname->setText(m_gui->getpara_scalarname());
 
     int tid = ui->para_T12ComboPath->findText(m_gui->getpara_T12ComboPath());
     if(tid >= 0){
