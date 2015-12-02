@@ -14,6 +14,8 @@
 #include <QTabWidget>
 #include <QDirIterator>
 #include <QContextMenuEvent>
+#include <QProcess>
+#include <QStringList>
 
 #include "csvbrowser.h"
 #include "errorreporter.h"

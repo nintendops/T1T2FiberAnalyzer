@@ -100,6 +100,7 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
 
         file.write("\n\nif __name__ == '__main__':\n");
         file.write("\trun()");
+        file.write("\tprint(\"Fiber output is successfully generated!\")");
         file.close();
         ErrorReporter::friendly_fire("Successfully generated script to " + outdir.toStdString() + "/" +pipeline_script.toStdString());
         return true;

@@ -46,8 +46,8 @@ void T1T2FiberAnalyzer::initializeConfPath()
         if(checkpath.empty())
             ErrorReporter::fire("Failed to locate a python compiler in $PATH! Please configure it manually.");
         else{
-            for(std::string p: checkpath){
-                QDirIterator dirit(QString::fromStdString(p));
+            for(std::vector<std::string>::iterator pit = checkpath.begin(); pit != checkpath.end(); ++pit){
+                QDirIterator dirit(QString::fromStdString(*pit));
                 while(dirit.hasNext()){
                     QString fn = dirit.next();         
                     if(tool::checkExecutable(fn.toStdString()) && fn.toStdString().find("python") != std::string::npos){
@@ -296,8 +296,8 @@ void T1T2FiberAnalyzer::T12extractHeaders()
         QComboBox* cb2 = ui->para_T12ComboSID;
         cb1->clear();
         cb2->clear();
-        for(std::string i : T12headers){
-            QString si = QString::fromStdString(i);
+        for(std::vector<std::string>::iterator it = T12headers.begin(); it != T12headers.end(); ++it){
+            QString si = QString::fromStdString(*it);
             cb1->addItem(si);
             cb2->addItem(si);
         }
@@ -320,8 +320,8 @@ void T1T2FiberAnalyzer::DTIextractHeaders()
         QComboBox* cb2 = ui->para_DTIComboSID;
         cb1->clear();
         cb2->clear();
-        for(std::string i : DTIheaders){
-            QString si = QString::fromStdString(i);
+        for(std::vector<std::string>::iterator it = DTIheaders.begin(); it != DTIheaders.end(); ++it){
+            QString si = QString::fromStdString(*it);
             cb1->addItem(si);
             cb2->addItem(si);
         }
@@ -645,7 +645,19 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
     QString abs_fiber_dir = QFileInfo(ui->para_DTIFiber_Path->text()).absoluteFilePath();
     QString abs_fiberprocess = QFileInfo(ui->conf_FiberProcessPath->text()).absoluteFilePath();
     if(writer->writeData(abs_out_dir, abs_fiber_dir, abs_fiberprocess, ui->para_scalarname->text(), data, t_data)){
-        // run the script if data has successfully been written
+        // run the script after data has successfully been written
+        QProcess p;
+        p.setProcessChannelMode(QProcess::MergedChannels);
+        QStringList arguments;
+        arguments << abs_out_dir+"/pipeline.py";
+        p.start(ui->conf_pypath->text(), arguments);
+        // to-do: dialog to catch run error
+        if(!p.waitForFinished())
+            qDebug() << p.errorString();
+        else
+        {
+            ErrorReporter::fire("Run Output",QString(p.readAll()));
+        }
     }
 
 }
