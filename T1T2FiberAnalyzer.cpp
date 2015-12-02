@@ -8,6 +8,8 @@ T1T2FiberAnalyzer::T1T2FiberAnalyzer(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    para_File = QTGUI_XML_NAME;
+    isSync = false;
     ui->setupUi(this);
     InitializeState();
 }

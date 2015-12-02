@@ -76,8 +76,8 @@ private:
     FiberTractModel* tracts;
     ScriptWriter* writer;
     const QString* DEFAULT_PATH;
-    bool isSync = false;
-    QString para_File = QTGUI_XML_NAME;
+    bool isSync;
+    QString para_File;
     // possible optimization: localize the following four variables?
     std::map<std::string,tool::TractData> T12TractData;
     std::map<std::string,tool::TractData> DTITractData;
