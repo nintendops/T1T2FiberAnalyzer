@@ -70,11 +70,18 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write(fiberprocess);
         file.write("# procedure run for each case\n");
         file.write("def run_process(sid,scalar_path,def_path,fiber_path,scalarName='scalar'):\n");
-        file.write("\tsubprocess.check_call([fiberprocess_path,'-n',"
+	file.write("\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
+		   " + fiber_dir+'/'+fiber_path + ' -o '+out_dir+'/'+fiber_path + ' -S ' + scalar_path "
+		   " + ' -D' + def_path + ' --scalarName '+scalarName\n");
+	file.write("\tsubprocess.check_call(command,shell=True)\n\n");
+	/*file.write("\tsubprocess.check_call([fiberprocess_path,'-n',"
                    "'--inputFiberBundle '+fiber_dir+'/'+fiber_path,"
                    "'-o '+out_dir+'/'+fiber_path,"
                    "'-S '+scalar_path, '-D '+ def_path, '--scalarName '+scalarName])\n\n");
-        file.write("# this function contains all the run_process calls\n");
+	*/
+	
+	
+	file.write("# this function contains all the run_process calls\n");
         file.write("def run():\n");
         for(std::vector<tool::MapData>::iterator it1 = data.begin(); it1 != data.end(); ++it1 )
         {
@@ -99,8 +106,8 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         }
 
         file.write("\n\nif __name__ == '__main__':\n");
-        file.write("\trun()");
-        file.write("\tprint(\"Fiber output is successfully generated!\")");
+        file.write("\trun()\n");
+        file.write("\tprint(\"Fiber output is successfully generated!\")\n");
         file.close();
         ErrorReporter::friendly_fire("Successfully generated script to " + outdir.toStdString() + "/" +pipeline_script.toStdString());
         return true;
