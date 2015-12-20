@@ -2,6 +2,7 @@
 #define T1T2FIBERANALYZER_H
 #define DEFAULT_DIR "/home/haiweich/Dev/repo/T1T2FiberAnalyzer/test_data/"
 #define QTGUI_XML_NAME "T1T2GUI.xml"
+#define QTGUI_CONF_XML_NAME "T1T2GUI_CONF.xml"
 
 #include <QMainWindow>
 #include <QDebug>
@@ -22,6 +23,9 @@
 #include "para_Load_T1T2FiberAnalyzer.h"
 #include "para_Save_T1T2FiberAnalyzer.h"
 #include "para_Model_T1T2FiberAnalyzer.h"
+#include "conf_Load_T1T2FiberAnalyzer.h"
+#include "conf_Model_T1T2FiberAnalyzer.h"
+#include "conf_Save_T1T2FiberAnalyzer.h"
 #include "fibertractmodel.h"
 #include "atlasmodel.h"
 #include "scriptwriter.h"
@@ -45,9 +49,9 @@ public:
 private slots:
     bool checkHeaderSelection();
     void savePara();
-    //void saveConf();
+    void saveConf();
     void loadPara();
-    //void loadConf();
+    void loadConf();
     void T12extractHeaders();
     void DTIextractHeaders();
     void on_T12MapInputBtn_clicked();
@@ -73,13 +77,18 @@ private:
     para_Model_T1T2FiberAnalyzer* m_gui;
     para_Save_T1T2FiberAnalyzer* s_gui;
     para_Load_T1T2FiberAnalyzer* l_gui;
-    // to-do: conf-prefix values are not saved and loaded
+    conf_Model_T1T2FiberAnalyzer* m_gui_conf;
+    conf_Save_T1T2FiberAnalyzer* s_gui_conf;
+    conf_Load_T1T2FiberAnalyzer* l_gui_conf;
+
     AtlasModel* atlas;
     FiberTractModel* tracts;
     ScriptWriter* writer;
     const QString* DEFAULT_PATH;
     bool isSync;
+    bool isSync_conf;
     QString para_File;
+    QString conf_File;
     // possible optimization: localize the following four variables?
     std::map<std::string,tool::TractData> T12TractData;
     std::map<std::string,tool::TractData> DTITractData;
@@ -93,6 +102,8 @@ private:
     void SetEventTriggers();
     void SyncToModel();
     void SyncToUI();
+    void SyncToModel_Conf();
+    void SyncToUI_Conf();
     std::vector<std::vector<QString> > SyncFromAtlasTableView();
     void SyncToAtlasTableView();
     std::vector<std::vector<QString> > SyncFromTractsTableView();

@@ -72,7 +72,7 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("def run_process(sid,scalar_path,def_path,fiber_path,scalarName='scalar'):\n");
         file.write("\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
            " + fiber_dir+'/'+fiber_path + ' -o '+out_dir+'/'+ sid + '_' + fiber_path + ' -S ' + scalar_path "
-		   " + ' -D' + def_path + ' --scalarName '+scalarName\n");
+           " + ' -D ' + def_path + ' --scalarName '+scalarName\n");
         file.write("\tsubprocess.check_call(command,shell=True)\n\n");
 
         /*file.write("\tsubprocess.check_call([fiberprocess_path,'-n',"

@@ -9,7 +9,9 @@ T1T2FiberAnalyzer::T1T2FiberAnalyzer(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     para_File = QTGUI_XML_NAME;
+    conf_File = QTGUI_CONF_XML_NAME;
     isSync = false;
+    isSync_conf = false;
     ui->setupUi(this);
     InitializeState();
 }
@@ -18,16 +20,6 @@ T1T2FiberAnalyzer::T1T2FiberAnalyzer(QWidget *parent) :
 T1T2FiberAnalyzer::~T1T2FiberAnalyzer()
 {
     writer->close();
-    delete m_gui;
-    delete s_gui;
-    delete l_gui;
-    delete atlas;
-    delete tracts;
-    delete writer;
-    delete DEFAULT_PATH;
-    delete ui;
-    // deallocate memory used by TableView model?
-
 }
 
 void T1T2FiberAnalyzer::initializeConfPath()
@@ -37,19 +29,30 @@ void T1T2FiberAnalyzer::initializeConfPath()
     writer = ScriptWriter::getInstance("tool.py","pipeline.py");
     writer->writePreliminary();
 
-    char* pypath = std::getenv("TFA_PYTHON");
+    std::string pypath;
 
-    if(!pypath){
+    if(std::getenv("TFA_PYTHON"))
+        pypath = std::string((std::getenv("TFA_PYTHON")));
+    else
+        pypath = "";
+
+    if (ui->conf_pypath->text() != ""){
+        pypath = ui->conf_pypath->text().toStdString();
+    }
+
+    if(pypath == "")
+    {
         char* path = std::getenv("PATH");
         std::vector<std::string> checkpath;
         tool::tokenize(path,":",checkpath);
         if(checkpath.empty())
             ErrorReporter::fire("Failed to locate a python compiler in $PATH! Please configure it manually.");
-        else{
+        else
+        {
             for(std::vector<std::string>::iterator pit = checkpath.begin(); pit != checkpath.end(); ++pit){
                 QDirIterator dirit(QString::fromStdString(*pit));
                 while(dirit.hasNext()){
-                    QString fn = dirit.next();         
+                    QString fn = dirit.next();
                     if(tool::checkExecutable(fn.toStdString()) && fn.toStdString().find("python") != std::string::npos){
                         //qDebug() << fn;
                         if(checkPyVersion(fn.toStdString())){
@@ -67,11 +70,12 @@ void T1T2FiberAnalyzer::initializeConfPath()
 
     }
     else if(tool::checkExecutable(pypath)){
+        QString str_pypath = QString::fromStdString(pypath);
         // to-do: codes need cleanup here. Python version should be checked first before populating it to gui
-        ui->conf_pypath->setText(QString(pypath));
+        ui->conf_pypath->setText(str_pypath);
     }
     else{
-        ErrorReporter::fire("Given path in $TFA_PYTHON is not executable!");
+        ErrorReporter::fire("Given python path is not executable!");
         return;
     }
 
@@ -81,8 +85,22 @@ void T1T2FiberAnalyzer::initializeConfPath()
         ErrorReporter::fire("Given executable is unsupported, or python version is below minimum requirement (2.5.0)!");
         ui->conf_pypath->clear();
     }
-}
 
+
+    if(ui->conf_FiberProcessPath->text() != "")
+    {
+       if(!tool::checkExecutable(ui->conf_FiberProcessPath->text().toStdString()))
+       {
+        ErrorReporter::fire("Given FiberProcess path is not executable!");
+       }
+
+    }else{
+        char* fp_path = std::getenv("TFA_FIBERPROCESS");
+        if(fp_path && !(tool::checkExecutable(fp_path))){
+            ErrorReporter::fire("Given FiberProcess path is not executable!");
+        }
+    }
+}
 
 // private methods
 
@@ -97,6 +115,10 @@ void T1T2FiberAnalyzer::InitializeState()
     m_gui = new para_Model_T1T2FiberAnalyzer();
     s_gui = new para_Save_T1T2FiberAnalyzer();
     l_gui = new para_Load_T1T2FiberAnalyzer();
+    m_gui_conf = new conf_Model_T1T2FiberAnalyzer();
+    s_gui_conf = new conf_Save_T1T2FiberAnalyzer();
+    l_gui_conf = new conf_Load_T1T2FiberAnalyzer();
+
     atlas = NULL;
     tracts = NULL;
 
@@ -108,10 +130,18 @@ void T1T2FiberAnalyzer::InitializeState()
 
     // load value from QtGUI xml if data was previously stored
     QFileInfo checkXML(QTGUI_XML_NAME);
+    QFileInfo checkXML_CONF(QTGUI_CONF_XML_NAME);
+
     if(checkXML.exists() && checkXML.isFile()){
         isSync = true;
         l_gui->load(*m_gui,QTGUI_XML_NAME);
         SyncToUI();
+    }
+
+    if(checkXML_CONF.exists() && checkXML_CONF.isFile()){
+        isSync_conf = true;
+        l_gui_conf->load(*m_gui_conf,QTGUI_CONF_XML_NAME);
+        SyncToUI_Conf();
     }
 
 
@@ -130,6 +160,9 @@ void T1T2FiberAnalyzer::SetEventTriggers(){
     QObject::connect(ui->actionExit,SIGNAL(triggered()),this,SLOT(close()));
     QObject::connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(savePara()));
     QObject::connect(ui->actionLoad,SIGNAL(triggered()),this,SLOT(loadPara()));
+    QObject::connect(ui->actionSave_Configuration,SIGNAL(triggered()),this,SLOT(saveConf()));
+    QObject::connect(ui->actionLoad_Configuration,SIGNAL(triggered()),this,SLOT(loadConf()));
+
 }
 
 bool T1T2FiberAnalyzer::checkPyVersion(std::string path)
@@ -156,7 +189,6 @@ bool T1T2FiberAnalyzer::checkRunCondition()
 
 void T1T2FiberAnalyzer::SyncToModel()
 {
-    // concerns about racing condition?
     m_gui->setpara_T12MapInputText(ui->para_T12MapInputText->text());
     m_gui->setpara_T12ComboPath(ui->para_T12ComboPath->currentText());
     m_gui->setpara_T12ComboSID(ui->para_T12ComboSID->currentText());
@@ -168,15 +200,23 @@ void T1T2FiberAnalyzer::SyncToModel()
     m_gui->setpara_scalarname(ui->para_scalarname->text());
 
 
-    if(atlas){
+    if(atlas)
+    {
         m_gui->setpara_CSVMatchTable(SyncFromAtlasTableView());
     }
 
-    if(tracts){
+    if(tracts)
+    {
         m_gui->setpara_Fiber_Tracts_Table(SyncFromTractsTableView());
     }
 
 
+}
+
+void T1T2FiberAnalyzer::SyncToModel_Conf()
+{
+    m_gui_conf->setconf_pypath(ui->conf_pypath->text());
+    m_gui_conf->setconf_FiberProcessPath(ui->conf_FiberProcessPath->text());
 }
 
 void T1T2FiberAnalyzer::SyncToUI()
@@ -215,7 +255,12 @@ void T1T2FiberAnalyzer::SyncToUI()
     /* synchronization of table model only occurs after match button is clicked
     */
 
+}
 
+void T1T2FiberAnalyzer::SyncToUI_Conf()
+{
+    ui->conf_pypath->setText(m_gui_conf->getconf_pypath());
+    ui->conf_FiberProcessPath->setText(m_gui_conf->getconf_FiberProcessPath());
 }
 
 // issue: loading does not verify if header names and file names are consistent
@@ -333,13 +378,14 @@ void T1T2FiberAnalyzer::DTIextractHeaders()
         }
 }
 
-QMessageBox::StandardButton T1T2FiberAnalyzer::SaveGuiValue(QString filename)
+QMessageBox::StandardButton T1T2FiberAnalyzer::SaveGuiValue()
 {
     SyncToModel();
-    QMessageBox::StandardButton rtn = QMessageBox::question(this, "","Save Current Values to Configuration File "+ filename  +"?",
+    QMessageBox::StandardButton rtn = QMessageBox::question(this, "","Save Current Values to Configuration File "+ para_File + " and " + conf_File +"?",
                                                             QMessageBox::Yes|QMessageBox::No| QMessageBox::Cancel);
     if(rtn == QMessageBox::Yes || rtn == QMessageBox::NoButton){
-        s_gui->save(*m_gui,filename.toStdString());
+        s_gui->save(*m_gui,para_File.toStdString());
+        s_gui_conf->save(*m_gui_conf,conf_File.toStdString());
     }
 
     return rtn;
@@ -354,7 +400,7 @@ void T1T2FiberAnalyzer::contextMenuEvent(QContextMenuEvent *event)
 
 void T1T2FiberAnalyzer::closeEvent(QCloseEvent *event)
 {
-    QMessageBox::StandardButton rtn = SaveGuiValue(para_File);
+    QMessageBox::StandardButton rtn = SaveGuiValue();
 
     if(rtn == QMessageBox::Cancel || rtn == QMessageBox::Escape){
         event->ignore();
@@ -369,7 +415,7 @@ void T1T2FiberAnalyzer::savePara()
 
     SyncToModel();
     QString m_DialogDir = para_File;
-    QString filename = QFileDialog::getSaveFileName( this , "Save Changed Value to Configuration File" , m_DialogDir , "XML files (*.xml)" );
+    QString filename = QFileDialog::getSaveFileName( this , "Save Changed Value to parameter save File" , m_DialogDir , "XML files (*.xml)" );
     if( filename != "" )
     {
         QFileInfo fi( filename ) ;
@@ -380,16 +426,39 @@ void T1T2FiberAnalyzer::savePara()
 
 }
 
+void T1T2FiberAnalyzer::saveConf(){
+    SyncToModel_Conf();
+    QString m_DialogDir = conf_File;
+    QString filename = QFileDialog::getSaveFileName( this , "Save Changed Value to configuration save File" , m_DialogDir , "XML files (*.xml)" );
+    if( filename != "" )
+    {
+        QFileInfo fi( filename ) ;
+        m_DialogDir = fi.dir().absolutePath() ;
+        s_gui_conf->save(*m_gui_conf,filename.toStdString());
+        conf_File = fi.fileName();
+    }
+}
+
 void T1T2FiberAnalyzer::loadPara()
 {
     // to-do: check for corner cases
 
     QString m_DialogDir = para_File;
-    QString filename = QFileDialog::getOpenFileName(this,"Load Configuration File", m_DialogDir, "XML files (*.xml)");
+    QString filename = QFileDialog::getOpenFileName(this,"Load parameter save File", m_DialogDir, "XML files (*.xml)");
     if(filename != ""){
         isSync = true;
         l_gui->load(*m_gui,filename.toStdString());
         SyncToUI();
+    }
+}
+
+void T1T2FiberAnalyzer::loadConf(){
+    QString m_DialogDir = conf_File;
+    QString filename = QFileDialog::getOpenFileName(this,"Load configuration save File", m_DialogDir, "XML files (*.xml)");
+    if(filename != ""){
+        isSync_conf = true;
+        l_gui_conf->load(*m_gui_conf,filename.toStdString());
+        SyncToUI_Conf();
     }
 }
 
@@ -652,7 +721,7 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         arguments << abs_out_dir+"/pipeline.py";
         p.start(ui->conf_pypath->text(), arguments);
         // to-do: dialog to catch run error
-        if(!p.waitForFinished())
+        if(!p.waitForFinished(300000))
             qDebug() << p.errorString();
         else
         {

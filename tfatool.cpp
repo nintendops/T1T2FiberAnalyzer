@@ -102,6 +102,11 @@ bool tool::checkExecutable(string path){
     return false;
 }
 
+bool tool::checkExecutable(char* path){
+    std::string str(path);
+    checkExecutable(str);
+}
+
 // generic parsing of csv files
 vector<vector<string>> tool::parseCSV(string dir, vector<string> &attrs){
     csvparser scanner(QString::fromStdString(dir));

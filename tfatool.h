@@ -42,6 +42,7 @@ namespace tool{
 
      int getvtkfiles (string dir, vector<tool::TractData> &files);
      bool checkExecutable(string path);
+     bool checkExecutable(char* path);
      bool checkNewLine(string &s);
      bool checkDirExist(string path);
      void tokenize(char* str, const char* delimiter, vector<string> &results);
