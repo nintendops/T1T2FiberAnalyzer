@@ -111,7 +111,7 @@ private:
     bool PopulateAtlasTable();
     bool PopulateTractsTable(QString str);
     void SaveGuiValue();
-    QMessageBox::StandardButton SaveGuiValue(QString filename);
+    QMessageBox::StandardButton SaveGuiValue();
 
 
 protected:
