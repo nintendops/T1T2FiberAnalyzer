@@ -722,8 +722,10 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         p.start(ui->conf_pypath->text(), arguments);
         // to-do: dialog to catch run error
         if(!p.waitForFinished(3000000))
+	  {
             qDebug() << p.errorString();
             ErrorReporter::fire("Process has taken too long to run. (timeout = 50 mins)");
+	  }
         else
         {
             QFile file(abs_out_dir + "/" +log);
