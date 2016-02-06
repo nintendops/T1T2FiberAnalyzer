@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QFile>
 #include <QDialog>
 #include <QtDebug>
 #include <QTableView>
@@ -110,7 +111,6 @@ private:
     void SyncToTractsTableView();
     bool PopulateAtlasTable();
     bool PopulateTractsTable(QString str);
-    void SaveGuiValue();
     QMessageBox::StandardButton SaveGuiValue();
 
 

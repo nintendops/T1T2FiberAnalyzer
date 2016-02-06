@@ -721,11 +721,15 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         arguments << abs_out_dir+"/pipeline.py";
         p.start(ui->conf_pypath->text(), arguments);
         // to-do: dialog to catch run error
-        if(!p.waitForFinished(300000))
+        if(!p.waitForFinished(3000000))
             qDebug() << p.errorString();
+            ErrorReporter::fire("Process has taken too long to run. (timeout = 50 mins)");
         else
         {
-            ErrorReporter::fire("Run Output",QString(p.readAll()));
+            QFile file(abs_out_dir + "/" +log);
+            file.write(p.readAll());
+            ErrorReporter::friendly_fire("Output is written into " + abs_out_dir + "/log");
+
         }
     }
 
