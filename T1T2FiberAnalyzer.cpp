@@ -217,6 +217,7 @@ void T1T2FiberAnalyzer::SyncToModel_Conf()
 {
     m_gui_conf->setconf_pypath(ui->conf_pypath->text());
     m_gui_conf->setconf_FiberProcessPath(ui->conf_FiberProcessPath->text());
+    m_gui_conf->setconf_DTIStatPath(ui->conf_DTIStatPath->text());
 }
 
 void T1T2FiberAnalyzer::SyncToUI()
@@ -261,6 +262,7 @@ void T1T2FiberAnalyzer::SyncToUI_Conf()
 {
     ui->conf_pypath->setText(m_gui_conf->getconf_pypath());
     ui->conf_FiberProcessPath->setText(m_gui_conf->getconf_FiberProcessPath());
+    ui->conf_DTIStatPath->setText(m_gui_conf->getconf_DTIStatPath());
 }
 
 // issue: loading does not verify if header names and file names are consistent
@@ -713,7 +715,8 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
     QString abs_out_dir = QFileInfo(ui->para_output_dir->text()).absoluteFilePath();
     QString abs_fiber_dir = QFileInfo(ui->para_DTIFiber_Path->text()).absoluteFilePath();
     QString abs_fiberprocess = QFileInfo(ui->conf_FiberProcessPath->text()).absoluteFilePath();
-    if(writer->writeData(abs_out_dir, abs_fiber_dir, abs_fiberprocess, ui->para_scalarname->text(), data, t_data)){
+    QString abs_dtitract = QFileInfo(ui->conf_DTIStatPath->text()).absoluteFilePath();
+    if(writer->writeData(abs_out_dir, abs_fiber_dir, abs_fiberprocess, abs_dtitract, ui->para_scalarname->text(), data, t_data)){
         // run the script after data has successfully been written
         QProcess p;
         p.setProcessChannelMode(QProcess::MergedChannels);
