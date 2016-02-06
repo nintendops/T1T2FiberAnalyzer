@@ -731,10 +731,16 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
 	  }
         else
         {
-            QFile file(abs_out_dir + "/log");
+	  QFile file(abs_out_dir + "/log");
+	  if(file.open(QIODevice::WriteOnly)){ 
             file.write(p.readAll());
             ErrorReporter::friendly_fire("Output is written into " + abs_out_dir.toStdString() + "/log");
             file.close();
+	  }
+	  else
+	    {
+	      ErrorReporter::fire("failed to write into log file");
+	    }
         }
     }
 

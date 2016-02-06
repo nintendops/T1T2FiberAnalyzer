@@ -75,21 +75,21 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write(dtistatout);
         file.write("# procedure run for each case\n");
         file.write("def run_process(sid,scalar_path,def_path,fiber_path,scalarName='scalar'):\n");
-        file.write("\toutput_fiber = out_dir + '/' + sid + '_' + fiber_path");
-        file.write("\toutput_fvp = string.rsplit(output_fiber,'.vtk',1)[0]+'.fvp'");
+        file.write("\toutput_fiber = out_dir + '/' + sid + '_' + fiber_path\n");
+        file.write("\toutput_fvp = string.rsplit(output_fiber,'.vtk',1)[0]+'.fvp'\n");
         file.write("\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
            " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "
            " + ' -D ' + def_path + ' --scalarName '+scalarName\n");
         file.write("\ti1 = subprocess.check_call(command,shell=True)\n");
         file.write("\tcommand_stat = dti_stat_path + ' --scalarName ' + scalarName + "
-                   "' --parameter_list ' + scalarName + ' -o ' + output_fvp + ' -i ' + output_fiber");
+                   "' --parameter_list ' + scalarName + ' -o ' + output_fvp + ' -i ' + output_fiber\n");
         file.write("\ti2 = subprocess.check_call(command_stat,shell=True)\n");
         file.write("\treturn i1 + i2 \n\n");
 	
 
         file.write("# this function contains all the run_process calls\n");
         file.write("def run():\n");
-        file.write("\tcode = 0");
+        file.write("\tcode = 0\n");
         for(std::vector<tool::MapData>::iterator it1 = data.begin(); it1 != data.end(); ++it1 )
         {
             for(std::vector<tool::TractData>::iterator it2 = tracts.begin(); it2 != tracts.end(); ++it2)
