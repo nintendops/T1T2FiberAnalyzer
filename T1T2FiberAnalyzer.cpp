@@ -734,7 +734,7 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
             QFile file(abs_out_dir + "/" +log);
             file.write(p.readAll());
             ErrorReporter::friendly_fire("Output is written into " + abs_out_dir + "/log");
-
+            file.close();
         }
     }
 

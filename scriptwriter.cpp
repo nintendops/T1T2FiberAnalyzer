@@ -115,9 +115,9 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
 
         file.write("\n\nif __name__ == '__main__':\n");
         file.write("\tcode = run()\n");
-        file.write("\tif code == 0:");
+        file.write("\tif code == 0:\n");
         file.write("\t\tprint(\"Fiber output is successfully generated! Return code = \" + str(code))\n");
-        file.write("\telse:");
+        file.write("\telse:\n");
         file.write("\t\tprint('Failed to run command. Return code =' + str(code))\n");
         file.close();
         ErrorReporter::friendly_fire("Successfully generated script to " + outdir.toStdString() + "/" +pipeline_script.toStdString());
