@@ -13,7 +13,7 @@ T1T2FiberAnalyzer::T1T2FiberAnalyzer(QWidget *parent) :
     isSync = false;
     isSync_conf = false;
     ui->setupUi(this);
-    InitializeState();
+    InitializeState();        
 }
 
 
@@ -312,6 +312,8 @@ void T1T2FiberAnalyzer::SyncToTractsTableView()
                 tracts->resetModel(Qt::Unchecked,found);
         }
     }
+
+    
 }
 
 std::vector<std::vector<QString> > T1T2FiberAnalyzer::SyncFromTractsTableView()
@@ -723,24 +725,25 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         QStringList arguments;
         arguments << abs_out_dir+"/pipeline.py";
         p.start(ui->conf_pypath->text(), arguments);
-        QMessageBox warning;
-        warning.setText("Please wait while pipeline is running...");
-        warning.show();
+        QMessageBox warning(QMessageBox::Information, "ScalarAnalyzer","Please wait while pipeline is running...");
+	warning.setWindowFlags(Qt::FramelessWindowHint);
+	warning.setStandardButtons(0);
+        warning.exec();
         // to-do: dialog to catch run error
         if(!p.waitForFinished(3000000))
 	  {
             qDebug() << p.errorString();
-            warning.close();
-            ErrorReporter::fire("Process has taken too long to run. (timeout = 50 mins)");
+	    warning.setText("Process has taken too long to run. (timeout = 50 mins)");
+
 	  }
         else
         {
-            warning.close();
             QFile file(abs_out_dir + "/log");
             if(file.open(QIODevice::WriteOnly)){
                 file.write(p.readAll());
-                ErrorReporter::friendly_fire("Output is written into " + abs_out_dir.toStdString() + "/log");
-                file.close();
+                warning.setText("Output is written into " + abs_out_dir + "/log");
+
+		file.close();
             }
 
             else
