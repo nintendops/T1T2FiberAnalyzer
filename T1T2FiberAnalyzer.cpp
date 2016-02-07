@@ -723,7 +723,7 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         QStringList arguments;
         arguments << abs_out_dir+"/pipeline.py";
         p.start(ui->conf_pypath->text(), arguments);
-        QMessageBox warning();
+        QMessageBox warning;
         warning.setText("Please wait while pipeline is running...");
         warning.show();
         // to-do: dialog to catch run error
