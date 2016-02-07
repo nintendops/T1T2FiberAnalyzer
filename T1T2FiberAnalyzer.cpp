@@ -135,13 +135,13 @@ void T1T2FiberAnalyzer::InitializeState()
 
     if(checkXML.exists() && checkXML.isFile()){
         isSync = true;
-        l_gui->load(*m_gui,QTGUI_XML_NAME);
+        l_gui->load(*m_gui,app_dir + QTGUI_XML_NAME);
         SyncToUI();
     }
 
     if(checkXML_CONF.exists() && checkXML_CONF.isFile()){
         isSync_conf = true;
-        l_gui_conf->load(*m_gui_conf,QTGUI_CONF_XML_NAME);
+        l_gui_conf->load(*m_gui_conf,app_dir + QTGUI_CONF_XML_NAME);
         SyncToUI_Conf();
     }
 
