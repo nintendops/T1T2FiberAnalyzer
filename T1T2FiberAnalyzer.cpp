@@ -723,24 +723,30 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         QStringList arguments;
         arguments << abs_out_dir+"/pipeline.py";
         p.start(ui->conf_pypath->text(), arguments);
+        QMessageBox warning();
+        warning.setText("Please wait while pipeline is running...");
+        warning.show();
         // to-do: dialog to catch run error
         if(!p.waitForFinished(3000000))
 	  {
             qDebug() << p.errorString();
+            warning.close();
             ErrorReporter::fire("Process has taken too long to run. (timeout = 50 mins)");
 	  }
         else
         {
-	  QFile file(abs_out_dir + "/log");
-	  if(file.open(QIODevice::WriteOnly)){ 
-            file.write(p.readAll());
-            ErrorReporter::friendly_fire("Output is written into " + abs_out_dir.toStdString() + "/log");
-            file.close();
-	  }
-	  else
-	    {
-	      ErrorReporter::fire("failed to write into log file");
-	    }
+            warning.close();
+            QFile file(abs_out_dir + "/log");
+            if(file.open(QIODevice::WriteOnly)){
+                file.write(p.readAll());
+                ErrorReporter::friendly_fire("Output is written into " + abs_out_dir.toStdString() + "/log");
+                file.close();
+            }
+
+            else
+            {
+                ErrorReporter::fire("failed to write into log file");
+            }
         }
     }
 

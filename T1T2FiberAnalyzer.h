@@ -18,6 +18,7 @@
 #include <QContextMenuEvent>
 #include <QProcess>
 #include <QStringList>
+#include <QMessageBox>
 
 #include "csvbrowser.h"
 #include "errorreporter.h"
