@@ -127,21 +127,21 @@ void T1T2FiberAnalyzer::InitializeState()
         DEFAULT_PATH = new QString(DEFAULT_DIR);
     else
         DEFAULT_PATH = new QString("./");
-    QString app_dir = QCoreApplication::applicationDirPath() + '/';
-
+    QString app_dir(QCoreApplication::applicationDirPath() + '/' + QTGUI_XML_NAME);
+    QString app_dir_conf(QCoreApplication::applicationDirPath() + '/' + QTGUI_CONF_XML_NAME);
     // load value from QtGUI xml if data was previously stored
-    QFileInfo checkXML(app_dir + QTGUI_XML_NAME);
-    QFileInfo checkXML_CONF(app_dir + QTGUI_CONF_XML_NAME);
+    QFileInfo checkXML(app_dir);
+    QFileInfo checkXML_CONF(app_dir_conf);
 
     if(checkXML.exists() && checkXML.isFile()){
         isSync = true;
-        l_gui->load(*m_gui,app_dir + QTGUI_XML_NAME);
+        l_gui->load(*m_gui,app_dir.toStdString());
         SyncToUI();
     }
 
     if(checkXML_CONF.exists() && checkXML_CONF.isFile()){
         isSync_conf = true;
-        l_gui_conf->load(*m_gui_conf,app_dir + QTGUI_CONF_XML_NAME);
+        l_gui_conf->load(*m_gui_conf,app_dir_conf.toStdString());
         SyncToUI_Conf();
     }
 
@@ -729,21 +729,23 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         QMessageBox warning(QMessageBox::Information, "ScalarAnalyzer","Please wait while pipeline is running...");
         warning.setWindowFlags(Qt::FramelessWindowHint);
         warning.setStandardButtons(0);
-        warning.exec();
-        // to-do: dialog to catch run error
+        warning.open();
+        QCoreApplication::processEvents();
+
+	// to-do: dialog to catch run error
         if(!p.waitForFinished(3000000))
 	  {
             qDebug() << p.errorString();
-	    warning.setText("Process has taken too long to run. (timeout = 50 mins)");
-        warning.setStandardButtons(QMessageBox::Ok);
+	    warning.close();
+	    ErrorReporter::fire("Process has taken too long to run. (timeout = 50 mins)");
 	  }
         else
         {
             QFile file(abs_out_dir + "/log");
+	    warning.close();
             if(file.open(QIODevice::WriteOnly)){
                 file.write(p.readAll());
-                warning.setText("Output is written into " + abs_out_dir + "/log");
-                warning.setStandardButtons(QMessageBox::Ok);
+ 		ErrorReporter::fire("Output is written into " + abs_out_dir.toStdString() + "/log");
                 file.close();
             }
 
