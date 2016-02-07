@@ -16,6 +16,7 @@
 #include <QTabWidget>
 #include <QDirIterator>
 #include <QContextMenuEvent>
+#include <QCoreApplication>
 #include <QProcess>
 #include <QStringList>
 #include <QMessageBox>

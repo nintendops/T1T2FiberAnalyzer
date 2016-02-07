@@ -127,10 +127,11 @@ void T1T2FiberAnalyzer::InitializeState()
         DEFAULT_PATH = new QString(DEFAULT_DIR);
     else
         DEFAULT_PATH = new QString("./");
+    QString app_dir = QCoreApplication::applicationDirPath() + '/';
 
     // load value from QtGUI xml if data was previously stored
-    QFileInfo checkXML(QTGUI_XML_NAME);
-    QFileInfo checkXML_CONF(QTGUI_CONF_XML_NAME);
+    QFileInfo checkXML(app_dir + QTGUI_XML_NAME);
+    QFileInfo checkXML_CONF(app_dir + QTGUI_CONF_XML_NAME);
 
     if(checkXML.exists() && checkXML.isFile()){
         isSync = true;
@@ -726,15 +727,15 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         arguments << abs_out_dir+"/pipeline.py";
         p.start(ui->conf_pypath->text(), arguments);
         QMessageBox warning(QMessageBox::Information, "ScalarAnalyzer","Please wait while pipeline is running...");
-	warning.setWindowFlags(Qt::FramelessWindowHint);
-	warning.setStandardButtons(0);
+        warning.setWindowFlags(Qt::FramelessWindowHint);
+        warning.setStandardButtons(0);
         warning.exec();
         // to-do: dialog to catch run error
         if(!p.waitForFinished(3000000))
 	  {
             qDebug() << p.errorString();
 	    warning.setText("Process has taken too long to run. (timeout = 50 mins)");
-
+        warning.setStandardButtons(QMessageBox::Ok);
 	  }
         else
         {
@@ -742,8 +743,8 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
             if(file.open(QIODevice::WriteOnly)){
                 file.write(p.readAll());
                 warning.setText("Output is written into " + abs_out_dir + "/log");
-
-		file.close();
+                warning.setStandardButtons(QMessageBox::Ok);
+                file.close();
             }
 
             else
