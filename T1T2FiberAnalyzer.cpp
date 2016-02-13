@@ -720,7 +720,7 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
     QString abs_fiber_dir = QFileInfo(ui->para_DTIFiber_Path->text()).absoluteFilePath();
     QString abs_fiberprocess = QFileInfo(ui->conf_FiberProcessPath->text()).absoluteFilePath();
     QString abs_dtitract = QFileInfo(ui->conf_DTIStatPath->text()).absoluteFilePath();
-    if(writer->writeData(abs_out_dir, abs_fiber_dir, abs_fiberprocess, abs_dtitract, ui->para_scalarname->text(), data, t_data)){
+    if(writer->writeData(abs_out_dir, abs_fiber_dir, abs_fiberprocess, abs_dtitract, isHField, ui->para_scalarname->text(), data, t_data)){
         // run the script after data has successfully been written
         QProcess p;
         p.setProcessChannelMode(QProcess::MergedChannels);
