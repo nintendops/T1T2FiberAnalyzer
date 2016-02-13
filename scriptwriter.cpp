@@ -56,7 +56,8 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("# -*- coding: utf-8 -*-\n\n");
         file.write("import sys\n");
         file.write("import subprocess\n");
-        file.write("import string\n\n");
+        file.write("import string\n");
+	file.write("import os\n\n");
 
         // global declaration
         file.write("# global declaration \n");
@@ -74,12 +75,25 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write(fiberprocess);
         file.write(dtistatout);
         file.write("# procedure run for each case\n");
-        file.write("def run_process(sid,scalar_path,def_path,fiber_path,scalarName='scalar'):\n");
-        file.write("\toutput_fiber = out_dir + '/' + sid + '_' + fiber_path\n");
+		
+        file.write("def run_process(sid,scalar_path,def_path,fiber_path,isHField,scalarName='scalar'):\n");
+	file.write("\tfibername=string.rsplit(fiber_path,'.vtk',1)[0]\n");
+	file.write("\tif not os.path.exists(out_dir+'/'+sid):\n");
+	file.write("\t\tos.makedirs(out_dir+'/'+sid)\n");
+	file.write("\tif not os.path.exists(out_dir+'/'+sid+'/'+fibername):\n");
+	file.write("\t\tos.makedirs(out_dir+'/'+sid+'/'+fibername)\n");	
+	file.write("\toutput_dir = out_dir+'/'+sid+'/'+fibername\n");	
+        file.write("\toutput_fiber = output_dir + '/' + sid + '_' + fiber_path\n");
         file.write("\toutput_fvp = string.rsplit(output_fiber,'.vtk',1)[0]+'.fvp'\n");
-        file.write("\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
+	file.write("\tif isHField:\n");
+        file.write("\t\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
+           " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "
+           " + ' -H ' + def_path + ' --scalarName '+scalarName\n");
+	file.write("\telse:\n");
+        file.write("\t\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
            " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "
            " + ' -D ' + def_path + ' --scalarName '+scalarName\n");
+	
         file.write("\ti1 = subprocess.check_call(command,shell=True)\n");
         file.write("\tcommand_stat = dti_stat_path + ' --scalarName ' + scalarName + "
                    "' --parameter_list ' + scalarName + ' -o ' + output_fvp + ' -i ' + output_fiber\n");
@@ -97,13 +111,13 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
                 char buffer[1024];
                 if(scalar_name != "")
                 {
-                    std::snprintf(buffer,1024,"\tcode += run_process('%s','%s','%s','%s','%s')\n",
+                    std::snprintf(buffer,1024,"\tcode += run_process('%s','%s','%s','%s',False,'%s')\n",
                                   it1->subjectID.toStdString().c_str(),it1->t12_path.toStdString().c_str(),
                                   it1->def_path.toStdString().c_str(), it2->file_path.toStdString().c_str(),
                                   scalar_name.toStdString().c_str());
                 }else
                 {
-                    std::snprintf(buffer,1024,"\tcode += run_process('%s','%s','%s','%s')\n",
+                    std::snprintf(buffer,1024,"\tcode += run_process('%s','%s','%s','%s', False)\n",
                                   it1->subjectID.toStdString().c_str(),it1->t12_path.toStdString().c_str(),
                                   it1->def_path.toStdString().c_str(), it2->file_path.toStdString().c_str());
 

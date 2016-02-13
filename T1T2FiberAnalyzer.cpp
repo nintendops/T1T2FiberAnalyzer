@@ -732,12 +732,11 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         warning.open();
         QCoreApplication::processEvents();
 
-	// to-do: dialog to catch run error
-        if(!p.waitForFinished(3000000))
+        if(!p.waitForFinished(30000000))
 	  {
             qDebug() << p.errorString();
 	    warning.close();
-	    ErrorReporter::fire("Process has taken too long to run. (timeout = 50 mins)");
+	    ErrorReporter::fire("Process has taken too long to run. (timeout = 500 mins)");
 	  }
         else
         {
