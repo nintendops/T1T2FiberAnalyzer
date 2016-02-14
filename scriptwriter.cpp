@@ -57,7 +57,9 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("import sys\n");
         file.write("import subprocess\n");
         file.write("import string\n");
-	file.write("import os\n\n");
+	file.write("import os\n");
+	file.write("import csv\n");
+	file.write("import time\n\n");
 
         // global declaration
         file.write("# global declaration \n");
@@ -74,6 +76,8 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write(fout);
         file.write(fiberprocess);
         file.write(dtistatout);
+	file.write("fvp_results=[]\n\n");
+
         file.write("# procedure run for each case\n");
 		
         file.write("def run_process(sid,scalar_path,def_path,fiber_path,isHField,scalarName='scalar'):\n");
@@ -98,8 +102,31 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("\tcommand_stat = dti_stat_path + ' --scalarName ' + scalarName + "
                    "' --parameter_list ' + scalarName + ' -o ' + output_fvp + ' -i ' + output_fiber\n");
         file.write("\ti2 = subprocess.check_call(command_stat,shell=True)\n");
+	file.write("\t#store fvp information\n");
+	file.write("\tif i2==0 :\n");
+	file.write("\t\tfvp_results.append((output_fvp,fibername,sid))\n");
+
         file.write("\treturn i1 + i2 \n\n");
 	
+	file.write("#this function contains the procedure to write the final csv\n");
+	file.write("def writeCSV():\n");
+	file.write("\tt = time.strftime('%c').replace(' ','-')\n");
+	file.write("\tresult = out_dir + '/' + 'Result_' + t + '.csv'\n");
+	file.write("\twith open(result,'w') as csvf:\n");
+	file.write("\t\tcsvw = csv.writer(csvf)\n");
+	file.write("\t\t# write csv headers\n");
+	file.write("\t\tcsvw.writerow(['Case','Fiber','Arc Length','Parameter Value'])\n");
+	file.write("\t\tfor fvp in fvp_results:\n");
+	file.write("\t\t\tf = open(fvp[0],'r')\n");
+	file.write("\t\t\t#omitting the first five lines, including headers\n");
+	file.write("\t\t\tfor i in range(0,5):\n");
+	file.write("\t\t\t\tf.readline()\n");
+	file.write("\t\t\tfor line in f:\n");
+	file.write("\t\t\t\tparameters = line.rstrip().split(',')\n");
+	file.write("\t\t\t\t# taking arc length and parameter value\n");
+	file.write("\t\t\t\tout_param = [fvp[2],fvp[1],parameters[0],parameters[2]]\n");
+	file.write("\t\t\t\tcsvw.writerow(out_param)\n");
+	file.write("\t\t\tf.close()\n\n");
 
         file.write("# this function contains all the run_process calls\n");
         file.write("def run():\n");
@@ -132,9 +159,10 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
                 file.write(buffer);
             }
         }
-        file.write("\treturn code");
+	file.write("\twriteCSV()\n");
+        file.write("\treturn code\n");
 
-        file.write("\n\nif __name__ == '__main__':\n");
+        file.write("\nif __name__ == '__main__':\n");
         file.write("\tcode = run()\n");
         file.write("\tif code == 0:\n");
         file.write("\t\tprint(\"Fiber output is successfully generated! Return code = \" + str(code))\n");
