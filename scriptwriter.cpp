@@ -43,7 +43,7 @@ void ScriptWriter::writePreliminary(){
 }
 
 // issue: special characters are not escaped
-bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_process, QString dtistat, QString scalar_name, std::vector<tool::MapData> data,
+bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_process, QString dtistat, bool isDField, QString scalar_name, std::vector<tool::MapData> data,
                std::vector<tool::TractData> tracts)
 {
     // issue: path may not take slash in Window system
@@ -108,18 +108,25 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         {
             for(std::vector<tool::TractData>::iterator it2 = tracts.begin(); it2 != tracts.end(); ++it2)
             {
+                char* DF;
+
+                if (isDField)
+                    DF = "True";
+                else
+                    DF = "False";
+
                 char buffer[1024];
                 if(scalar_name != "")
                 {
-                    std::snprintf(buffer,1024,"\tcode += run_process('%s','%s','%s','%s',False,'%s')\n",
+                    std::snprintf(buffer,1024,"\tcode += run_process('%s','%s','%s','%s',%s,'%s')\n",
                                   it1->subjectID.toStdString().c_str(),it1->t12_path.toStdString().c_str(),
-                                  it1->def_path.toStdString().c_str(), it2->file_path.toStdString().c_str(),
+                                  it1->def_path.toStdString().c_str(), it2->file_path.toStdString().c_str(), DF,
                                   scalar_name.toStdString().c_str());
                 }else
                 {
-                    std::snprintf(buffer,1024,"\tcode += run_process('%s','%s','%s','%s', False)\n",
+                    std::snprintf(buffer,1024,"\tcode += run_process('%s','%s','%s','%s', %s)\n",
                                   it1->subjectID.toStdString().c_str(),it1->t12_path.toStdString().c_str(),
-                                  it1->def_path.toStdString().c_str(), it2->file_path.toStdString().c_str());
+                                  it1->def_path.toStdString().c_str(), it2->file_path.toStdString().c_str(),DF);
 
                 }
                 file.write(buffer);

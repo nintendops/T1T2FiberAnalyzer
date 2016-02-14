@@ -73,6 +73,8 @@ private slots:
     void on_conf_pypath_editingFinished();
     void on_OutputDirBtn_clicked();
     void on_RunBtn_clicked();
+    void on_DFieldRadio_clicked();
+    void on_HFieldRadio_clicked();
 
 private:
     // vars
@@ -90,6 +92,7 @@ private:
     const QString* DEFAULT_PATH;
     bool isSync;
     bool isSync_conf;
+    bool isHField;
     QString para_File;
     QString conf_File;
     // possible optimization: localize the following four variables?

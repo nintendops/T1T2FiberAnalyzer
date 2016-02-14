@@ -12,6 +12,7 @@ T1T2FiberAnalyzer::T1T2FiberAnalyzer(QWidget *parent) :
     conf_File = QTGUI_CONF_XML_NAME;
     isSync = false;
     isSync_conf = false;
+    isHField = false;
     ui->setupUi(this);
     InitializeState();        
 }
@@ -755,4 +756,16 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         }
     }
 
+}
+
+void T1T2FiberAnalyzer::on_DFieldRadio_clicked()
+{
+    isHField = false;
+    ui->HFieldRadio->setChecked(false);
+}
+
+void T1T2FiberAnalyzer::on_HFieldRadio_clicked()
+{
+    isHField = true;
+    ui->DFieldRadio->setChecked(false);
 }
