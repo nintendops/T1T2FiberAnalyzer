@@ -73,7 +73,9 @@ private slots:
     void on_conf_pypath_editingFinished();
     void on_OutputDirBtn_clicked();
     void on_RunBtn_clicked();
+
     void on_DFieldRadio_clicked();
+
     void on_HFieldRadio_clicked();
 
 private:
