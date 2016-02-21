@@ -44,7 +44,7 @@ void ScriptWriter::writePreliminary(){
 
 // issue: special characters are not escaped
 bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_process, QString dtistat, bool isHField, QString scalar_name, std::vector<tool::MapData> data,
-               std::vector<tool::TractData> tracts)
+                             std::vector<tool::TractData> tracts, bool isTranspose)
 {
     // issue: path may not take slash in Window system
     QFile file(outdir + "/" +pipeline_script);
@@ -57,9 +57,9 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("import sys\n");
         file.write("import subprocess\n");
         file.write("import string\n");
-	file.write("import os\n");
-	file.write("import csv\n");
-	file.write("import time\n\n");
+        file.write("import os\n");
+        file.write("import csv\n");
+        file.write("import time\n\n");
 
         // global declaration
         file.write("# global declaration \n");
@@ -76,57 +76,70 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write(fout);
         file.write(fiberprocess);
         file.write(dtistatout);
-	file.write("fvp_results=[]\n\n");
+        file.write("fvp_results=[]\n\n");
 
         file.write("# procedure run for each case\n");
-		
+
         file.write("def run_process(sid,scalar_path,def_path,fiber_path,isHField,scalarName='scalar'):\n");
-	file.write("\tfibername=string.rsplit(fiber_path,'.vtk',1)[0]\n");
-	file.write("\tif not os.path.exists(out_dir+'/'+sid):\n");
-	file.write("\t\tos.makedirs(out_dir+'/'+sid)\n");
-	file.write("\tif not os.path.exists(out_dir+'/'+sid+'/'+fibername):\n");
-	file.write("\t\tos.makedirs(out_dir+'/'+sid+'/'+fibername)\n");	
-	file.write("\toutput_dir = out_dir+'/'+sid+'/'+fibername\n");	
+        file.write("\tfibername=string.rsplit(fiber_path,'.vtk',1)[0]\n");
+        file.write("\tif not os.path.exists(out_dir+'/'+fibername):\n");
+        file.write("\t\tos.makedirs(out_dir+'/'+fibername)\n");
+        file.write("\tif not os.path.exists(out_dir+'/'+fibername+'/'+sid):\n");
+        file.write("\t\tos.makedirs(out_dir+'/'+ fibername +'/'+sid)\n");
+        file.write("\toutput_dir = out_dir+'/'+ fibername +'/'+ sid\n");
         file.write("\toutput_fiber = output_dir + '/' + sid + '_' + fiber_path\n");
         file.write("\toutput_fvp = string.rsplit(output_fiber,'.vtk',1)[0]+'.fvp'\n");
-	file.write("\tif isHField:\n");
+        file.write("\tif isHField:\n");
         file.write("\t\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
-           " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "
-           " + ' -H ' + def_path + ' --scalarName '+scalarName\n");
-	file.write("\telse:\n");
+                   " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "
+                   " + ' -H ' + def_path + ' --scalarName '+scalarName\n");
+        file.write("\telse:\n");
         file.write("\t\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
-           " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "
-           " + ' -D ' + def_path + ' --scalarName '+scalarName\n");
-	
+                   " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "
+                   " + ' -D ' + def_path + ' --scalarName '+scalarName\n");
+
         file.write("\ti1 = subprocess.check_call(command,shell=True)\n");
         file.write("\tcommand_stat = dti_stat_path + ' --scalarName ' + scalarName + "
                    "' --parameter_list ' + scalarName + ' -o ' + output_fvp + ' -i ' + output_fiber\n");
         file.write("\ti2 = subprocess.check_call(command_stat,shell=True)\n");
-	file.write("\t#store fvp information\n");
-	file.write("\tif i2==0 :\n");
-	file.write("\t\tfvp_results.append((output_fvp,fibername,sid))\n");
+        file.write("\t#store fvp information\n");
+        file.write("\tif i2==0 :\n");
+        file.write("\t\tfvp_results.append((output_fvp,fibername,sid))\n");
 
         file.write("\treturn i1 + i2 \n\n");
-	
-	file.write("#this function contains the procedure to write the final csv\n");
-	file.write("def writeCSV():\n");
-	file.write("\tt = time.strftime('%c').replace(' ','-')\n");
-	file.write("\tresult = out_dir + '/' + 'Result_' + t + '.csv'\n");
-	file.write("\twith open(result,'w') as csvf:\n");
-	file.write("\t\tcsvw = csv.writer(csvf)\n");
-	file.write("\t\t# write csv headers\n");
-	file.write("\t\tcsvw.writerow(['Case','Fiber','Arc Length','Parameter Value'])\n");
-	file.write("\t\tfor fvp in fvp_results:\n");
-	file.write("\t\t\tf = open(fvp[0],'r')\n");
-	file.write("\t\t\t#omitting the first five lines, including headers\n");
-	file.write("\t\t\tfor i in range(0,5):\n");
-	file.write("\t\t\t\tf.readline()\n");
-	file.write("\t\t\tfor line in f:\n");
-	file.write("\t\t\t\tparameters = line.rstrip().split(',')\n");
-	file.write("\t\t\t\t# taking arc length and parameter value\n");
-	file.write("\t\t\t\tout_param = [fvp[2],fvp[1],parameters[0],parameters[2]]\n");
-	file.write("\t\t\t\tcsvw.writerow(out_param)\n");
-	file.write("\t\t\tf.close()\n\n");
+
+        file.write("#this function contains the procedure to write the final csv\n");
+        file.write("def writeCSV(transpose):\n");
+        file.write("\tfiber_ref = dict()\n");
+        file.write("\tt = time.strftime('%c').replace(' ','-')\n\n");
+        file.write("\tfor fvp in fvp_results:\n");
+        file.write("\t\tf_table = []\n");
+        file.write("\t\tif fvp[1] not in fiber_ref:\n");
+        file.write("\t\t\tf_table.append(['Arc_length',fvp[2]])\n");
+        file.write("\t\t\tfiber_ref[fvp[1]] = f_table\n");
+        file.write("\t\telse:\n");
+        file.write("\t\t\tf_table = fiber_ref[fvp[1]]\n");
+        file.write("\t\t\tf_table[0].append(fvp[2])\n");
+        file.write("\t\tf = open(fvp[0],'r')\n");
+        file.write("\t\t# omitting the first five lines\n");
+        file.write("\t\tfor i in range(0,5):\n");
+        file.write("\t\t\tf.readline()\n");
+        file.write("\t\tindex = 1\n");
+        file.write("\t\tfor line in f:\n");
+        file.write("\t\t\tparameters = line.rstrip().rsplit(',')\n");
+        file.write("\t\t\tif len(f_table) > index:\n");
+        file.write("\t\t\t\tf_table[index].append(parameters[2])\n");
+        file.write("\t\t\telse:\n");
+        file.write("\t\t\t\tf_table.append([parameters[0],parameters[2]])\n");
+        file.write("\t\t\tindex += 1\n");
+        file.write("\t\tf.close()\n\n\n");
+        file.write("\tfor (fiber,table) in fiber_ref.items():\n");
+        file.write("\t\tif transpose:\n");
+        file.write("\t\t\ttable = map(list,zip(*table))\n");
+        file.write("\t\tresult = out_dir + '/' + fiber + '/' + 'Result_' + t + '.csv'\n");
+        file.write("\t\twith open(result,'w') as csvf:\n");
+        file.write("\t\t\tcsvw = csv.writer(csvf)\n");
+        file.write("\t\t\tcsvw.writerows(table)\n\n\n");
 
         file.write("# this function contains all the run_process calls\n");
         file.write("def run():\n");
@@ -159,7 +172,10 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
                 file.write(buffer);
             }
         }
-	file.write("\twriteCSV()\n");
+        if(isTranspose)
+            file.write("\twriteCSV(True)\n");
+        else
+            file.write("\twriteCSV(False)\n");
         file.write("\treturn code\n");
 
         file.write("\nif __name__ == '__main__':\n");
