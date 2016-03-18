@@ -25,7 +25,7 @@ public:
 private:
     Qt::CheckState* checkedState;
     std::vector<tool::TractData> tract_db;
-
+    static bool Tract_Comparator(tool::TractData a, tool::TractData b);
 
 };
 

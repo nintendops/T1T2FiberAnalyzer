@@ -1,7 +1,7 @@
 #ifndef T1T2FIBERANALYZER_H
 #define T1T2FIBERANALYZER_H
 #define DEFAULT_DIR "/home/haiweich/Dev/repo/T1T2FiberAnalyzer/test_data/"
-#define QTGUI_XML_NAME "T1T2GUI.xml"
+#define QTGUI_XML_NAME "T1T2GUI_PARA.xml"
 #define QTGUI_CONF_XML_NAME "T1T2GUI_CONF.xml"
 
 #include <QMainWindow>

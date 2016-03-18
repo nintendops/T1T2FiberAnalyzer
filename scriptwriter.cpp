@@ -19,12 +19,8 @@ ScriptWriter::ScriptWriter(QString tool,QString pipeline){
 void ScriptWriter::writePreliminary(){
 
     QFile file(tool_script);
-    if(file.exists()){
-        // shall we do something?
-        //ErrorReporter::fire("Overwriting file " + tool_script.toStdString());
-    }
+
     if(file.open(QIODevice::WriteOnly)){
-        // obtaining lock of file
         file.write("#! /usr/bin/env python\n");
         file.write("# -*- coding: utf-8 -*-\n\n");
         file.write("import sys\n");
@@ -33,10 +29,9 @@ void ScriptWriter::writePreliminary(){
         file.write("else:\n");
         file.write("\tprint(\"true\")\n");
         file.close();
-
     }else{
         // to-do: open failed. Should throw an error
-        ErrorReporter::fire("Failed to open file " + tool_script.toStdString() + " for script generation.");
+        ErrorReporter::fire("Failed to write into file " + tool_script.toStdString() + " for script generation. Maybe you don't have write access to the executing path?");
     }
 
 
@@ -63,14 +58,14 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
 
         // global declaration
         file.write("# global declaration \n");
-        char out[18+outdir.size()];
+        char out[64+outdir.size()];
         snprintf(out,sizeof out, "out_dir = \"%s\"\n",outdir.toStdString().c_str());
         file.write(out);
-        char fout[24+ outdir.size()];
+        char fout[64+ outdir.size()];
         snprintf(fout,sizeof fout, "fiber_dir = \"%s\"\n",fiber_dir.toStdString().c_str());
-        char fiberprocess[36+ fiber_process.size()];
+        char fiberprocess[64+ fiber_process.size()];
         snprintf(fiberprocess,sizeof fiberprocess, "fiberprocess_path = \"%s\"\n",fiber_process.toStdString().c_str());
-        char dtistatout[36 + dtistat.size()];
+        char dtistatout[64 + dtistat.size()];
         snprintf(dtistatout,sizeof dtistatout, "dti_stat_path= \"%s\"\n", dtistat.toStdString().c_str());
 
         file.write(fout);
@@ -82,13 +77,17 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
 
         file.write("def run_process(sid,scalar_path,def_path,fiber_path,isHField,scalarName='scalar'):\n");
         file.write("\tfibername=string.rsplit(fiber_path,'.vtk',1)[0]\n");
-        file.write("\tif not os.path.exists(out_dir+'/'+fibername):\n");
-        file.write("\t\tos.makedirs(out_dir+'/'+fibername)\n");
-        file.write("\tif not os.path.exists(out_dir+'/'+fibername+'/'+sid):\n");
-        file.write("\t\tos.makedirs(out_dir+'/'+ fibername +'/'+sid)\n");
         file.write("\toutput_dir = out_dir+'/'+ fibername +'/'+ sid\n");
         file.write("\toutput_fiber = output_dir + '/' + sid + '_' + fiber_path\n");
-        file.write("\toutput_fvp = string.rsplit(output_fiber,'.vtk',1)[0]+'.fvp'\n");
+        file.write("\toutput_fvp = string.rsplit(output_fiber,'.vtk',1)[0]+'.fvp'\n\n");
+        file.write("\tif not os.path.exists(out_dir+'/'+fibername):\n");
+        file.write("\t\tos.makedirs(out_dir+'/'+fibername)\n");
+        file.write("\tif not os.path.exists(output_dir):\n");
+        file.write("\t\tos.makedirs(output_dir)\n");
+        file.write("\telse:\n");
+        file.write("\t\tprint('folder ' + output_dir + 'already exists, skipping...')\n");
+        file.write("\t\tfvp_results.append((output_fvp,fibername,sid))\n");
+        file.write("\t\treturn 0\n");
         file.write("\tif isHField:\n");
         file.write("\t\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
                    " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "

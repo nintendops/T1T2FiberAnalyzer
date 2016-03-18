@@ -704,6 +704,12 @@ void T1T2FiberAnalyzer::on_OutputDirBtn_clicked()
 
 void T1T2FiberAnalyzer::on_RunBtn_clicked()
 {
+    // first save all parameters and configurations
+    s_gui->save(*m_gui,para_File.toStdString());
+    s_gui_conf->save(*m_gui_conf,conf_File.toStdString());
+    ErrorReporter::friendly_fire("All parameters and configurations are saved to "
+                                    + para_File.toStdString() + " and " + conf_File.toStdString());
+
     std::vector<tool::MapData> data;
     std::vector<tool::TractData> t_data;
     for(unsigned int i =0; i < atlas->getDataSize(); i++){
@@ -750,7 +756,7 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
 	    warning.close();
             if(file.open(QIODevice::WriteOnly)){
                 file.write(p.readAll());
- 		ErrorReporter::fire("Output is written into " + abs_out_dir.toStdString() + "/log");
+                ErrorReporter::friendly_fire("Output is written into " + abs_out_dir.toStdString() + "/log");
                 file.close();
             }
 
@@ -759,6 +765,10 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
                 ErrorReporter::fire("failed to write into log file");
             }
         }
+    }
+    else
+    {
+        ErrorReporter::fire("Failed to create pipeline script! Maybe you don't have write access at the output path?");
     }
 
 }

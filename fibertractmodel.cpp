@@ -5,6 +5,8 @@
 FiberTractModel::FiberTractModel(QObject *parent, std::vector<tool::TractData> db) :
     QAbstractTableModel(parent){
     tract_db = db;
+    // Sort fiber paths alphebatically
+    std::sort(tract_db.begin(),tract_db.end(),Tract_Comparator);
 
     checkedState = new Qt::CheckState[tract_db.size()]();
 
@@ -113,4 +115,10 @@ void FiberTractModel::resetModel(Qt::CheckState state, int index){
     }else
         checkedState[index] = state;
     this->endResetModel();
+}
+
+bool FiberTractModel::Tract_Comparator(tool::TractData a, tool::TractData b)
+{
+    int i = a.file_path.compare(b.file_path);
+    return (i < 0);
 }
