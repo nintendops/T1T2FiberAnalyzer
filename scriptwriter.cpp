@@ -88,6 +88,16 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("\t\tprint('folder ' + output_dir + 'already exists, skipping...')\n");
         file.write("\t\tfvp_results.append((output_fvp,fibername,sid))\n");
         file.write("\t\treturn 0\n");
+        file.write("\tif not os.path.exists(fiber_dir+'/'+fiber_path):\n");
+        file.write("\t\tprint('Fiber file ' + fiber_path + 'does not exist! Skipping case' + sid)\n");
+        file.write("\t\treturn 0\n");
+        file.write("\tif not os.path.exists(scalar_path):\n");
+        file.write("\t\tprint('Scalar file ' + scalar_path + 'does not exist! Skipping case' + sid)\n");
+        file.write("\t\treturn 0\n");
+        file.write("\tif not os.path.exists(def_path):\n");
+        file.write("\t\tprint('Deformation file ' def_path + 'does not exist! Skipping case' + sid)\n");
+        file.write("\t\treturn 0\n");
+
         file.write("\tif isHField:\n");
         file.write("\t\tcommand = fiberprocess_path + ' -n' + ' --inputFiberBundle '"
                    " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "
@@ -97,10 +107,16 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
                    " + fiber_dir+'/'+fiber_path + ' -o '+ output_fiber + ' -S ' + scalar_path "
                    " + ' -D ' + def_path + ' --scalarName '+scalarName\n");
 
-        file.write("\ti1 = subprocess.check_call(command,shell=True)\n");
-        file.write("\tcommand_stat = dti_stat_path + ' --scalarName ' + scalarName + "
+        file.write("\ttry:\n");
+        file.write("\t\ti1 = subprocess.check_call(command,shell=True)\n");
+        file.write("\t\tcommand_stat = dti_stat_path + ' --scalarName ' + scalarName + "
                    "' --parameter_list ' + scalarName + ' -o ' + output_fvp + ' -i ' + output_fiber\n");
-        file.write("\ti2 = subprocess.check_call(command_stat,shell=True)\n");
+        file.write("\t\ti2 = subprocess.check_call(command_stat,shell=True)\n");
+        file.write("\texcept subprocess.CalledProcessError as e:\n");
+        file.write("\t\tprint 'Error! Non-zero status code returned by command: ' + str(e.returncode)\n");
+        file.write("\t\tprint e.output\n");
+        file.write("\t\ti1=i2=1\n");
+
         file.write("\t#store fvp information\n");
         file.write("\tif i2==0 :\n");
         file.write("\t\tfvp_results.append((output_fvp,fibername,sid))\n");
@@ -135,7 +151,7 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("\tfor (fiber,table) in fiber_ref.items():\n");
         file.write("\t\tif transpose:\n");
         file.write("\t\t\ttable = map(list,zip(*table))\n");
-        file.write("\t\tresult = out_dir + '/' + fiber + '/' + 'Result_' + t + '.csv'\n");
+        file.write("\t\tresult = out_dir + '/' + fiber + '/' + 'Result_' + fiber + '_' + t + '.csv'\n");
         file.write("\t\twith open(result,'w') as csvf:\n");
         file.write("\t\t\tcsvw = csv.writer(csvf)\n");
         file.write("\t\t\tcsvw.writerows(table)\n\n\n");
@@ -182,7 +198,7 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("\tif code == 0:\n");
         file.write("\t\tprint(\"Fiber output is successfully generated! Return code = \" + str(code))\n");
         file.write("\telse:\n");
-        file.write("\t\tprint('Failed to run command. Return code =' + str(code))\n");
+        file.write("\t\tprint('Error occured! Return code =' + str(code))\n");
         file.close();
         ErrorReporter::friendly_fire("Successfully generated script to " + outdir.toStdString() + "/" +pipeline_script.toStdString());
         return true;
