@@ -85,17 +85,18 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("\tif not os.path.exists(output_dir):\n");
         file.write("\t\tos.makedirs(output_dir)\n");
         file.write("\telse:\n");
-        file.write("\t\tprint('folder ' + output_dir + 'already exists, skipping...')\n");
-        file.write("\t\tfvp_results.append((output_fvp,fibername,sid))\n");
+        file.write("\t\tprint('folder ' + output_dir + ' already exists, skipping...')\n");
+	file.write("\t\tif os.path.exists(output_fvp):\n");
+        file.write("\t\t\tfvp_results.append((output_fvp,fibername,sid))\n");
         file.write("\t\treturn 0\n");
         file.write("\tif not os.path.exists(fiber_dir+'/'+fiber_path):\n");
-        file.write("\t\tprint('Fiber file ' + fiber_path + 'does not exist! Skipping case' + sid)\n");
+        file.write("\t\tprint('Fiber file ' + fiber_path + ' does not exist! Skipping case ' + sid)\n");
         file.write("\t\treturn 0\n");
         file.write("\tif not os.path.exists(scalar_path):\n");
-        file.write("\t\tprint('Scalar file ' + scalar_path + 'does not exist! Skipping case' + sid)\n");
+        file.write("\t\tprint('Scalar file ' + scalar_path + ' does not exist! Skipping case ' + sid)\n");
         file.write("\t\treturn 0\n");
         file.write("\tif not os.path.exists(def_path):\n");
-        file.write("\t\tprint('Deformation file ' def_path + 'does not exist! Skipping case' + sid)\n");
+        file.write("\t\tprint('Deformation file ' + def_path + ' does not exist! Skipping case ' + sid)\n");
         file.write("\t\treturn 0\n");
 
         file.write("\tif isHField:\n");

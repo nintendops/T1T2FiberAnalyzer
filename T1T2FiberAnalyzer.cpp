@@ -748,7 +748,7 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
 	  {
             qDebug() << p.errorString();
 	    warning.close();
-	    ErrorReporter::fire("Process has taken too long to run. (timeout = 500 mins)");
+	    ErrorReporter::fire("An error occurred! or process timed out (timeout = 500 mins)");
 	  }
         else
         {
