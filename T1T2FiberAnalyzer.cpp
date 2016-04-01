@@ -744,11 +744,11 @@ void T1T2FiberAnalyzer::on_RunBtn_clicked()
         warning.open();
         QCoreApplication::processEvents();
 
-        if(!p.waitForFinished(30000000))
+        if(!p.waitForFinished(-1))
 	  {
             qDebug() << p.errorString();
 	    warning.close();
-	    ErrorReporter::fire("An error occurred! or process timed out (timeout = 500 mins)");
+	    ErrorReporter::fire("Process failed to execute with the following error: " + p.errorString().toStdString());
 	  }
         else
         {
