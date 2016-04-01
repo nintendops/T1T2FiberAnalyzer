@@ -81,7 +81,7 @@ bool ScriptWriter::writeData(QString outdir, QString fiber_dir, QString fiber_pr
         file.write("\toutput_fiber = output_dir + '/' + sid + '_' + fiber_path\n");
         file.write("\toutput_fvp = string.rsplit(output_fiber,'.vtk',1)[0]+'.fvp'\n\n");
 
-	file.write("\tprint('Running on fiber\case: ' + fibername + '/' + sid + '\n\n')\n");
+	file.write("\tprint('Running on fiber\case: ' + fibername + '/' + sid)\n");
 
 	file.write("\tif not os.path.exists(fiber_dir+'/'+fiber_path):\n");
         file.write("\t\tprint('Fiber file ' + fiber_path + ' does not exist! Skipping case ' + sid)\n");
